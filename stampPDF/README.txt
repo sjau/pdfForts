@@ -1,6 +1,21 @@
 stampPDF
 --------
 
+
+PREREQUISITES
+
+- KDE / Dolphin
+- kdialog
+- ghostscript
+- pdftk
+- imagemagick
+- bash
+- basename (part of coreutils)
+
+
+
+HOWTO
+
 In order to use this script do the following:
 
 1) run the install.sh script to copy the files to the necessary locations
