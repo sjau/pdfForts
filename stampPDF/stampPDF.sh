@@ -248,7 +248,7 @@ function createTmpDirs
 function loadConfig
 {
 	# Load config values
-	source "${HOME}/.stampPDF/stampPDF.conf"
+	source "${HOME}/.pdfForts/stampPDF.conf"
 }
 
 
