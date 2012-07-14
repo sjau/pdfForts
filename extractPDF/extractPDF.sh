@@ -12,6 +12,10 @@ That would extract the pages 3-6, page 17, pages 21-24, pages 37 to the end, pag
 The order is defines by your range.
 
 " "1-end"`;
+if [ $? != 0 ]; then
+	exit;
+fi
+
 
 # Parse the selected file
 for arg ;
@@ -23,6 +27,9 @@ do
 		fileNoExt=${arg%.*}
 		# Prompt for save file
 		Name=`kdialog --getsavefilename "${fileNoExt} - extracted.pdf"`;
+		if [ $? != 0 ]; then
+			exit;
+		fi
 		pdftk "${arg}" cat ${Range} output "${Name}"
 	fi
 done

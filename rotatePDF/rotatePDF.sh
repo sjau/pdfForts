@@ -2,9 +2,9 @@
 
 # Ask for range
 Rotate=`kdialog --menu "Chose rotation (clockwise):" E "90°" S "180°" W "270°"`;
-	if [ $? != 0 ]; then
-		exit;
-	fi
+if [ $? != 0 ]; then
+	exit;
+fi
 
 # Parse the selected file
 for arg ;
