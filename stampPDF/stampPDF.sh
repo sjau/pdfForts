@@ -265,6 +265,9 @@ createBasicTemplate;
 
 # Prompt for document number, grayscale conversion, image resize
 docNr=`kdialog --title "Document number" --inputbox "At what number shall the document numbering commence?"`;
+if [ $? != 0 ]; then
+	exit;
+fi
 docNrStart="${docNr}"
 #grayScale=`kdialog --radiolist "Convert all documents to grayscale? (very slow on PDFs)" 1 "Yes" off  0  "No" on`;
 #resizeImage=`kdialog --radiolist "Resize image to max A4 dimensions?" 1 "Yes" off  0  "No" on`;
