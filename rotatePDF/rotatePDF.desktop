@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin
+MimeType=application/pdf;
+Actions=rotatePDF
+
+[Desktop Action rotatePDF]
+Name=Rotate PDF
+Name[de]=PDF drehen
+Icon=application-pdf
+Exec=rotatePDF.sh %F
