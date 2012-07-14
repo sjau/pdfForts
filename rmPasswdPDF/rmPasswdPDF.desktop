@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin
+MimeType=application/pdf;
+Actions=rmPasswdPDF
+
+[Desktop Action rmPasswdPDF]
+Name=Remove password from PDF
+Name[de]=PDF Passwortschutz entfernen
+Icon=application-pdf
+Exec=rmPasswdPDF.sh %F
