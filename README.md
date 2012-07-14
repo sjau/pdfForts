@@ -30,3 +30,10 @@ extractPDF
 ----------
 
 This script lets you extract one or more pages from  PDF.
+
+
+
+rotatePDF
+---------
+
+Rotate a PDF by 90°, 180°, 270° clockwise.
