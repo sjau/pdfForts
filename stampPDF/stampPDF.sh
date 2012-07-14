@@ -82,14 +82,15 @@ function createStampAssemble
 function checkConfig
 {
 	# Test if config exists
-	userConfig="${HOME}/.stampPDF/stampPDF.conf"
+	userConfig="${HOME}/.pdfForts/stampPDF.conf"
 	if [ ! -f "${userConfig}" ]
 	then
 		# User config does not exist, copy default to user
-		mkdir -p "${HOME}/.stampPDF/"
-		cp "/usr/share/kde4/services/ServiceMenus/stampPDF/stampPDF.conf" "${HOME}/.stampPDF/"
-		kdialog --msgbox "No configuration file for stampPDF has been found.\n A default one was copied to ${HOME}/.stampPDF/stampPDF.conf.\n Please edit that one to suit your needs.\n Next Kate will be opened with the config file."
-		kate "${HOME}/.stampPDF/stampPDF.conf"
+		mkdir -p "${HOME}/.pdfForts/"
+		cp "/usr/share/kde4/services/ServiceMenus/stampPDF/stampPDF.conf" "${HOME}/.pdfForts/"
+		kdialog --msgbox "No configuration file for stampPDF has been found.\n A default one was copied to ${HOME}/.pdfForts/stampPDF.conf.\n Please edit that one to suit your needs.\n Next Kate will be opened with the config file."
+		kate "${HOME}/.pdfForts/stampPDF.conf"
+        exit;
 	fi
 }
 
