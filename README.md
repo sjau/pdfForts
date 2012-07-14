@@ -9,3 +9,10 @@ stampPDF
 --------
 
 This script just adds a document number and page number on a bunch of selcted pdfs.
+
+
+
+rmPasswdPDF
+-----------
+
+This script creates a copy of a PDF without password. The password must be known. 
