@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin
+MimeType=application/pdf;
+Actions=extractPDF
+
+[Desktop Action extractPDF]
+Name=Extract pages from PDF
+Name[de]=Seiten aus extrahieren
+Icon=application-pdf
+Exec=extractPDF.sh %F

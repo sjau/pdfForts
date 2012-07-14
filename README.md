@@ -20,6 +20,13 @@ This script creates a copy of a PDF without password. The password must be known
 
 
 addPasswdPDF
------------
+------------
 
 This script adds a password to the PDFs.
+
+
+
+extractPDF
+----------
+
+This script lets you extract one or more pages from  PDF.
