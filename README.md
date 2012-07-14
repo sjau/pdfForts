@@ -16,3 +16,10 @@ rmPasswdPDF
 -----------
 
 This script creates a copy of a PDF without password. The password must be known. 
+
+
+
+addPasswdPDF
+-----------
+
+This script adds a password to the PDFs.
