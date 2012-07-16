@@ -8,4 +8,4 @@ Actions=addPasswdPDF
 Name=Add password to PDF
 Name[de]=PDF mit Passwort versehen
 Icon=application-pdf
-Exec=addPasswdPDF.sh %F
+Exec=/usr/bin/pdfForts/addPasswdPDF.sh %F

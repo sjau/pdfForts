@@ -8,4 +8,4 @@ Actions=stampPDF
 Name=Stamp documents and create PDF
 Name[de]=Dokumentenstempel hinzufügen und PDF kreieren
 Icon=application-pdf
-Exec=stampPDF.sh %F
+Exec=/usr/bin/pdfForts/stampPDF.sh %F

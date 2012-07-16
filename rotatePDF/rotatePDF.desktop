@@ -8,4 +8,4 @@ Actions=rotatePDF
 Name=Rotate PDF
 Name[de]=PDF drehen
 Icon=application-pdf
-Exec=rotatePDF.sh %F
+Exec=/usr/bin/pdfForts/rotatePDF.sh %F

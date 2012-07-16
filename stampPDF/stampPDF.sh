@@ -87,7 +87,7 @@ function checkConfig
 	then
 		# User config does not exist, copy default to user
 		mkdir -p "${HOME}/.pdfForts/"
-		cp "/usr/share/kde4/services/ServiceMenus/stampPDF/stampPDF.conf" "${HOME}/.pdfForts/"
+		cp "/usr/share/kde4/services/ServiceMenus/pdfForts/stampPDF.conf" "${HOME}/.pdfForts/"
 		kdialog --msgbox "No configuration file for stampPDF has been found.\n A default one was copied to ${HOME}/.pdfForts/stampPDF.conf.\n Please edit that one to suit your needs.\n\n Next Kate will be opened with the config file.\n\n REMEMBER: Files are parsed alphabetically!"
 		kate "${HOME}/.pdfForts/stampPDF.conf"
         kdialog --msgbox "You have now a user config.\n Retry again on the PDF files.\n\n REMEMBER: Files are parsed alphabetically!"

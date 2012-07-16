@@ -8,4 +8,4 @@ Actions=extractPDF
 Name=Extract pages from PDF
 Name[de]=Seiten aus extrahieren
 Icon=application-pdf
-Exec=extractPDF.sh %F
+Exec=/usr/bin/pdfForts/extractPDF.sh %F
