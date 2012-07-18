@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin
+MimeType=application/pdf;
+Actions=metaPDF
+
+[Desktop Action metaPDF]
+Name=Add/alter meta data in PDFs
+Name[de]=Metadaten ändern/hinzufügen
+Icon=application-pdf
+Exec=/usr/bin/pdfForts/metaPDF.sh %F
