@@ -14,12 +14,6 @@ origPath=`pwd`
 
 
 
-scriptName="addPasswdPDF"
-installPath="/usr/bin/pdfForts/"
-serviceMenus="/usr/share/kde4/services/ServiceMenus/pdfForts/"
-configFile="n"
-
-
 function installFunc
 {
 	for scriptName in "${runScripts[@]}"
