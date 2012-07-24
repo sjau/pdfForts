@@ -41,6 +41,13 @@ Rotate a PDF by 90°, 180°, 270° clockwise.
 
 
 metaPDF
----------
+-------
 
 Add meta data to a PDF.
+
+
+
+combinePDF
+----------
+
+Combine PDFs and maintain bookmarks.

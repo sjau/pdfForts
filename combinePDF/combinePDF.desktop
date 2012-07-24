@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin
+MimeType=application/pdf;
+Actions=combinePDF
+
+[Desktop Action combinePDF]
+Name=Combine to one PDF
+Name[de]=PDFs zusammenfügen
+Icon=application-pdf
+Exec=/usr/bin/pdfForts/combinePDF.sh %F

@@ -55,7 +55,7 @@ do
 		IFS="${old_IFS}"
 
 		# Check for original data
-		unset "${origData}"
+		unset "origData"
 		declare -A origData
 		searchArray "Author"
 		searchArray "CreationDate"
