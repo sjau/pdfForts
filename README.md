@@ -51,3 +51,10 @@ combinePDF
 ----------
 
 Combine PDFs and maintain bookmarks.
+
+
+
+bookmarkPDF
+-----------
+
+Lets you edit the current bookmarks and apply them to the PDF.

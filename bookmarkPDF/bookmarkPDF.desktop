@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin
+MimeType=application/pdf;
+Actions=bookmarkPDF
+
+[Desktop Action bookmarkPDF]
+Name=Edit PDF Bookmarks
+Name[de]=PDF Bookmarks bearbeiten
+Icon=application-pdf
+Exec=/usr/bin/pdfForts/bookmarkPDF.sh %F

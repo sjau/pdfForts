@@ -7,7 +7,7 @@ fi
 
 
 # Set allScripts array
-allScripts=( "addPasswdPDF" "extractPDF" "metaPDF" "rmPasswdPDF" "rotatePDF" "stampPDF" "combinePDF" )
+allScripts=( "addPasswdPDF" "extractPDF" "metaPDF" "rmPasswdPDF" "rotatePDF" "stampPDF" "combinePDF" "bookmarkPDF" )
 
 # Set original path
 origPath=`pwd`
