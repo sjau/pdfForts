@@ -6,13 +6,12 @@ PREREQUISITES
 
 - KDE / Dolphin
 - kdialog
-- ghostscript
 - pdftk
-- imagemagick
 - bash
 - basename (part of coreutils)
 - unoconv
-
+- zip
+- unzip
 
 
 HOWTO

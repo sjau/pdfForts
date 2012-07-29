@@ -95,7 +95,7 @@ esac
 
 
 # Prompt for default text string
-tplMessage=`kdialog --title "Test message" --inputbox "Please enter the desired text message" "${defaultText}"`
+tplMessage=`kdialog --title "Text message" --inputbox "Please enter the desired text message" "${defaultText}"`
 
 
 # Create temporary dir
