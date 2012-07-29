@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin
+MimeType=application/pdf;
+Actions=ocrPDF
+
+[Desktop Action ocrPDF]
+Name=OCR PDF
+Name[de]=OCR PDF
+Icon=application-pdf
+Exec=/usr/bin/pdfForts/ocrPDF.sh %F

@@ -19,6 +19,7 @@ Each of the script has other prerequisites. Most of them require one or more of 
 - basename
 - bash
 - unoconv
+- tesseract & tesseract language package(s)
 
 
 
@@ -61,6 +62,12 @@ metaPDF
 -------
 
 Add meta data to a PDF.
+
+
+ocrPDF
+-----------
+
+This script converts image PDFs to text files using tesseract.
 
 
 
