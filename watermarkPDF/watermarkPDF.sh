@@ -67,6 +67,12 @@ function createOdt
 
 
 
+function cleanUp
+{
+	rm -Rf  "${tmpStorage}/"*
+}
+
+
 checkConfig;
 
 
@@ -117,6 +123,6 @@ do
 		unoconv -f pdf "${tmpStorage}/draft.odt"
 		unoconv -f pdf "${tmpStorage}/draft.odt"
 		pdftk "${arg}" multibackground "${tmpStorage}/draft.pdf" output "${newFile}"
-
+		cleanUp
 	fi
 done
