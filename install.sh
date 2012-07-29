@@ -160,5 +160,6 @@ symlink) validParaFunc "${2}"
    echo "rmPasswdPDF - only run on rmPasswdPDF script"
    echo "rotatePDF - only run on rotatePDF script"
    echo "stampPDF - only run on stampPDF script"
+   echo "watermarkPDF - only run watermarkPDF script"
    ;;
 esac
