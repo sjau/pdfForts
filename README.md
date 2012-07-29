@@ -5,6 +5,23 @@ This is just a bunch of bash script to make work easier in KDE/Dolphin as action
 
 
 
+PREREQUISITES
+-------------
+
+Each of the script has other prerequisites. Most of them require one or more of the following:
+
+- Dolphin
+- kdialog
+- pdftk
+- imagemagick
+- zip
+- unzip
+- basename
+- bash
+- unoconv
+
+
+
 stampPDF
 --------
 
