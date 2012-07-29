@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin
+MimeType=application/pdf;image/*;
+Actions=watermarkPDF
+
+[Desktop Action watermarkPDF]
+Name=Watermark PDF
+Name[de]=Wasserzeichen hinzufügen
+Icon=application-pdf
+Exec=/usr/bin/pdfForts/watermarkPDF.sh %F

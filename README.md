@@ -58,3 +58,10 @@ bookmarkPDF
 -----------
 
 Lets you edit the current bookmarks and apply them to the PDF.
+
+
+
+watermarkPDF
+-----------
+
+Lets you add a watermark accross the PDF.

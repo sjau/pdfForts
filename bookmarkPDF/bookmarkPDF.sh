@@ -99,18 +99,11 @@ function bookmarkData
 
 	# Loop through the array in reverse order
 	lastLevel=0
-	for ((x=${#titleArr[@]}; x >= 0; --x))
+	for ((x=${#titleArr[@]}; x >= 1; --x))
 	do
-		case "${x}" in
-			0) 	curTitle=${fName%.*}
-				curLevel="0"
-				curNumber="1"
-				;;
-			*) 	curTitle="${titleArr[$x]}"
-				curLevel="${levelArr[$x]}"
-				curNumber="${numberArr[$x]}"
-				;;
-		esac
+		curTitle="${titleArr[$x]}"
+		curLevel="${levelArr[$x]}"
+		curNumber="${numberArr[$x]}"
 
 		# Equal level or sublevel
 		if [ "${curLevel}" -ge "${lastLevel}" ]

@@ -7,7 +7,7 @@ fi
 
 
 # Set allScripts array
-allScripts=( "addPasswdPDF" "extractPDF" "metaPDF" "rmPasswdPDF" "rotatePDF" "stampPDF" "combinePDF" "bookmarkPDF" )
+allScripts=( "addPasswdPDF" "extractPDF" "metaPDF" "rmPasswdPDF" "rotatePDF" "stampPDF" "combinePDF" "bookmarkPDF" "watermarkPDF" )
 
 # Set original path
 origPath=`pwd`
@@ -32,6 +32,10 @@ function installFunc
 		then
 			cp "${scriptName}.conf" "${serviceMenus}"
 		fi
+		if [ "${templateFile}" = "y" ]
+		then
+			cp "${templateName}" "${serviceMenus}${templateName}"
+		fi
 	done
 }
 
@@ -49,6 +53,10 @@ function uninstallFunc
 		if [ "${configFile}" = "y" ]
 		then
 			rm "${serviceMenus}${scriptName}.conf"
+		fi
+		if [ "${templateFile}" = "y" ]
+		then
+			rm "${serviceMenus}${templateName}"
 		fi
 	done
 }
@@ -71,6 +79,10 @@ function symlinkFunc
 		if [ "${configFile}" = "y" ]
 		then
 			ln -s "${curPath}/${scriptName}.conf" "${serviceMenus}${scriptName}.conf"
+		fi
+		if [ "${templateFile}" = "y" ]
+		then
+			ln -s "${curPath}/${templateName}" "${serviceMenus}${templateName}"
 		fi
 	done
 }
