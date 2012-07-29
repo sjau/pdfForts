@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin
+MimeType=application/pdf;
+Actions=extractTextPDF
+
+[Desktop Action extractTextPDF]
+Name=Extract Text from PDF
+Name[de]=Text vopn PDF extrahieren
+Icon=application-pdf
+Exec=/usr/bin/pdfForts/extractTextPDF.sh %F

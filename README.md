@@ -50,6 +50,13 @@ This script lets you extract one or more pages from  PDF.
 
 
 
+extractTextPDF
+----------
+
+This script lets you extract text from a PDF.
+
+
+
 metaPDF
 -------
 
