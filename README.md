@@ -18,7 +18,7 @@ Each of the script has other prerequisites. Most of them require one or more of 
 - unzip
 - basename
 - bash
-- unoconv
+- libreoffice
 - tesseract & tesseract language package(s)
 
 

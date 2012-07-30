@@ -9,7 +9,7 @@ PREREQUISITES
 - pdftk
 - bash
 - basename (part of coreutils)
-- unoconv
+- libreoffice
 - zip
 - unzip
 

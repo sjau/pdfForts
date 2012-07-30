@@ -120,8 +120,7 @@ do
 		if [ $? != 0 ]; then
 			exit;
 		fi
-		unoconv -f pdf "${tmpStorage}/draft.odt"
-		unoconv -f pdf "${tmpStorage}/draft.odt"
+		libreoffice --headless --invisible --convert-to pdf "${tmpStorage}/draft.odt"
 		pdftk "${arg}" multibackground "${tmpStorage}/draft.pdf" output "${newFile}"
 		cleanUp
 	fi
