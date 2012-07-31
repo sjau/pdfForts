@@ -8,7 +8,7 @@ PREREQUISITES
 - kdialog
 - ghostscript
 - pdftk
-- imagemagick
+- libreoffice
 - bash
 - basename (part of coreutils)
 

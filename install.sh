@@ -36,6 +36,11 @@ function installFunc
 		then
 			cp "${templateName}" "${serviceMenus}${templateName}"
 		fi
+		if [ ! -f "${installPath}common.sh" ]
+		then
+			cp "common.sh" "${installPath}"
+		fi
+
 	done
 }
 
@@ -57,6 +62,11 @@ function uninstallFunc
 		if [ "${templateFile}" = "y" ]
 		then
 			rm "${serviceMenus}${templateName}"
+		fi
+		fCount=$(ls -l "${installPath}" | wc -l)
+		if [ "${fCount}" -le "2" ]
+		then
+			rm "${installPath}common.sh"
 		fi
 	done
 }
@@ -83,6 +93,10 @@ function symlinkFunc
 		if [ "${templateFile}" = "y" ]
 		then
 			ln -s "${curPath}/${templateName}" "${serviceMenus}${templateName}"
+		fi
+		if [ ! -f "${installPath}common.sh" ]
+		then
+			cp -s "${origPath}/common.sh" "${installPath}common.sh"
 		fi
 	done
 }
