@@ -125,11 +125,6 @@ function convertBookmarkData
 		curLvl=$((${curDash} / 2))
 		curTitle="${arrLine[1]}"
 		curNr="${arrLine[2]}"
-		echo "-----"
-		echo "-----"
-		echo "${curLvl}   -   ${curTitle}   -   ${curNr}"
-		echo "-----"
-		echo "-----"
 		levelArr["${bookmarkLine}"]="${curLvl}"
 		titleArr["${bookmarkLine}"]="${curTitle}"
 		numberArr["${bookmarkLine}"]="${curNr}"
