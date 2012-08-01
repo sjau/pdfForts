@@ -37,7 +37,7 @@ Notice: Unoconv can be run even if LibreOffice is running!"
 				libreoffice --headless --invisible --convert-to pdf "${stampDir}/stamp.odt"
 				;;
 	esac
-	if [ ! -f "stamp.pdf" ]
+	if [[ ! -f "stamp.pdf" ]]
 	then
 		kdialog --error "Couldn't convert the .odt file to a .pdf. Please try to switch between Unoconv and LibreOffice.
 
@@ -94,7 +94,7 @@ function handlePDF
 function setFinalDocName
 {
 	docNrEnd=$((${doc}-1))
-	if [ "$docNrStart" -eq "$docNrEnd" ]
+	if [[ "$docNrStart" -eq "$docNrEnd" ]]
 	then
 		destFile="${destDir}/${savefile} ${docNrStart}.pdf"
 	else
@@ -152,7 +152,7 @@ chkConfOption "${odtConvert}" "${confValue}"
 
 # Prompt for converter selection
 selectedConverter=`kdialog --radiolist "Select converter tool" 1 "Unoconv (recommended)" on 2 "LibreOffice" off`;
-if [ $? != 0 ]; then
+if [[ $? != 0 ]]; then
 	exit;
 fi
 

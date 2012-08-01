@@ -24,7 +24,7 @@ function checkConfig
 
 	# Test if config exists
 	userConfig="${HOME}/.pdfForts/${baseName}.conf"
-	if [ ! -f "${userConfig}" ]
+	if [[ ! -f "${userConfig}" ]]
 	then
 		# User config does not exist, copy default to user
 		mkdir -p "${HOME}/.pdfForts/"
@@ -140,7 +140,7 @@ function convertBookmarkData
 		curNumber="${numberArr[$x]}"
 
 		# Equal level or sublevel
-		if [ "${curLevel}" -ge "${lastLevel}" ]
+		if [[ "${curLevel}" -ge "${lastLevel}" ]]
 		then
 			page=$(($curPage + $curNumber))
 			lvl[$curLevel]=$(( lvl[$curLevel] += 1 ))
@@ -149,7 +149,7 @@ function convertBookmarkData
 		fi
 
 		# Parent level
-		if [ "${curLevel}" -lt "${lastLevel}" ]
+		if [[ "${curLevel}" -lt "${lastLevel}" ]]
 		then
 			page=$(($curPage + $curNumber))
 			lvl[$curLevel]=$(( lvl[$curLevel] += 1 ))
@@ -220,7 +220,7 @@ function chkConfOption
 	chkOption="${1}"
 	confValue="${2}"
 
-	if [ "${chkOption}" = "" ]
+	if [[ "${chkOption}" == "" ]]
 	then
 		echo " " >> "${userConfig}"
 		echo "${confValue}" >> "${userConfig}"
