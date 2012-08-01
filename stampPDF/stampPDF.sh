@@ -18,7 +18,34 @@ function createStamp
 	zip -D -X -0 "stamp.odt" mimetype
 	zip -D -X -9 -r "stamp.odt" . -x mimetype \*/.\* .\* \*.png \*.jpg \*.jpeg
 	zip -D -X -0 -r "stamp.odt" . -i \*.png \*.jpg \*.jpeg
-	libreoffice --headless --invisible --convert-to pdf "${stampDir}/stamp.odt"
+
+	case "${selectedConverter}" in
+			1) # Unoconv selected
+				unoconv -f pdf "stamp.odt"
+				if [ ! -f "stamp.pdf" ]
+				then
+					unoconv -f pdf "stamp.odt"
+				fi
+				;;
+			2) # LibreOffice selected
+				if [ "$(pidof soffice.bin)" ]
+				then
+					kdialog --error "LibreOffice is running! Please close LibreOffice before continuing.
+
+Notice: Unoconv can be run even if LibreOffice is running!"
+				fi
+				libreoffice --headless --invisible --convert-to pdf "${stampDir}/stamp.odt"
+				;;
+	esac
+	if [ ! -f "stamp.pdf" ]
+	then
+		kdialog --error "Couldn't convert the .odt file to a .pdf. Please try to switch between Unoconv and LibreOffice.
+
+Also make sure that if you selected LibreOffice that it wasn't running.
+
+If the problem continues to appear, please file a bug report at: https://github.com/sjau/pdfForts"
+		exit;
+	fi
 	mv "${stampDir}/stamp.pdf" "${stampPDF}/${pgNr}.pdf"
 }
 
@@ -75,7 +102,6 @@ function setFinalDocName
 	fi
 	echo "gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile='${destFile}' '${docDir}/'*pdf  '${pdfMarks}'"
 	gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile="${destFile}" "${docDir}/"*pdf  "${pdfMarks}"
-#	gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile="/home/ubuntu/Desktop/file.pdf" "${stampPDF}/"*pdf  "${pdfMarks}"
 }
 
 
@@ -104,7 +130,7 @@ mkdir -p "${stampPDF}"
 
 
 
-# Prompt for document number, grayscale conversion, image resize
+# Prompt for document number
 doc=`kdialog --title "Document number" --inputbox "At what number shall the document numbering commence?"`;
 if [ $? != 0 ]; then
 	exit;
@@ -115,6 +141,20 @@ docNrStart="${doc}"
 
 # Prompt for template selection
 selectTemplate
+
+
+
+# Check config for options
+confValue='odtConvert="unoconv"		# Set to unoconv or libreoffice'
+chkConfOption "${odtConvert}" "${confValue}"
+
+
+
+# Prompt for converter selection
+selectedConverter=`kdialog --radiolist "Select converter tool" 1 "Unoconv (recommended)" on 2 "LibreOffice" off`;
+if [ $? != 0 ]; then
+	exit;
+fi
 
 
 

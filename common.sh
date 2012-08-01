@@ -212,3 +212,22 @@ Please install and re-run this script.";
 		}
 	done
 }
+
+
+
+function chkConfOption
+{
+	chkOption="${1}"
+	confValue="${2}"
+
+	if [ "${chkOption}" = "" ]
+	then
+		echo " " >> "${userConfig}"
+		echo "${confValue}" >> "${userConfig}"
+		kdialog --msgbox "Added a new option to the end of your config file located at: "${userConfig}".
+
+Kate will be launched for you to review."
+
+		kate -b "${userConfig}"
+	fi
+}
