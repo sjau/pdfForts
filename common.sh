@@ -171,6 +171,7 @@ function convertBookmarkData
 }
 
 
+
 function selectTemplate
 {
 	# Prompt to use default template or custom template
@@ -194,4 +195,20 @@ NOTICE: All '_replace_' strings in the selected template will be replaced by a s
 			exit;
 			;;
 	esac
+}
+
+
+
+function checkPrograms
+{
+	for curCmd in ${reqCmds}
+	do
+		type -P ${curCmd} &>/dev/null  && continue  ||
+		{
+			kdialog --error "Couldn't find the '${curCmd} program.
+
+Please install and re-run this script.";
+			exit 1;
+		}
+	done
 }

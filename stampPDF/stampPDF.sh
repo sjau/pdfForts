@@ -80,6 +80,15 @@ function setFinalDocName
 
 
 
+
+# Check for required programs
+reqCmds="unzip zip sed pdftk gs kdialog basename kate libreoffice unoconv"
+checkPrograms
+
+
+
+# Run some common functions
+checkPrograms
 createTmpDir
 deleteTmpDir
 checkConfig "stampPDF"
