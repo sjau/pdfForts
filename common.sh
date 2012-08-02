@@ -53,7 +53,7 @@ function getSaveFile
 	fMessage="${2}"
 	fExt="${3}"
 	fName=${fFile%.*}
-	newFile=`kdialog --getsavefilename "${fName} - ${message}.${fExt}"`;
+	saveFile=$(kdialog --getsavefilename "${fName} - ${fMessage}.${fExt}");
 	if [ $? != 0 ]; then
 		exit;
 	fi

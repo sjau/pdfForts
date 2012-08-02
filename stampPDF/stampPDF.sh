@@ -111,7 +111,6 @@ function setFinalDocName
 
 
 # Run some common functions
-checkPrograms
 createTmpDir
 deleteTmpDir
 checkConfig "stampPDF"
