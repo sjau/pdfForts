@@ -2,6 +2,10 @@
 
 source "/usr/bin/pdfForts/common.sh"
 
+# Check for required programs
+reqCmds="unzip zip sed pdftk gs kdialog basename kate libreoffice unoconv"
+checkPrograms
+
 
 
 function createStamp
@@ -103,13 +107,6 @@ function setFinalDocName
 	echo "gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile='${destFile}' '${docDir}/'*pdf  '${pdfMarks}'"
 	gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile="${destFile}" "${docDir}/"*pdf  "${pdfMarks}"
 }
-
-
-
-
-# Check for required programs
-reqCmds="unzip zip sed pdftk gs kdialog basename kate libreoffice unoconv"
-checkPrograms
 
 
 
