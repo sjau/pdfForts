@@ -50,18 +50,3 @@ do
 		pdftk "${arg}" output "${saveFile}" user_pw "${Passwd}"
 	fi
 done
-
-
-
-
-function getSaveFile
-{
-	fFile="${1}"
-	fMessage="${2}"
-	fExt="${3}"
-	fName=${fFile%.*}
-	newFile=`kdialog --getsavefilename "${fName} - ${fMessage}.${fExt}"`;
-	if [ $? != 0 ]; then
-		exit;
-	fi
-}

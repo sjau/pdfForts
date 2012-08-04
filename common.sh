@@ -9,11 +9,13 @@ function createTmpDir
 }
 
 
+
 function deleteTmpDir
 {
 	trap 'rm -rf "${tmpStorage}"' 0		# remove directory when script finishes
 	trap 'exit 2' 1 2 3 15				# terminate script when receiving signal
 }
+
 
 
 function checkConfig
@@ -47,6 +49,7 @@ Retry again on the PDF files."
 }
 
 
+
 function getSaveFile
 {
 	fFile="${1}"
@@ -58,6 +61,7 @@ function getSaveFile
 		exit;
 	fi
 }
+
 
 
 function countZero
@@ -97,7 +101,58 @@ function sortFiles
 
 
 
-function convertBookmarkData
+function extractMetaData
+{
+	curFile="${1}"
+	pdftk "${curFile}" dump_data > "${metaFile}"
+	pdftk "${curFile}" cat output "${noBookmark}"
+}
+
+
+
+function convertMetaToBookmark
+{
+	unset "curTitle"
+	unset "curLvl"
+	unset "curNr"
+	unset "haystack"
+
+	mapfile -t haystack < "${1}"
+	needle="BookmarkTitle"
+
+	rm "${bookMarks}"
+
+	for ((i=0; i < ${#haystack[@]}; ++i))
+	do
+		if [[ "${haystack[$i]}" =~ "${needle}" ]]
+		then
+			curTitle="${haystack[$i]:15}"
+			j=$[i+1]
+			k=$[i+2]
+			if [[ "${haystack[$j]}" =~ "BookmarkLevel:" ]]
+			then
+				curLvl="${haystack[$j]:15}"
+			fi
+			if [[ "${haystack[$k]}" =~ "BookmarkPageNumber:" ]]
+			then
+				curNr="${haystack[$k]:20}"
+			fi
+
+			curDash=""
+			while [[  "${curLvl}" -gt "1" ]]
+			do
+				curDash="${curDash}--"
+				((curLvl--))
+			done
+
+			echo "${curDash}|${curTitle}|${curNr}" >> "${bookMarks}"
+		fi
+	done
+}
+
+
+
+function convertBookmarkToPdfmark
 {
 	bookmarkFile="${1}"
 

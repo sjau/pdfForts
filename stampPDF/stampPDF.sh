@@ -179,7 +179,7 @@ done
 
 
 unset "curPage"
-convertBookmarkData "${bookMarks}"
+convertBookmarkToPdfmark "${bookMarks}"
 setFinalDocName "${curFile}"
 
 exit;
