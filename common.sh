@@ -13,7 +13,7 @@ function createTmpDir
 function deleteTmpDir
 {
 	trap 'rm -rf "${tmpStorage}"' 0		# remove directory when script finishes
-	trap 'exit 2' 1 2 3 15				# terminate script when receiving signal
+	trap 1 2 3 15						# terminate script when receiving signal
 }
 
 
@@ -56,10 +56,7 @@ function getSaveFile
 	fMessage="${2}"
 	fExt="${3}"
 	fName=${fFile%.*}
-	saveFile=$(kdialog --getsavefilename "${fName} - ${fMessage}.${fExt}");
-	if [ $? != 0 ]; then
-		exit;
-	fi
+	saveFile=$(kdialog --getsavefilename "${fName} - ${fMessage}.${fExt}") || exit;
 }
 
 
@@ -241,10 +238,7 @@ NOTICE: All '_replace_' strings in the selected template will be replaced by a s
 			tplSelected="${defaultTemplate}"
 			;;
 		1) # No selected
-			tplSelected=`kdialog --getopenfilename ${HOME} "*.odt"`;
-			if [ $? != 0 ]; then
-				exit;
-			fi
+			tplSelected=`kdialog --getopenfilename ${HOME} "*.odt"` || exit;
 			;;
 		2) # Cancel selected
 			exit;
