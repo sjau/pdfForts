@@ -127,10 +127,7 @@ mkdir -p "${stampPDF}"
 
 
 # Prompt for document number
-doc=`kdialog --title "Document number" --inputbox "At what number shall the document numbering commence?"`;
-if [ $? != 0 ]; then
-	exit;
-fi
+doc=`kdialog --title "Document number" --inputbox "At what number shall the document numbering commence?"` || exit;
 docNrStart="${doc}"
 
 
@@ -147,10 +144,7 @@ chkConfOption "${odtConvert}" "${confValue}"
 
 
 # Prompt for converter selection
-selectedConverter=`kdialog --radiolist "Select converter tool" 1 "Unoconv (recommended)" on 2 "LibreOffice" off`;
-if [[ $? != 0 ]]; then
-	exit;
-fi
+selectedConverter=`kdialog --radiolist "Select converter tool" 1 "Unoconv (recommended)" on 2 "LibreOffice" off` || exit;
 
 
 
