@@ -119,8 +119,25 @@ function convertMetaToBookmark
 
 	rm "${bookMarks}"
 
+	if [[ "${docBookmarks}" -eq "1" ]]
+	then
+		if [[ "${levelBookmarks}" -eq "1" ]]
+		then
+			adjustLvl="1"
+			echo "|${fileBase}|1" >> "${bookMarks}"
+		else
+			echo "|${fileBase}|1" >> "${bookMarks}"
+		fi
+	fi
+
 	for ((i=0; i < ${#haystack[@]}; ++i))
 	do
+		# Get pages number
+		if [[ "${haystack[$i]}" =~ "NumberOfPages:" ]]
+		then
+			curDocPages="${haystack[$i]:15}"
+		fi
+		# Get bookmark meta data
 		if [[ "${haystack[$i]}" =~ "${needle}" ]]
 		then
 			curTitle="${haystack[$i]:15}"
@@ -128,7 +145,8 @@ function convertMetaToBookmark
 			k=$[i+2]
 			if [[ "${haystack[$j]}" =~ "BookmarkLevel:" ]]
 			then
-				curLvl="${haystack[$j]:15}"
+				tmpLvl="${haystack[$j]:15}"
+				curLvl=$((tmpLvl + adjustLvl))
 			fi
 			if [[ "${haystack[$k]}" =~ "BookmarkPageNumber:" ]]
 			then
@@ -194,7 +212,7 @@ function convertBookmarkToPdfmark
 		# Equal level or sublevel
 		if [[ "${curLevel}" -ge "${lastLevel}" ]]
 		then
-			page=$(($curPage + $curNumber))
+			page=$((curPage + curNumber))
 			lvl[$curLevel]=$(( lvl[$curLevel] += 1 ))
 			outputArr[$x]="[/Title (${curTitle}) /Page ${page} /OUT pdfmark"
 			lastLevel="${curLevel}"
@@ -203,7 +221,7 @@ function convertBookmarkToPdfmark
 		# Parent level
 		if [[ "${curLevel}" -lt "${lastLevel}" ]]
 		then
-			page=$(($curPage + $curNumber))
+			page=$((curPage + curNumber))
 			lvl[$curLevel]=$(( lvl[$curLevel] += 1 ))
 			subLvl=$((${curLevel}+1))
 			outputArr[$x]="[/Count ${lvl[${subLvl}]} /Title (${curTitle}) /Page ${page} /OUT pdfmark"
