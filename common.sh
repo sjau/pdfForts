@@ -192,10 +192,12 @@ function convertBookmarkToPdfmark
 		unset arrLine
 		IFS='|' read -ra arrLine <<< "${lineContent}"
 		curDash="${#arrLine[0]}"
-		curLvl=$((${curDash} / 2))
+		curLvl=$((curDash / 2))
+		curModulus=$((curDash % 2))
 		curTitle="${arrLine[1]}"
 		curNr="${arrLine[2]}"
 		levelArr["${bookmarkLine}"]="${curLvl}"
+		modulusArr["${bookmarkLine}"]="${curModulus}"
 		titleArr["${bookmarkLine}"]="${curTitle}"
 		numberArr["${bookmarkLine}"]="${curNr}"
 		((bookmarkLine++))
@@ -208,7 +210,9 @@ function convertBookmarkToPdfmark
 		curTitle="${titleArr[$x]}"
 		curLevel="${levelArr[$x]}"
 		curNumber="${numberArr[$x]}"
-
+		curModulus="${modulusArr[$x]}"
+		curNegModulus="-1"
+		
 		# Equal level or sublevel
 		if [[ "${curLevel}" -ge "${lastLevel}" ]]
 		then
@@ -216,6 +220,7 @@ function convertBookmarkToPdfmark
 			lvl[$curLevel]=$(( lvl[$curLevel] += 1 ))
 			outputArr[$x]="[/Title (${curTitle}) /Page ${page} /OUT pdfmark"
 			lastLevel="${curLevel}"
+
 		fi
 
 		# Parent level
@@ -224,17 +229,22 @@ function convertBookmarkToPdfmark
 			page=$((curPage + curNumber))
 			lvl[$curLevel]=$(( lvl[$curLevel] += 1 ))
 			subLvl=$((${curLevel}+1))
-			outputArr[$x]="[/Count ${lvl[${subLvl}]} /Title (${curTitle}) /Page ${page} /OUT pdfmark"
+			countLvl="${lvl[${subLvl}]}"
+            if [[ "${curModulus}" -gt "0" ]]
+            then
+                countLvl=$((countLvl * curNegModulus))
+            fi
+			outputArr[$x]="[/Count ${countLvl} /Page ${page} /Title (${curTitle}) /OUT pdfmark"
 			lvl[${subLvl}]="0"
 			lastLevel="${curLevel}"
 		fi
-
-	done
+    done
 
 	for (( a = 0 ; a <= ${#outputArr[@]} ; a++ )) do
 		if [[ "${outputArr[$a]}" ]]
 		then
 			echo "${outputArr[$a]}" >> "${tmpStorage}/pdfmarks"
+#            echo "${outputArr[$a]}" >> "/tmp/pdfmarks"
 		fi
 	done
 
