@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Ask for range
-Rotate=`kdialog --menu "Chose rotation (clockwise):" E "90°" S "180°" W "270°"`;
+Rotate=`kdialog --menu "Chose rotation (clockwise):" East "90°" South "180°" West "270°"`;
 if [ $? != 0 ]; then
 	exit;
 fi
