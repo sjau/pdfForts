@@ -63,10 +63,9 @@ function getSaveFile
 
 function countZero
 {
-	stringCheck="${1}"
+	# Check length of string and add zeros accordingly
 	unset "addZero"
-	stringLength=$(echo "${#stringCheck}")
-	case "${stringLength}" in
+	case "${#1}" in
 		1) addZero="00000" ;;
 		2) addZero="0000" ;;
 		3) addZero="000" ;;
