@@ -92,6 +92,13 @@ Rotate a PDF by 90°, 180°, 270° clockwise.
 
 
 
+searchablePDF
+---------
+
+Make an image PDF searchable for text.
+
+
+
 stampPDF
 --------
 

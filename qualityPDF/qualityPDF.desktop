@@ -2,9 +2,9 @@
 Type=Service
 ServiceTypes=KonqPopupMenu/Plugin
 MimeType=application/pdf;
-Actions=rotatePDF
+Actions=qualityPDF
 
-[Desktop Action rotatePDF]
+[Desktop Action qualityPDF]
 Name=Change Quality PDF
 Name[de]=PDF Qualität ändern
 Icon=application-pdf
