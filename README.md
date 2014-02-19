@@ -71,6 +71,13 @@ This script converts image PDFs to text files using tesseract.
 
 
 
+qualityPDF
+-----------
+
+This script lets you convert images to grayscale or b/w and also alter the resolution of images.
+
+
+
 rmPasswdPDF
 -----------
 

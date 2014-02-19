@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin
+MimeType=application/pdf;
+Actions=rotatePDF
+
+[Desktop Action rotatePDF]
+Name=Change Quality PDF
+Name[de]=PDF Qualität ändern
+Icon=application-pdf
+Exec=/usr/bin/pdfForts/qualityPDF.sh %F
