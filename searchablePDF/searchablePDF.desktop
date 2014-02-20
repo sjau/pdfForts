@@ -4,7 +4,7 @@ ServiceTypes=KonqPopupMenu/Plugin
 MimeType=application/pdf;
 Actions=searchablePDF
 
-[Desktop Action seachablePDF]
+[Desktop Action searchablePDF]
 Name=Create searchable PDF
 Name[de]=Durchsuchbares PDF erstellen
 Icon=application-pdf

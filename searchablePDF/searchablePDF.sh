@@ -3,7 +3,7 @@
 source "/usr/bin/pdfForts/common.sh"
 
 # Check for required programs
-reqCmds="sed pdftk kdialog basename cuneiform hocr2pdf"
+reqCmds="pdftk kdialog basename cuneiform hocr2pdf"
 checkPrograms
 
 
@@ -11,7 +11,8 @@ checkPrograms
 Lang=$(cuneiform -l)
 Language=$(kdialog --title "Language Setting" --inputbox "${Lang}");
 
-if [ $? != 0 ]; then
+if [[ "${?}" != 0 ]]
+then
 	exit;
 fi
 
@@ -23,13 +24,13 @@ deleteTmpDir
 for arg ;
 do
 	# Test if it is a file
-	if [ -f "${arg}" ]
+	if [[ -f "${arg}" ]]
 	then
 		fName=`basename "${arg}"`
 		fileNoExt=${arg%.*}
 		# Prompt for save file
 		Name=`kdialog --getsavefilename "${fileNoExt} - searchable.pdf"`;
-		if [ $? != 0 ]; then
+		if [[ "${?}" != 0 ]]; then
 			exit;
 		fi
 		
@@ -47,7 +48,13 @@ do
                 for curFile in "pages__"*.png ;
                 do
                     cuneiform -l "${Language}" -f hocr -o "${curFile}.html" "${curFile}"
+                    # Check if cuneiform has encountered a problem, if so, make a blank .html file
+                    if [[ "${?}" != 0 ]]
+                    then
+                        touch "${curFile}.html"
+                    fi
                     hocr2pdf -i "${curFile}" -r 300 -s -o "${curFile}.new.pdf" < "${curFile}.html"
+                    
                 done
  
                 pdftk "pages__"*.new.pdf cat output "${Name}"
