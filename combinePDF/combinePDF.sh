@@ -16,12 +16,12 @@ sortFiles "$@"
 
 
 # Prompt whether to add each individual pdf as seperate bookmark entry
-docBookmarks=`kdialog --radiolist "Shall the pdf names also added as bookmark entries?" 1 "Yes" on 2 "No" off` || exit;
+docBookmarks=$(kdialog --radiolist "Shall the pdf names also added as bookmark entries?" 1 "Yes" on 2 "No" off) || exit;
 
 
 
 # Prompt for level between individual pdf name and existing bookmarks
-levelBookmarks=`kdialog --radiolist "Shall the pdf names be a superior category?" 1 "Yes" on 2 "No" off` || exit;
+levelBookmarks=$(kdialog --radiolist "Shall the pdf names be a superior category?" 1 "Yes" on 2 "No" off) || exit;
 
 
 

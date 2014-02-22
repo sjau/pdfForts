@@ -26,7 +26,7 @@ metaFile="${tmpStorage}/meta.txt"
 for arg ;
 do
 	# Test if it is a file
-	if [ -f "${arg}" ]
+	if [[ -f "${arg}" ]]
 	then
 		fMessage="Bookmarks edited"
 		fExt="pdf"

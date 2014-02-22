@@ -25,7 +25,7 @@ function searchArray
 
 # Create temporary dirs
 tmpDir='stampPDF.XXXXXXXXXX';
-tmpStorage=`mktemp -t -d "${tmpDir}"` || exit 1
+tmpStorage=$(mktemp -t -d "${tmpDir}") || exit 1
 pdfMarkOrig="${tmpStorage}/pdfMarkOrig.txt"
 pdfMarks="${tmpStorage}/pdfMarks.txt"
 
@@ -36,7 +36,7 @@ userName="${name%%,*}"
 
 if [ "${userName}" == "" ]
 then
-	userName=`whoami`
+	userName=$(whoami)
 fi
 
 # Loop through the selected files
@@ -67,16 +67,17 @@ do
 		searchArray "ModDate"
 
 		# Prompt for password entry
-        fName=`basename "${arg}"`
+        fName=$(basename "${arg}")
 		fileNoExt=${arg%.*}
-		author=`kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
+		author=$(kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
 
-Author - The document's author" "${origData[Author]}"`;
-		if [ $? != 0 ]; then
+Author - The document's author" "${origData[Author]}");
+		if [[ $? != 0 ]]
+		then
 			exit;
 		fi
 
-		creationdate=`kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
+		creationdate=$(kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
 
 CreationDate - The date the document was created
 
@@ -86,47 +87,53 @@ MM is the month (01-12), DD is the day (01-31), HH is the hour (00-23), mm are t
 The remainder of the string defines the relation of local time to GMT.
 O is either + for a positive difference (local time is later than GMT) or - (minus) for a negative difference.
 HH' is the absolute value of the offset from GMT in hours, and mm' is the absolute value of the offset in minutes.
-If no GMT information is specified, the relation between the specified time and GMT is considered unknown. Regardless of whether or not GMT information is specified, the remainder of the string should specify the local time." "${origData[CreationDate]}"`;
-		if [ $? != 0 ]; then
+If no GMT information is specified, the relation between the specified time and GMT is considered unknown. Regardless of whether or not GMT information is specified, the remainder of the string should specify the local time." "${origData[CreationDate]}");
+		if [[ $? != 0 ]]
+		then
 			exit;
 		fi
 
-		creator=`kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
+		creator=$(kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
 
-Creator - If the document was converted to PDF from another form, the name of the application that originally created the document" "${origData[Creator]}"`;
-		if [ $? != 0 ]; then
+Creator - If the document was converted to PDF from another form, the name of the application that originally created the document" "${origData[Creator]}");
+		if [[ $? != 0 ]]
+		then
 			exit;
 		fi
 
-		producer=`kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
+		producer=$(kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
 
-Producer - The application that created the PDF from its native form" "${origData[Producer]}"`;
-		if [ $? != 0 ]; then
+Producer - The application that created the PDF from its native form" "${origData[Producer]}");
+		if [[ $? != 0 ]]
+		then
 			exit;
 		fi
 
-		title=`kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
+		title=$(kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
 
-Titel - The document's title" "${origData[Title]}"`;
-		if [ $? != 0 ]; then
+Titel - The document's title" "${origData[Title]}");
+		if [[ $? != 0 ]]
+		then
 			exit;
 		fi
 
-		subject=`kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
+		subject=$(kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
 
-Subject - The document's subject" "${origData[Subject]}"`;
-		if [ $? != 0 ]; then
+Subject - The document's subject" "${origData[Subject]}");
+		if [[ $? != 0 ]]
+		then
 			exit;
 		fi
 
-		keywords=`kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
+		keywords=$(kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
 
-Keywords - Relevant keywords for this document, seperated by a comma followed by whitespace" "${origData[Keywords]}"`;
-		if [ $? != 0 ]; then
+Keywords - Relevant keywords for this document, seperated by a comma followed by whitespace" "${origData[Keywords]}");
+		if [[ $? != 0 ]]
+		then
 			exit;
 		fi
 
-		moddate=`kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
+		moddate=$(kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
 
 ModDate - The date and time the document was last modified
 
@@ -136,16 +143,18 @@ MM is the month (01-12), DD is the day (01-31), HH is the hour (00-23), mm are t
 The remainder of the string defines the relation of local time to GMT.
 O is either + for a positive difference (local time is later than GMT) or - (minus) for a negative difference.
 HH' is the absolute value of the offset from GMT in hours, and mm' is the absolute value of the offset in minutes.
-If no GMT information is specified, the relation between the specified time and GMT is considered unknown. Regardless of whether or not GMT information is specified, the remainder of the string should specify the local time." "${origData[ModDate]}"`;
-		if [ $? != 0 ]; then
+If no GMT information is specified, the relation between the specified time and GMT is considered unknown. Regardless of whether or not GMT information is specified, the remainder of the string should specify the local time." "${origData[ModDate]}");
+		if [[ $? != 0 ]]
+		then
 			exit;
 		fi
 
-		fName=`basename "${arg}"`
+		fName=$(basename "${arg}")
 		fileNoExt=${arg%.*}
 		# Prompt for save file
-		Name=`kdialog --getsavefilename "${fileNoExt} - Metainfo.pdf"`;
-		if [ $? != 0 ]; then
+		Name=$(kdialog --getsavefilename "${fileNoExt} - Metainfo.pdf");
+		if [[ $? != 0 ]]
+		then
 			exit;
 		fi
 

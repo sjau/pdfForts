@@ -18,7 +18,7 @@ fi
 
 # Run some common functions
 createTmpDir
-deleteTmpDir
+#deleteTmpDir
 
 # Parse the selected file
 for arg ;
@@ -26,11 +26,12 @@ do
 	# Test if it is a file
 	if [[ -f "${arg}" ]]
 	then
-		fName=`basename "${arg}"`
+		fName=$(basename "${arg}")
 		fileNoExt=${arg%.*}
 		# Prompt for save file
-		Name=`kdialog --getsavefilename "${fileNoExt} - searchable.pdf"`;
-		if [[ "${?}" != 0 ]]; then
+		Name=$(kdialog --getsavefilename "${fileNoExt} - searchable.pdf");
+		if [[ "${?}" != 0 ]]
+		then
 			exit;
 		fi
 		
@@ -53,7 +54,7 @@ do
                     then
                         touch "${curFile}.html"
                     fi
-                    hocr2pdf -i "${curFile}" -r 300 -s -o "${curFile}.new.pdf" < "${curFile}.html"
+                    hocr2pdf -i "${curFile}" -n -r 300 -o "${curFile}.new.pdf" < "${curFile}.html"
                     
                 done
  

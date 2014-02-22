@@ -11,12 +11,12 @@ checkPrograms
 while [[ "${PasswdChk}" != "OK" ]]
 do
 	# Ask for password
-	Passwd1=`kdialog --title "Password" --password "Please enter a password"`;
-	if [ $? != 0 ]; then
+	Passwd1=$(kdialog --title "Password" --password "Please enter a password");
+	if [[ $? != 0 ]]; then
 		exit;
 	fi
-	Passwd2=`kdialog --title "Password Confirmation" --password "Re-enter the password"`;
-	if [ $? != 0 ]; then
+	Passwd2=$(kdialog --title "Password Confirmation" --password "Re-enter the password");
+	if [[ $? != 0 ]]; then
 		exit;
 	fi
 	# Check if the passwords are the same
@@ -42,7 +42,7 @@ done
 for arg ;
 do
 	# Test if it is a file
-	if [ -f "${arg}" ]
+	if [[ -f "${arg}" ]]
 	then
 		fMessage="with Pwd"
 		fExt="pdf"

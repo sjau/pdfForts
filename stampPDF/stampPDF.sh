@@ -26,13 +26,13 @@ function createStamp
 	case "${selectedConverter}" in
 			1) # Unoconv selected
 				unoconv -f pdf "stamp.odt"
-				if [ ! -f "stamp.pdf" ]
+				if [[ ! -f "stamp.pdf" ]]
 				then
 					unoconv -f pdf "stamp.odt"
 				fi
 				;;
 			2) # LibreOffice selected
-				if [ "$(pidof soffice.bin)" ]
+				if [[ "$(pidof soffice.bin)" ]]
 				then
 					kdialog --error "LibreOffice is running! Please close LibreOffice before continuing.
 
@@ -127,7 +127,7 @@ mkdir -p "${stampPDF}"
 
 
 # Prompt for document number
-doc=`kdialog --title "Document number" --inputbox "At what number shall the document numbering commence?"` || exit;
+doc=$(kdialog --title "Document number" --inputbox "At what number shall the document numbering commence?") || exit;
 docNrStart="${doc}"
 
 
@@ -144,7 +144,7 @@ chkConfOption "${odtConvert}" "${confValue}"
 
 
 # Prompt for converter selection
-selectedConverter=`kdialog --radiolist "Select converter tool" 1 "Unoconv (recommended)" on 2 "LibreOffice" off` || exit;
+selectedConverter=$(kdialog --radiolist "Select converter tool" 1 "Unoconv (recommended)" on 2 "LibreOffice" off) || exit;
 
 
 

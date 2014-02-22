@@ -4,7 +4,7 @@ function createTmpDirs
 {
 	# Create temporary dirs
 	tmpDir='watermarkPDF.XXXXXXXXXX';
-	tmpStorage=`mktemp -t -d "${tmpDir}"` || exit 1
+	tmpStorage=$(mktemp -t -d "${tmpDir}") || exit 1
 }
 
 
@@ -13,7 +13,7 @@ function checkConfig
 {
 	# Test if config exists
 	userConfig="${HOME}/.pdfForts/watermarkPDF.conf"
-	if [ ! -f "${userConfig}" ]
+	if [[ ! -f "${userConfig}" ]]
 	then
 		# User config does not exist, copy default to user
 		mkdir -p "${HOME}/.pdfForts/"
@@ -78,19 +78,20 @@ checkConfig;
 
 
 # Prompt to use default template or custom template
-tplSelect=`kdialog --title "Default template dialog" --yesnocancel "Press YES if you want to use the default template locatet at
+tplSelect=$(kdialog --title "Default template dialog" --yesnocancel "Press YES if you want to use the default template locatet at
 '${defaultTemplate}'
 
 Press NO to select a different template.
 
-NOTICE: All '_replace_' strings in the selected template will be replaced by a string selected later"`
+NOTICE: All '_replace_' strings in the selected template will be replaced by a string selected later")
 case "${?}" in
 	0) # Yes selected
 		tplSelected="${defaultTemplate}"
 		;;
 	1) # No selected
-		tplSelected=`kdialog --getopenfilename ${HOME} "*.odt"`;
-		if [ $? != 0 ]; then
+		tplSelected=$(kdialog --getopenfilename ${HOME} "*.odt")
+		if [[ $? != 0 ]]
+		then
 			exit;
 		fi
 		;;
@@ -101,7 +102,7 @@ esac
 
 
 # Prompt for default text string
-tplMessage=`kdialog --title "Text message" --inputbox "Please enter the desired text message" "${defaultText}"`
+tplMessage=$(kdialog --title "Text message" --inputbox "Please enter the desired text message" "${defaultText}")
 
 
 # Create temporary dir
@@ -112,12 +113,13 @@ createOdt;
 for arg ;
 do
 	# Test if it is a file
-	if [ -f "${arg}" ]
+	if [[ -f "${arg}" ]]
 	then
 		# Prompt file save name
 		fn=${arg%.*}
-		newFile=`kdialog --getsavefilename "${fn} - ${tplMessage}.pdf"`;
-		if [ $? != 0 ]; then
+		newFile=$(kdialog --getsavefilename "${fn} - ${tplMessage}.pdf")
+		if [[ $? != 0 ]]
+		then
 			exit;
 		fi
 		libreoffice --headless --invisible --convert-to pdf "${tmpStorage}/draft.odt"

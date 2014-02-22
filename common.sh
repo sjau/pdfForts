@@ -254,18 +254,18 @@ function convertBookmarkToPdfmark
 function selectTemplate
 {
 	# Prompt to use default template or custom template
-	tplSelect=`kdialog --title "Default template dialog" --yesnocancel "Press YES if you want to use the default template located at ${defaultTemplate}
+	tplSelect=$(kdialog --title "Default template dialog" --yesnocancel "Press YES if you want to use the default template located at ${defaultTemplate}
 
 Press NO to select a different template.
 
-NOTICE: All '_replace_' strings in the selected template will be replaced by a string selected later"`
+NOTICE: All '_replace_' strings in the selected template will be replaced by a string selected later")
 
 	case "${?}" in
 		0) # Yes selected
 			tplSelected="${defaultTemplate}"
 			;;
 		1) # No selected
-			tplSelected=`kdialog --getopenfilename ${HOME} "*.odt"` || exit;
+			tplSelected=$(kdialog --getopenfilename ${HOME} "*.odt") || exit;
 			;;
 		2) # Cancel selected
 			exit;

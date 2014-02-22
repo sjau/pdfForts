@@ -10,7 +10,7 @@ fi
 allScripts=( "addPasswdPDF" "bookmarkPDF" "combinePDF" "extractPDF" "extractTextPDF" "metaPDF" "ocrPDF" "qualityPDF" "rmPasswdPDF" "rotatePDF" "searchablePDF" "stampPDF" "watermarkPDF" )
 
 # Set original path
-origPath=`pwd`
+origPath=$(pwd)
 
 
 
@@ -79,7 +79,7 @@ function symlinkFunc
 		source "${origPath}/${scriptName}/vars.sh"
 		cd "${origPath}/${scriptName}"
 
-		curPath=`pwd`
+		curPath=$(pwd)
 		mkdir -p "${installPath}"
 		ln -s "${curPath}/${scriptName}.sh" "${installPath}${scriptName}.sh"
 

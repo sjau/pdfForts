@@ -4,7 +4,7 @@ function createTmpDirs
 {
 	# Create temporary dirs
 	tmpDir='ocrPDF.XXXXXXXXXX';
-	tmpStorage=`mktemp -t -d "${tmpDir}"` || exit 1
+	tmpStorage=$(mktemp -t -d "${tmpDir}") || exit 1
 }
 
 
@@ -13,7 +13,7 @@ function checkConfig
 {
 	# Test if config exists
 	userConfig="${HOME}/.pdfForts/ocrPDF.conf"
-	if [ ! -f "${userConfig}" ]
+	if [[ ! -f "${userConfig}" ]]
 	then
 		# User config does not exist, copy default to user
 		mkdir -p "${HOME}/.pdfForts/"
@@ -76,18 +76,20 @@ createTmpDirs;
 
 
 # Prompt to maintain the layout
-langSel=`kdialog --title "Set Language" --inputbox "Set the three letter language code to use on the PDF document.
+langSel=$(kdialog --title "Set Language" --inputbox "Set the three letter language code to use on the PDF document.
 
 Using the appropriate language makes the recognition better.
 
-Also make sure you have the actual tesseract language pack installed." "${defaultLanguage}"`
-if [ $? != 0 ]; then
+Also make sure you have the actual tesseract language pack installed." "${defaultLanguage}")
+if [[ $? != 0 ]]
+then
 	exit;
 fi
 
 
-pgSeperator=`kdialog --radiolist "Add a page seperator?:" 0 "yes" on 1 "No" off`
-if [ $? = 3 ]; then
+pgSeperator=$(kdialog --radiolist "Add a page seperator?:" 0 "yes" on 1 "No" off)
+if [[ $? = 3 ]]
+then
 	exit;
 fi
 
@@ -96,12 +98,13 @@ fi
 for arg ;
 do
 	# Test if it is a file
-	if [ -f "${arg}" ]
+	if [[ -f "${arg}" ]]
 	then
 		# Prompt file save name
 		fn=${arg%.*}
-		newFile=`kdialog --getsavefilename "${fn}.txt"`;
-		if [ $? != 0 ]; then
+		newFile=$(kdialog --getsavefilename "${fn}.txt");
+		if [[ $? != 0 ]]
+		then
 			exit;
 		fi
 		pdftk "${arg}" burst output "${tmpStorage}/pages__%04d.pdf"

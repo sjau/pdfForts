@@ -8,14 +8,16 @@ checkPrograms
 
 
 # Ask for Settings
-Color=`kdialog --menu "Chose Color Mode:" Keep "Keep current" Gray "Convert to Grayscale" BW "Convert to B/W"`;
-Resolution=`kdialog --menu "Set Image Resolution:" Keep "Keep current" 600 "Convert to 600 dpi" 300 "Convert to 300 dpi" 200 "Convert to 200 dpi" 150 "Convert to 150 dpi" Custom "Set custom resolution"`;
+Color=$(kdialog --menu "Chose Color Mode:" Keep "Keep current" Gray "Convert to Grayscale" BW "Convert to B/W");
+Resolution=$(kdialog --menu "Set Image Resolution:" Keep "Keep current" 600 "Convert to 600 dpi" 300 "Convert to 300 dpi" 200 "Convert to 200 dpi" 150 "Convert to 150 dpi" Custom "Set custom resolution");
+
 if [[ "${Resolution}" = "Custom" ]]
 then
-    Resolution=`kdialog --title "Set Custom Image Resolution" --inputbox "Set your custom resolution, e.g. use 100 for 100x100 dpi"`;
+    Resolution=$(kdialog --title "Set Custom Image Resolution" --inputbox "Set your custom resolution, e.g. use 100 for 100x100 dpi")
 fi
 
-if [ $? != 0 ]; then
+if [[ $? != 0 ]]
+then
 	exit;
 fi
 
@@ -28,13 +30,14 @@ deleteTmpDir
 for arg ;
 do
 	# Test if it is a file
-	if [ -f "${arg}" ]
+	if [[ -f "${arg}" ]]
 	then
-		fName=`basename "${arg}"`
+		fName=$(basename "${arg}")
 		fileNoExt=${arg%.*}
 		# Prompt for save file
-		Name=`kdialog --getsavefilename "${fileNoExt} - quality.pdf"`;
-		if [ $? != 0 ]; then
+		Name=$(kdialog --getsavefilename "${fileNoExt} - quality.pdf");
+		if [[ $? != 0 ]]
+		then
 			exit;
 		fi
 		curFile="${arg}"
