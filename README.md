@@ -3,6 +3,9 @@ pdfForts
 
 This is just a bunch of bash script to make work easier in KDE/Dolphin as actions.
 
+![Screenshot of the servicemenu](/path/to/servicemenu.png "Screenshot of the servicemenu")
+
+
 
 
 PREREQUISITES
