@@ -17,7 +17,6 @@ then
 	exit;
 fi
 
-
 # Parse the selected file
 for arg ;
 do
@@ -28,7 +27,7 @@ do
 		fileNoExt=${arg%.*}
 		# Prompt for save file
 		Name=$(kdialog --getsavefilename "${fileNoExt} - extracted.pdf");
-		if [[ $? != 0 ]}
+		if [[ $? != 0 ]]
 		then
 			exit;
 		fi
