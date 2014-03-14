@@ -74,6 +74,13 @@ This script converts image PDFs to text files using tesseract.
 
 
 
+pdfaPDF
+-----------
+
+This script converts an existing PDF into a PDF/A file.
+
+
+
 qualityPDF
 -----------
 

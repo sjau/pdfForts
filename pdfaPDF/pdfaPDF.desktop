@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin
+MimeType=application/pdf;
+Actions=pdfaPDF
+
+[Desktop Action pdfaPDF]
+Name=Make PDF/A
+Name[de]=PDF/A erstellen
+Icon=application-pdf
+Exec=/usr/bin/pdfForts/pdfaPDF.sh %F

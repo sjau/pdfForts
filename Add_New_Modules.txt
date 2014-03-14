@@ -1,0 +1,27 @@
+HOW TO ADD NEW MODULES
+======================
+
+
+1. Copy existing module and give it a new name, e.g. cp -a ocrPDF pdfaPDF
+
+
+2. Inside the new module folder, rename the files according to module name, e.g. mv ocrPDF.conf pdfaPDF.conf
+
+
+3. Edit the existing files for your needs, especially the .desktop file
+
+
+4. Edit install.sh and
+
+4.1. add the new module name to the 'allScripts' list
+
+4.2. add the new module with a short description to the large "echo" section near the end
+
+
+5. Edit the README.md file and also add the new module with a short description
+
+
+6. Commit the changes
+
+
+7. Rerun installation routine for the new module
