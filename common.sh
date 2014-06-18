@@ -106,6 +106,26 @@ function extractMetaData
 
 
 
+function convertSpecialCharsToASCII
+{
+	curTitle="${1}"
+
+	# Create associative array where key is the string to look for and value the replacement
+	declare -A replArray
+	replArray[ä]='\344'
+	replArray[ö]='\366'
+	replArray[ü]='\374'
+	replArray[Ä]='\304'
+	replArray[Ö]='\326'
+	replArray[Ü]='\334'
+
+	for k in "${!replArray[@]}"
+	do
+		curTitle="${curTitle//$k/${replArray[$k]}}"
+	done
+}
+
+
 function convertMetaToBookmark
 {
 	unset "curTitle"
@@ -194,6 +214,7 @@ function convertBookmarkToPdfmark
 		curLvl=$((curDash / 2))
 		curModulus=$((curDash % 2))
 		curTitle="${arrLine[1]}"
+		convertSpecialCharsToASCII "${curTitle}"
 		curNr="${arrLine[2]}"
 		levelArr["${bookmarkLine}"]="${curLvl}"
 		modulusArr["${bookmarkLine}"]="${curModulus}"
