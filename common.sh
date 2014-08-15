@@ -143,9 +143,9 @@ function convertMetaToBookmark
 		if [[ "${levelBookmarks}" -eq "1" ]]
 		then
 			adjustLvl="1"
-			echo "|${fileBase}|1" >> "${bookMarks}"
+			echo "+-|${fileBase}|1" >> "${bookMarks}"
 		else
-			echo "|${fileBase}|1" >> "${bookMarks}"
+			echo "+-|${fileBase}|1" >> "${bookMarks}"
 		fi
 	fi
 
@@ -179,7 +179,7 @@ function convertMetaToBookmark
 				((curLvl--))
 			done
 
-			echo "${curDash}|${curTitle}|${curNr}" >> "${bookMarks}"
+			echo "+-${curDash}|${curTitle}|${curNr}" >> "${bookMarks}"
 		fi
 	done
 }
@@ -201,6 +201,9 @@ function convertBookmarkToPdfmark
 	unset "lvl"
 	declare -A "lvl"
 	unset "fileContent"
+	unset "collapseArr"
+	declare -A "collapseArr"
+	
 	numberOfPages=0
 
 	mapfile -t fileContent < "${bookmarkFile}"
@@ -211,18 +214,23 @@ function convertBookmarkToPdfmark
 		unset arrLine
 		IFS='|' read -ra arrLine <<< "${lineContent}"
 		curDash="${#arrLine[0]}"
-		curLvl=$((curDash / 2))
-		curModulus=$((curDash % 2))
+		curLvl=$((curDash / 2 - 1))
+		curCollapse="${arrLine[0]:0:1}"
+		if [[ "${curCollapse}" == "+" ]]
+		then
+			collapseArr["${bookmarkLine}"]="-1"
+		else
+			collapseArr["${bookmarkLine}"]="1"
+		fi
 		curTitle="${arrLine[1]}"
 		convertSpecialCharsToASCII "${curTitle}"
 		curNr="${arrLine[2]}"
 		levelArr["${bookmarkLine}"]="${curLvl}"
-		modulusArr["${bookmarkLine}"]="${curModulus}"
 		titleArr["${bookmarkLine}"]="${curTitle}"
 		numberArr["${bookmarkLine}"]="${curNr}"
 		((bookmarkLine++))
 	done
-
+	
 	# Loop through the array in reverse order
 	lastLevel=0
 	for ((x=${#titleArr[@]}; x >= 1; --x))
@@ -230,8 +238,7 @@ function convertBookmarkToPdfmark
 		curTitle="${titleArr[$x]}"
 		curLevel="${levelArr[$x]}"
 		curNumber="${numberArr[$x]}"
-		curModulus="${modulusArr[$x]}"
-		curNegModulus="-1"
+		curCollapseMultiplier="${collapseArr[$x]}"
 		
 		# Equal level or sublevel
 		if [[ "${curLevel}" -ge "${lastLevel}" ]]
@@ -250,10 +257,7 @@ function convertBookmarkToPdfmark
 			lvl[$curLevel]=$(( lvl[$curLevel] += 1 ))
 			subLvl=$((${curLevel}+1))
 			countLvl="${lvl[${subLvl}]}"
-            if [[ "${curModulus}" -gt "0" ]]
-            then
-                countLvl=$((countLvl * curNegModulus))
-            fi
+            countLvl=$((countLvl * curCollapseMultiplier))
 			outputArr[$x]="[/Count ${countLvl} /Page ${page} /Title (${curTitle}) /OUT pdfmark"
 			lvl[${subLvl}]="0"
 			lastLevel="${curLevel}"
@@ -264,7 +268,6 @@ function convertBookmarkToPdfmark
 		if [[ "${outputArr[$a]}" ]]
 		then
 			echo "${outputArr[$a]}" >> "${tmpStorage}/pdfmarks"
-#            echo "${outputArr[$a]}" >> "/tmp/pdfmarks"
 		fi
 	done
 
