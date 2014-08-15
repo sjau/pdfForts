@@ -104,8 +104,14 @@ function setFinalDocName
 	else
 		destFile="${destDir}/${savefile} ${docNrStart} - ${docNrEnd}.pdf"
 	fi
-	echo "gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile='${destFile}' '${docDir}/'*pdf  '${pdfMarks}'"
-	gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile="${destFile}" "${docDir}/"*pdf  "${pdfMarks}"
+//	echo "gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile='${destFile}' '${docDir}/'*pdf  '${pdfMarks}'"
+//	gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile="${destFile}" "${docDir}/"*pdf  "${pdfMarks}"
+	cd "${docDir}"
+	for curPDF in *pdf
+	do
+		gs -sDEVICE=ps2write -o "${curPDF}.ps" "${curPDF}"
+	done
+	gs -sDEVICE=pdfwrite -o "${destFile}" *ps  "${pdfMarks}"
 }
 
 
@@ -168,6 +174,7 @@ do
 	destDir=$(dirname "${fPath}")
 	# Start the file manipulation
 	handlePDF "${docNr}" "${curFile}" "${fileBase}" "${fileExt}"
+	echo "${docNr} - ${curFile} - ${fileBase} - ${fileExt}" >> "/tmp/nr.txt"
 	((doc++))
 done
 

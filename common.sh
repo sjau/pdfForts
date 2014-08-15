@@ -12,8 +12,9 @@ function createTmpDir
 
 function deleteTmpDir
 {
-	trap 'rm -rf "${tmpStorage}"' 0		# remove directory when script finishes
-	trap 1 2 3 15						# terminate script when receiving signal
+#	trap 'rm -rf "${tmpStorage}"' 0		# remove directory when script finishes
+#	trap 1 2 3 15						# terminate script when receiving signal
+echo ""
 }
 
 
