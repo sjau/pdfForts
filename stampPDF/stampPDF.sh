@@ -174,7 +174,6 @@ do
 	destDir=$(dirname "${fPath}")
 	# Start the file manipulation
 	handlePDF "${docNr}" "${curFile}" "${fileBase}" "${fileExt}"
-	echo "${docNr} - ${curFile} - ${fileBase} - ${fileExt}" >> "/tmp/nr.txt"
 	((doc++))
 done
 
