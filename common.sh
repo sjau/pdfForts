@@ -245,7 +245,7 @@ function convertBookmarkToPdfmark
 		then
 			page=$((curPage + curNumber))
 			lvl[$curLevel]=$(( lvl[$curLevel] += 1 ))
-			outputArr[$x]="[/Title (${curTitle}) /Page ${page} /OUT pdfmark"
+			outputArr[$x]="[ /Title (${curTitle}) /Page ${page} /OUT pdfmark"
 			lastLevel="${curLevel}"
 
 		fi
@@ -258,7 +258,7 @@ function convertBookmarkToPdfmark
 			subLvl=$((${curLevel}+1))
 			countLvl="${lvl[${subLvl}]}"
             countLvl=$((countLvl * curCollapseMultiplier))
-			outputArr[$x]="[/Count ${countLvl} /Page ${page} /Title (${curTitle}) /OUT pdfmark"
+			outputArr[$x]="[ /Count ${countLvl} /Page ${page} /Title (${curTitle}) /OUT pdfmark"
 			lvl[${subLvl}]="0"
 			lastLevel="${curLevel}"
 		fi

@@ -48,11 +48,11 @@ do
 	((h++))
 done
 
-
-# Combine the files
+# Combine the files - create first pdf with no bookmarks and then add bookmarks
 cd "${tmpStorage}"
-gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile="new.pdf" *.pdf "pdfmarks"
-mv "new.pdf" "${saveFile}"
+gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile="noBM.pdf" -c "/pdfmark {cleartomark} def" -f *.pdf "pdfmarks"
+gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile="new.pdf" "noBM.pdf" "pdfmarks"
+cp "new.pdf" "${saveFile}"
 
 
 exit;
