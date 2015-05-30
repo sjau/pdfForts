@@ -3,7 +3,7 @@
 source "/usr/bin/pdfForts/common.sh"
 
 # Check for required programs
-reqCmds="pdftk kdialog basename kate gs"
+reqCmds="pdftk kdialog basename kate gs recode"
 checkPrograms
 
 
