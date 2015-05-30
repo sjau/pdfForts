@@ -10,6 +10,7 @@ PREREQUISITES
 - ghostscript
 - bash
 - basename (part of coreutils)
+- recode
 
 
 

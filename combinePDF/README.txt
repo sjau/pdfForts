@@ -9,6 +9,7 @@ PREREQUISITES
 - pdftk
 - bash
 - basename (part of coreutils)
+- recode
 
 
 

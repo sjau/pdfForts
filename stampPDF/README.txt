@@ -11,6 +11,7 @@ PREREQUISITES
 - libreoffice
 - bash
 - basename (part of coreutils)
+- recode
 
 
 

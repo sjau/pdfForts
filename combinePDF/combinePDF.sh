@@ -39,7 +39,8 @@ do
 	fileBase=$(basename "${curFile%.*}")
 	countZero "${h}"
 	curDocLoc="${tmpStorage}/${addZero}${h}"
-	pdftk "${curFile}" dump_data >> "${curDocLoc}.txt"
+	pdftk "${curFile}" dump_data >> "${curDocLoc}.txt.html"
+	cat "${curDocLoc}.txt.html" | recode html..utf8 > "${curDocLoc}.txt"
 	pdftk "${curFile}" cat output "${curDocLoc}.pdf"
 	bookMarks="${tmpStorage}/bm${addZero}${h}.txt"
 	convertMetaToBookmark "${curDocLoc}.txt"

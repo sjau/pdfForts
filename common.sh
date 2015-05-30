@@ -100,8 +100,10 @@ function sortFiles
 function extractMetaData
 {
 	curFile="${1}"
-	pdftk "${curFile}" dump_data > "${metaFile}"
+	pdftk "${curFile}" dump_data > "${metaFile}.html"
+	cat "${metaFile}.html" | recode html..utf8 > "${metaFile}"
 	pdftk "${curFile}" cat output "${noBookmark}"
+
 }
 
 
@@ -118,6 +120,7 @@ function convertSpecialCharsToASCII
 	replArray[Ä]='\304'
 	replArray[Ö]='\326'
 	replArray[Ü]='\334'
+	replArray[ß]='\337'
 
 	for k in "${!replArray[@]}"
 	do
