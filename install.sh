@@ -7,7 +7,7 @@ fi
 
 
 # Set allScripts array
-allScripts=( "addPasswdPDF" "bookmarkPDF" "combinePDF" "extractPDF" "extractTextPDF" "metaPDF" "ocrPDF" "pdfaPDF" "qualityPDF" "rmPasswdPDF" "rotatePDF" "searchablePDF" "stampPDF" "watermarkPDF" )
+allScripts=( "addPasswdPDF" "attachPDF" "bookmarkPDF" "combinePDF" "extractPDF" "extractTextPDF" "metaPDF" "ocrPDF" "pdfaPDF" "qualityPDF" "rmPasswdPDF" "rotatePDF" "searchablePDF" "stampPDF" "watermarkPDF" )
 
 # Set original path
 origPath=$(pwd)
@@ -168,6 +168,7 @@ symlink) validParaFunc "${2}"
    echo "Possible options for PARAMETER2"
    echo "all - run on all scripts"
    echo "addPasswdPDF - only run on addPasswdPDF script"
+   echo "attachPDF - only run on attachPDF script"
    echo "combinePDF - only run combinePDF script"
    echo "extractPDF - only run on extractPDF script"
    echo "extractTextPDF - only run on extractTextPDF script"

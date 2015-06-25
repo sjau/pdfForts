@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin
+MimeType=application/pdf;
+Actions=bookmarkPDF
+
+[Desktop Action bookmarkPDF]
+Name=Attach file to PDF
+Name[de]=Datei zum PDF hinzufügen
+Icon=application-pdf
+Exec=/usr/bin/pdfForts/attachPDF.sh %F

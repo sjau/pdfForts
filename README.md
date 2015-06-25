@@ -33,6 +33,13 @@ This script adds a password to the PDFs.
 
 
 
+attachPDF
+------------
+
+This lets you add files to your PDF files. However scripts like stamp and combine remove them. So add them at the end.
+
+
+
 bookmarkPDF
 -----------
 
