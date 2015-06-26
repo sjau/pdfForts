@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 scriptName="metaPDF"
 installPath="/usr/bin/pdfForts/"

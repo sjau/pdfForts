@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Ask for range
 Rotate=$(kdialog --menu "Chose rotation (clockwise):" East "90°" South "180°" West "270°");

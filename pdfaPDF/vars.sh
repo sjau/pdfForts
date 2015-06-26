@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 scriptName="pdfaPDF"
 installPath="/usr/bin/pdfForts/"

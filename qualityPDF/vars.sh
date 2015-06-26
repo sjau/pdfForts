@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 scriptName="qualityPDF"
 installPath="/usr/bin/pdfForts/"

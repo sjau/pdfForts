@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Prompt to maintain the layout
 tplSelect=$(kdialog --title "Maintain Layout" --yesnocancel "Press YES if you want the extracted text to reflect the layout of the PDF")

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 scriptName="watermarkPDF"
 installPath="/usr/bin/pdfForts/"

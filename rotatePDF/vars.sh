@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 scriptName="rotatePDF"
 installPath="/usr/bin/pdfForts/"

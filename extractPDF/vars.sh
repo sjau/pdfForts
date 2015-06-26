@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 scriptName="extractPDF"
 installPath="/usr/bin/pdfForts/"

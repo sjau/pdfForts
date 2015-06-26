@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Ask for range
 Range=$(kdialog --title "Define pages" --inputbox "Set the pages you want to extract.

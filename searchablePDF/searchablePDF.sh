@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 source "/usr/bin/pdfForts/common.sh"
 
