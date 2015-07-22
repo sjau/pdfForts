@@ -32,13 +32,13 @@ metaFile="${tmpStorage}/meta.txt"
 # Loop through the selected files
 for arg ;
 do
-	# Test if it is a file
-	if [[ -f "${arg}" ]]
-	then
-		fMessage="File attached"
-		fExt="pdf"
-		getSaveFile "${arg}" "${fMessage}" "${fExt}"
+    # Test if it is a file
+    if [[ -f "${arg}" ]]
+    then
+        fMessage="File attached"
+        fExt="pdf"
+        getSaveFile "${arg}" "${fMessage}" "${fExt}"
 
-                pdftk "${arg}" attach_files "${attach}" to_page "${pagenumber}" output "${saveFile}"
-	fi
+        pdftk "${arg}" attach_files "${attach}" to_page "${pagenumber}" output "${saveFile}"
+    fi
 done

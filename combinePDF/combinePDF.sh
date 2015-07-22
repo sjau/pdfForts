@@ -36,17 +36,17 @@ h="1"
 curPage="0"
 for curFile in "${filesSorted[@]}"
 do
-	fileBase=$(basename "${curFile%.*}")
-	countZero "${h}"
-	curDocLoc="${tmpStorage}/${addZero}${h}"
-	pdftk "${curFile}" dump_data >> "${curDocLoc}.txt.html"
-	cat "${curDocLoc}.txt.html" | recode html..utf8 > "${curDocLoc}.txt"
-	pdftk "${curFile}" cat output "${curDocLoc}.pdf"
-	bookMarks="${tmpStorage}/bm${addZero}${h}.txt"
-	convertMetaToBookmark "${curDocLoc}.txt"
-	convertBookmarkToPdfmark "${bookMarks}"
-	curPage=$((curPage + curDocPages))
-	((h++))
+    fileBase=$(basename "${curFile%.*}")
+    countZero "${h}"
+    curDocLoc="${tmpStorage}/${addZero}${h}"
+    pdftk "${curFile}" dump_data >> "${curDocLoc}.txt.html"
+    cat "${curDocLoc}.txt.html" | recode html..utf8 > "${curDocLoc}.txt"
+    pdftk "${curFile}" cat output "${curDocLoc}.pdf"
+    bookMarks="${tmpStorage}/bm${addZero}${h}.txt"
+    convertMetaToBookmark "${curDocLoc}.txt"
+    convertBookmarkToPdfmark "${bookMarks}"
+    curPage=$((curPage + curDocPages))
+    ((h++))
 done
 
 # Combine the files and send it to final destination

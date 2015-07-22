@@ -16,145 +16,145 @@ origPath=$(pwd)
 
 function installFunc
 {
-	for scriptName in "${runScripts[@]}"
-	do
-		source "${origPath}/${scriptName}/vars.sh"
-		cd "${origPath}/${scriptName}"
+    for scriptName in "${runScripts[@]}"
+    do
+        source "${origPath}/${scriptName}/vars.sh"
+        cd "${origPath}/${scriptName}"
 
-		mkdir -p "${installPath}"
-		cp "${scriptName}.sh" "${installPath}"
-		chmod 0755 "${installPath}${scriptName}.sh"
+        mkdir -p "${installPath}"
+        cp "${scriptName}.sh" "${installPath}"
+        chmod 0755 "${installPath}${scriptName}.sh"
 
-		mkdir -p "${serviceMenus}"
-		cp "${scriptName}.desktop" "${serviceMenus}"
+        mkdir -p "${serviceMenus}"
+        cp "${scriptName}.desktop" "${serviceMenus}"
 
-		if [ "${configFile}" = "y" ]
-		then
-			cp "${scriptName}.conf" "${serviceMenus}"
-		fi
-		if [ "${templateFile}" = "y" ]
-		then
-			cp "${templateName}" "${serviceMenus}${templateName}"
-		fi
-		if [ ! -f "${installPath}common.sh" ]
-		then
-			cp "common.sh" "${installPath}"
-		fi
+        if [ "${configFile}" = "y" ]
+        then
+            cp "${scriptName}.conf" "${serviceMenus}"
+        fi
+        if [ "${templateFile}" = "y" ]
+        then
+            cp "${templateName}" "${serviceMenus}${templateName}"
+        fi
+        if [ ! -f "${installPath}common.sh" ]
+        then
+            cp "common.sh" "${installPath}"
+        fi
 
-	done
+    done
 }
 
 
 function uninstallFunc
 {
-	for scriptName in "${runScripts[@]}"
-	do
-		source "${origPath}/${scriptName}/vars.sh"
-		cd "${origPath}/${scriptName}"
+    for scriptName in "${runScripts[@]}"
+    do
+        source "${origPath}/${scriptName}/vars.sh"
+        cd "${origPath}/${scriptName}"
 
-		rm "${installPath}${scriptName}.sh"
-		rm "${serviceMenus}${scriptName}.desktop"
+        rm "${installPath}${scriptName}.sh"
+        rm "${serviceMenus}${scriptName}.desktop"
 
-		if [ "${configFile}" = "y" ]
-		then
-			rm "${serviceMenus}${scriptName}.conf"
-		fi
-		if [ "${templateFile}" = "y" ]
-		then
-			rm "${serviceMenus}${templateName}"
-		fi
-		fCount=$(ls -l "${installPath}" | wc -l)
-		if [ "${fCount}" -le "2" ]
-		then
-			rm "${installPath}common.sh"
-		fi
-	done
+        if [ "${configFile}" = "y" ]
+        then
+            rm "${serviceMenus}${scriptName}.conf"
+        fi
+        if [ "${templateFile}" = "y" ]
+        then
+            rm "${serviceMenus}${templateName}"
+        fi
+        fCount=$(ls -l "${installPath}" | wc -l)
+        if [ "${fCount}" -le "2" ]
+        then
+            rm "${installPath}common.sh"
+        fi
+    done
 }
 
 
 function symlinkFunc
 {
-	for scriptName in "${runScripts[@]}"
-	do
-		source "${origPath}/${scriptName}/vars.sh"
-		cd "${origPath}/${scriptName}"
+    for scriptName in "${runScripts[@]}"
+    do
+        source "${origPath}/${scriptName}/vars.sh"
+        cd "${origPath}/${scriptName}"
 
-		curPath=$(pwd)
-		mkdir -p "${installPath}"
-		ln -s "${curPath}/${scriptName}.sh" "${installPath}${scriptName}.sh"
+        curPath=$(pwd)
+        mkdir -p "${installPath}"
+        ln -s "${curPath}/${scriptName}.sh" "${installPath}${scriptName}.sh"
 
-		mkdir -p "${serviceMenus}"
-		ln -s "${curPath}/${scriptName}.desktop" "${serviceMenus}${scriptName}.desktop"
+        mkdir -p "${serviceMenus}"
+        ln -s "${curPath}/${scriptName}.desktop" "${serviceMenus}${scriptName}.desktop"
 
-		if [ "${configFile}" = "y" ]
-		then
-			ln -s "${curPath}/${scriptName}.conf" "${serviceMenus}${scriptName}.conf"
-		fi
-		if [ "${templateFile}" = "y" ]
-		then
-			ln -s "${curPath}/${templateName}" "${serviceMenus}${templateName}"
-		fi
-		if [ ! -f "${installPath}common.sh" ]
-		then
-			cp -s "${origPath}/common.sh" "${installPath}common.sh"
-		fi
-	done
+        if [ "${configFile}" = "y" ]
+        then
+            ln -s "${curPath}/${scriptName}.conf" "${serviceMenus}${scriptName}.conf"
+        fi
+        if [ "${templateFile}" = "y" ]
+        then
+            ln -s "${curPath}/${templateName}" "${serviceMenus}${templateName}"
+        fi
+        if [ ! -f "${installPath}common.sh" ]
+        then
+            cp -s "${origPath}/common.sh" "${installPath}common.sh"
+        fi
+    done
 }
 
 
 function validParaFunc
 {
-	paraCheck="${1}"
-	# Check if PARAMETER2 is in allScripts array
-	for i in "${allScripts[@]}"
-	do
-		if [ "${i}" == "${paraCheck}" ]
-		then
-			valFound="OK"
-		fi
-	done
-	# Check if PARAMETER2 is 'all'
-	if [ "${paraCheck}" == "all" ]
-	then
-			valFound="OK"
-	fi
-	# Check if the $valFound var was set to OK
-	if [ "${valFound}" != "OK" ]
-	then
-		echo "Sorry, no valid PARAMETER2 supplied."
-		echo "Please run the script without parameters to see the help."
-		echo "e.g.    ./install.sh"
-		exit;
-	fi
+    paraCheck="${1}"
+    # Check if PARAMETER2 is in allScripts array
+    for i in "${allScripts[@]}"
+    do
+        if [ "${i}" == "${paraCheck}" ]
+        then
+            valFound="OK"
+        fi
+    done
+    # Check if PARAMETER2 is 'all'
+    if [ "${paraCheck}" == "all" ]
+    then
+            valFound="OK"
+    fi
+    # Check if the $valFound var was set to OK
+    if [ "${valFound}" != "OK" ]
+    then
+        echo "Sorry, no valid PARAMETER2 supplied."
+        echo "Please run the script without parameters to see the help."
+        echo "e.g.    ./install.sh"
+        exit;
+    fi
 }
 
 
 case "${2}" in
 all) echo ""
-	runScripts=( "${allScripts[@]}" )
-	;;
+    runScripts=( "${allScripts[@]}" )
+    ;;
 *) echo ""
-	runScripts=( ${2} )
-	;;
+    runScripts=( ${2} )
+    ;;
 esac
 
 
 
 case "${1}" in
 install) validParaFunc "${2}"
-	echo "Install the files"
-	installFunc
+    echo "Install the files"
+    installFunc
     echo "Copy files to their location. An entry in Dolphin should appear soon."
-	;;
+    ;;
 uninstall) validParaFunc "${2}"
-	echo "Uninstalling the files"
-	uninstallFunc
-	echo "Remove files. The entry in Dolphin should disappear soon."
+    echo "Uninstalling the files"
+    uninstallFunc
+    echo "Remove files. The entry in Dolphin should disappear soon."
     ;;
 symlink) validParaFunc "${2}"
-	echo  "Symlinking the files"
-	symlinkFunc
-	echo "Symlink files to their location. An entry in Dolphin should appear soon."
+    echo  "Symlinking the files"
+    symlinkFunc
+    echo "Symlink files to their location. An entry in Dolphin should appear soon."
     ;;
 *) echo "Use: run as root: ./install.sh PARAMETER1 PARAMETER2"
    echo ""

@@ -18,7 +18,7 @@ fi
 
 if [[ $? != 0 ]]
 then
-	exit;
+    exit;
 fi
 
 # Run some common functions
@@ -29,38 +29,38 @@ deleteTmpDir
 # Parse the selected file
 for arg ;
 do
-	# Test if it is a file
-	if [[ -f "${arg}" ]]
-	then
-		fName=$(basename "${arg}")
-		fileNoExt=${arg%.*}
-		# Prompt for save file
-		Name=$(kdialog --getsavefilename "${fileNoExt} - quality.pdf");
-		if [[ $? != 0 ]]
-		then
-			exit;
-		fi
-		curFile="${arg}"
-		# Check if color change is required
-		if [[ "${Color}" = "Gray" ]]
-		then
-                    convert "${curFile}" -colorspace gray "${tmpStorage}/gray.pdf"
-                    curFile="${tmpStorage}/gray.pdf"
-                fi
-                if [[ "${Color}" = "BW" ]]
-                then
-                    convert "${curFile}" -colorspace gray -colors 2 -normalize "${tmpStorage}/bw.pdf"
-                    curFile="${tmpStorage}/bw.pdf"
-                fi
-                
-                # Check if resolution change is required
-                if [[ "${Resolution}" != "Keep" ]]
-                then
-                    gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dDownsampleColorImages=true -dColorImageResolution=${Resolution} -dNOPAUSE  -dBATCH -sOutputFile="${tmpStorage}/resize.pdf" "${curFile}"
-                    curFile="${tmpStorage}/resize.pdf"
-                fi
-                mv "$curFile" "${Name}"
-	fi
+    # Test if it is a file
+    if [[ -f "${arg}" ]]
+    then
+        fName=$(basename "${arg}")
+        fileNoExt=${arg%.*}
+        # Prompt for save file
+        Name=$(kdialog --getsavefilename "${fileNoExt} - quality.pdf");
+        if [[ $? != 0 ]]
+        then
+            exit;
+        fi
+        curFile="${arg}"
+        # Check if color change is required
+        if [[ "${Color}" = "Gray" ]]
+        then
+            convert "${curFile}" -colorspace gray "${tmpStorage}/gray.pdf"
+            curFile="${tmpStorage}/gray.pdf"
+        fi
+        if [[ "${Color}" = "BW" ]]
+        then
+            convert "${curFile}" -colorspace gray -colors 2 -normalize "${tmpStorage}/bw.pdf"
+            curFile="${tmpStorage}/bw.pdf"
+        fi
+
+        # Check if resolution change is required
+        if [[ "${Resolution}" != "Keep" ]]
+        then
+            gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dDownsampleColorImages=true -dColorImageResolution=${Resolution} -dNOPAUSE  -dBATCH -sOutputFile="${tmpStorage}/resize.pdf" "${curFile}"
+            curFile="${tmpStorage}/resize.pdf"
+        fi
+        mv "$curFile" "${Name}"
+    fi
 done
 
 

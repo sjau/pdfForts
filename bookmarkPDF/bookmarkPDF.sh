@@ -25,17 +25,17 @@ metaFile="${tmpStorage}/meta.txt"
 # Loop through the selected files
 for arg ;
 do
-	# Test if it is a file
-	if [[ -f "${arg}" ]]
-	then
-		fMessage="Bookmarks edited"
-		fExt="pdf"
-		getSaveFile "${arg}" "${fMessage}" "${fExt}"
+    # Test if it is a file
+    if [[ -f "${arg}" ]]
+    then
+        fMessage="Bookmarks edited"
+        fExt="pdf"
+        getSaveFile "${arg}" "${fMessage}" "${fExt}"
 
-		extractMetaData "${arg}"
-		convertMetaToBookmark "${metaFile}"
-		kate -b "${bookMarks}"
-		convertBookmarkToPdfmark "${bookMarks}"
-		gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile="${saveFile}" -c "userdict /opdfmark systemdict /pdfmark get put /pdfmark {cleartomark} def" -f "${noBookmark}" -c "/pdfmark userdict /opdfmark get def" -f "${pdfMarks}"
-	fi
+        extractMetaData "${arg}"
+        convertMetaToBookmark "${metaFile}"
+        kate -b "${bookMarks}"
+        convertBookmarkToPdfmark "${bookMarks}"
+        gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile="${saveFile}" -c "userdict /opdfmark systemdict /pdfmark get put /pdfmark {cleartomark} def" -f "${noBookmark}" -c "/pdfmark userdict /opdfmark get def" -f "${pdfMarks}"
+    fi
 done
