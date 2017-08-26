@@ -5,7 +5,7 @@ set -x
 source "/usr/bin/pdfForts/common.sh"
 
 # Check for required programs
-reqCmds="unzip zip sed pdftk gs libreoffice unoconv"
+reqCmds="unzip zip sed pdftk gs libreoffice unoconv kate"
 checkPrograms
 
 
@@ -33,7 +33,7 @@ createStamp () {
             ;;
         2) # LibreOffice selected
             if [[ "$(pidof soffice.bin)" ]]; then
-                kdialog --error "LibreOffice is running! Please close LibreOffice before continuing.
+                guiError "LibreOffice is running! Please close LibreOffice before continuing.
 
 Notice: Unoconv can be run even if LibreOffice is running!"
             fi
@@ -41,7 +41,7 @@ Notice: Unoconv can be run even if LibreOffice is running!"
             ;;
     esac
     if [[ ! -f "stamp.pdf" ]]; then
-        kdialog --error "Couldn't convert the .odt file to a .pdf. Please try to switch between Unoconv and LibreOffice.
+        guiError "Couldn't convert the .odt file to a .pdf. Please try to switch between Unoconv and LibreOffice.
 
 Also make sure that if you selected LibreOffice that it wasn't running.
 
@@ -132,7 +132,7 @@ mkdir -p "${stampPDF}"
 
 
 # Prompt for document number
-doc=$(kdialog --title "Document number" --inputbox "At what number shall the document numbering commence?") || exit;
+doc=$(guiInput "Document number" "At what number shall the document numbering commence?") || exit;
 docNrStart="${doc}"
 
 
@@ -149,8 +149,16 @@ chkConfOption "${odtConvert}" "${confValue}"
 
 
 # Prompt for converter selection
-selectedConverter=$(kdialog --radiolist "Select converter tool" 1 "Unoconv (recommended)" on 2 "LibreOffice" off) || exit;
-
+if type kdialog &>/dev/null; then
+    selectedConverter=$(kdialog --radiolist "Select converter tool:" 1 "Unoconv (recommended)" on 2 "LibreOffice" off) || exit;
+else
+    selectedConverter=$(zenity --list --radiolist --text "Select converter tool:" --hide-header --column "1" --column "2" TRUE "Unoconv (recommended)" FALSE "LibreOffice") || exit;
+    if [[ "${selectedConverter}" == "Unoconv (recommended)" ]]; then
+        selectedConverter="1"
+    else
+        selectedConverter="2"
+    fi
+fi
 
 
 # Start total page count for pdf bookmarks

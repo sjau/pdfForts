@@ -6,19 +6,16 @@ source "/usr/bin/pdfForts/common.sh"
 reqCmds="pdftk"
 checkPrograms
 
-
 # Run some common functions
 createTmpDir
 deleteTmpDir
 
-
-
 # Prompt for file selection
 cwd=$(pwd);
-attach=$(kdialog --getopenfilename "${cwd}") || exit;
+attach=$(guiFileSelect "${cwd}") || exit;
 
 # Prompt for page number
-pagenumber=$(kdialog --title "Page number" --inputbox "To what page in the PDF shall the file be attached to?") || exit;
+pagenumber=$(guiInput "Page number" "To what page in the PDF shall the file be attached to?") || exit;
 
 # Set bookmark file
 noBookmark="${tmpStorage}/noBookmark.pdf"

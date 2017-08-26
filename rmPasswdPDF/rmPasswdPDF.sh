@@ -12,7 +12,7 @@ for arg; do
     if [[ -f "${arg}" ]]; then
         # Prompt for password entry
         fName=${arg##*/}
-        Passwd=$(kdialog --title "Password" --inputbox "Enter the password for '${fName}'")
+        Passwd=$(guiPassword "Password" "Enter the password for '${fName}'")
         if [[ $? != 0 ]]; then
             exit;
         fi

@@ -2,7 +2,7 @@ createTmpDir () {
     # Create temporary dir
     tmpDir='pdfForts.XXXXXXXXXX';
     tmpStorage=$(mktemp -t -d "${tmpDir}") || {
-        kdialog --error "Couldn't create temporary dir"
+        guiError "Couldn't create temporary dir"
         exit 1;
     }
 }
@@ -26,7 +26,7 @@ checkConfig () {
         mkdir -p "${HOME}/.pdfForts/"
         cp "/usr/share/kservices5/ServiceMenus/pdfForts/${baseName}.conf" "${userConfig}"
 
-        kdialog --msgbox "No configuration file for ${baseName} has been found.
+        guiInfo "No configuration file for ${baseName} has been found.
 A default one was copied to ${userConfig}.
 Please edit that one to suit your needs.
 
@@ -34,9 +34,8 @@ Next Kate will be opened with the config file."
 
         kate -b "${userConfig}"
 
-        kdialog --msgbox "You have now a user config for ${baseName}.
+        guiInfo "You have now a user config for ${baseName}.
 Retry again on the PDF files."
-
         exit;
     fi
     source "${userConfig}"
@@ -48,7 +47,7 @@ getSaveFile () {
     fMessage="${2}"
     fExt="${3}"
     fName=${fFile%.*}
-    saveFile=$(kdialog --getsavefilename "${fName} - ${fMessage}.${fExt}") || exit;
+    saveFile=$(guiFileSave "${fName} - ${fMessage}.${fExt}") || exit;
 }
 
 
@@ -245,21 +244,18 @@ convertBookmarkToPdfmark () {
 
 selectTemplate () {
     # Prompt to use default template or custom template
-    tplSelect=$(kdialog --title "Default template dialog" --yesnocancel "Press YES if you want to use the default template located at ${defaultTemplate}
+    tplSelect=$(guiYesNo "Default template dialog" "Press YES if you want to use the default template located at ${defaultTemplate}
 
 Press NO to select a different template.
 
 NOTICE: All '_replace_' strings in the selected template will be replaced by a string selected later")
 
     case "${?}" in
-        0) # Yes selected 
+        1) # Yes selected 
             tplSelected="${defaultTemplate}"
             ;;
-        1) # No selected
-            tplSelected=$(kdialog --getopenfilename ${HOME} "*.odt") || exit;
-            ;;
-        2) # Cancel selected
-            exit;
+        2) # No selected
+            tplSelected=$(guiFileSelect "${HOME}") || exit;
             ;;
     esac
 }
@@ -271,7 +267,7 @@ checkPrograms () {
         type -P "zenity" &>/dev/null && continue || {
             echo "Couldn't find KDialog or Zenity on your system." > "/tmp/pdfFortsError.txt"
             echo "Please install and re-run this script." >> "/tmp/pdfFortsError.txt"
-            kate "/tmp/pdfFortsError.txt"
+            kate -b "/tmp/pdfFortsError.txt"
             exit 1;
         }
     }
@@ -279,10 +275,9 @@ checkPrograms () {
     # Check other required programs
     for curCmd in ${reqCmds}; do
         type -P ${curCmd} &>/dev/null  && continue  || {
-            kdialog --error "Couldn't find the '${curCmd} program.
+            guiError "Couldn't find the '${curCmd} program.
 
 Please install and re-run this script.";
-            exit 1;
         }
     done
 }
@@ -295,10 +290,77 @@ chkConfOption () {
     if [[ "${chkOption}" == "" ]]; then
         echo " " >> "${userConfig}"
         echo "${confValue}" >> "${userConfig}"
-        kdialog --msgbox "Added a new option to the end of your config file located at: "${userConfig}".
+        guiInfo "Added a new option to the end of your config file located at: "${userConfig}".
 
 Kate will be launched for you to review."
 
         kate -b "${userConfig}"
     fi
+}
+
+guiError () {
+    if type kdialog &>/dev/null; then
+        kdialog --error "${1}"
+    else
+        zenity --error --text="${1}"
+    fi
+    exit 1;
+}
+
+guiInfo () {
+    if type kdialog &>/dev/null; then
+        kdialog --msgbox "${1}"
+    else
+        zenity --info --text="${1}"
+    fi
+}
+
+guiPassword () {
+    if type kdialog &>/dev/null; then
+        local output=$(kdialog --title "${1}" --password "${2}") || exit;
+    else
+        local output=$(zenity --password --title "${1}") || exit;
+    fi
+    echo "${output}"
+}
+
+guiFileSelect () {
+    if type kdialog &>/dev/null; then
+        local output=$(kdialog --getopenfilename "${1}") || exit;
+    else
+        local output=$(zenity --file-selection --filename="${1}/") || exit;
+    fi
+    echo "${output}"
+}
+
+guiFileSave () {
+    if type kdialog &>/dev/null; then
+        local output=$(kdialog --getsavefilename "${1}") || exit;
+    else
+        local output=$(zenity --file-selection --save --filename="${1}") || exit;
+    fi
+    echo "${output}"
+}
+
+guiInput () {
+    if type kdialog &>/dev/null; then
+        local output=$(kdialog --title "${1}" --inputbox "${2}" "${3}") || exit;
+    else
+        local output=$(zenity --entry --title "${1}" --text="${2}" --entry-text="${3}") || exit;
+    fi
+    echo "${output}"
+}
+
+guiYesNo () {
+    if type kdialog &>/dev/null; then
+        local output=$(kdialog --radiolist "${1}" 1 "Yes" on 2 "No" off) || exit;
+    else
+        local output=$(zenity --list --radiolist --text "${1}" --hide-header --column "1" --column "2" TRUE "Yes" FALSE "No") || exit;
+        if [[ "${output}" == "Yes" ]]; then
+            output="1"
+        else
+            output="2"
+        fi
+    fi
+    echo "${output}"
 }

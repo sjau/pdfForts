@@ -7,16 +7,13 @@ reqCmds="pdftotext"
 checkPrograms
 
 # Prompt to maintain the layout
-tplSelect=$(kdialog --title "Maintain Layout" --yesnocancel "Press YES if you want the extracted text to reflect the layout of the PDF")
+tplSelect=$(guiYesNo "Maintain Layout? Select YES if you want the extracted text to reflect the layout of the PDF.")
 case "${?}" in
-    0) # Yes selected
+    1) # Yes selected
         layout="-layout"
         ;;
-    1) # No selected
+    2) # No selected
         layout=""
-        ;;
-    2) # Cancel selected
-        exit;
         ;;
 esac
 

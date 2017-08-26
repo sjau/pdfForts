@@ -6,6 +6,12 @@ source "/usr/bin/pdfForts/common.sh"
 reqCmds="pdftk gs"
 checkPrograms
 
+# Create temporary dirs
+createTmpDir
+deleteTmpDir
+pdfMarkOrig="${tmpStorage}/pdfMarkOrig.txt"
+pdfMarks="${tmpStorage}/pdfMarks.txt"
+
 searchArray () {
     needle="${1}"
     haystack="${2}"
@@ -23,14 +29,6 @@ searchArray () {
         fi
     done
 }
-
-
-# Create temporary dirs
-createTmpDir
-deleteTmpDir
-pdfMarkOrig="${tmpStorage}/pdfMarkOrig.txt"
-pdfMarks="${tmpStorage}/pdfMarks.txt"
-
 
 # Get user real name
 IFS=: read -r _ _ _ _ name _ < <(getent passwd $USER);
@@ -66,16 +64,16 @@ for arg; do
         searchArray "ModDate"
 
         # Prompt for password entry
-        fName=$(arg##*/)
+        fName=${arg##*/}
         fileNoExt=${arg%.*}
-        author=$(kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
+        author=$(guiInput "Set meta data for '${fName}'" "Set meta data for '${fName}'
 
 Author - The document's author" "${origData[Author]}");
         if [[ $? != 0 ]]; then
             exit;
         fi
 
-        creationdate=$(kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
+        creationdate=$(guiInput "Set meta data for '${fName}'" "Set meta data for '${fName}'
 
 CreationDate - The date the document was created
 
@@ -90,42 +88,42 @@ If no GMT information is specified, the relation between the specified time and 
             exit;
         fi
 
-        creator=$(kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
+        creator=$(guiInput "Set meta data for '${fName}'" "Set meta data for '${fName}'
 
 Creator - If the document was converted to PDF from another form, the name of the application that originally created the document" "${origData[Creator]}");
         if [[ $? != 0 ]]; then
             exit;
         fi
 
-        producer=$(kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
+        producer=$(guiInput "Set meta data for '${fName}'" "Set meta data for '${fName}'
 
 Producer - The application that created the PDF from its native form" "${origData[Producer]}");
         if [[ $? != 0 ]]; then
             exit;
         fi
 
-        title=$(kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
+        title=$(guiInput "Set meta data for '${fName}'" "Set meta data for '${fName}'
 
 Titel - The document's title" "${origData[Title]}");
         if [[ $? != 0 ]]; then
             exit;
         fi
 
-        subject=$(kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
+        subject=$(guiInput "Set meta data for '${fName}'" "Set meta data for '${fName}'
 
 Subject - The document's subject" "${origData[Subject]}");
         if [[ $? != 0 ]]; then
             exit;
         fi
 
-        keywords=$(kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
+        keywords=$(guiInput "Set meta data for '${fName}'" "Set meta data for '${fName}'
 
 Keywords - Relevant keywords for this document, seperated by a comma followed by whitespace" "${origData[Keywords]}");
         if [[ $? != 0 ]]; then
             exit;
         fi
 
-        moddate=$(kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
+        moddate=$(guiInput "Set meta data for '${fName}'" "Set meta data for '${fName}'
 
 ModDate - The date and time the document was last modified
 

@@ -7,10 +7,19 @@ reqCmds="pdftk"
 checkPrograms
 
 # Ask for range
-Rotate=$(kdialog --menu "Chose rotation (clockwise):" East "90°" South "180°" West "270°");
-if [[ $? != 0 ]]; then
-    exit;
+if type kdialog &>/dev/null; then
+    Rotate=$(kdialog --checklist "Chose rotation (clockwise):" East "90°" off South "180°" off West "270°" off) || exit;
+else
+    Rotate=$(zenity --list --radiolist --text "Chose rotation (clockwise):" --hide-header --column "1" --column "2" FALSE "90°" FALSE "180°" FALSE "270°") || exit;
+    if [[ "${Rotate}" == "90°" ]]; then
+        Rotate="East"
+    elif [[ "${Rotate}" == "180°" ]]; then
+        Rotate="South"
+    else
+        Rotate="West"
+    fi
 fi
+
 
 # Parse the selected file
 for arg; do

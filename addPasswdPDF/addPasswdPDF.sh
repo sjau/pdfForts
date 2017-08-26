@@ -9,11 +9,11 @@ checkPrograms
 
 while [[ "${PasswdChk}" != "OK" ]]; do
     # Ask for password
-    Passwd1=$(kdialog --title "Password" --password "Please enter a password");
+    Passwd1=$(guiPassword "Password" "Please enter a password");
     if [[ $? != 0 ]]; then
         exit;
     fi
-    Passwd2=$(kdialog --title "Password Confirmation" --password "Re-enter the password");
+    Passwd2=$(guiPassword "Password Confirmation" "Re-enter the password");
     if [[ $? != 0 ]]; then
         exit;
     fi
@@ -23,10 +23,10 @@ while [[ "${PasswdChk}" != "OK" ]]; do
         if [[ -n "${Passwd}" ]]; then
             PasswdChk="OK"
         else
-            kdialog --error "You can't set an empty password."
+            guiError "You can't set an empty password."
         fi
     else
-        kdialog --error "The supplied passwords do not match.
+        guiError "The supplied passwords do not match.
 Please try again."
     fi
 done

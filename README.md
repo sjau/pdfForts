@@ -14,7 +14,7 @@ PREREQUISITES
 Each of the script has other prerequisites. Most of them require one or more of the following:
 
 - Dolphin
-- kdialog
+- KDialog / or Zenity
 - pdftk
 - imagemagick
 - zip

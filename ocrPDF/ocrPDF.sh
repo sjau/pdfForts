@@ -3,7 +3,7 @@
 source "/usr/bin/pdfForts/common.sh"
 
 # Check for required programs
-reqCmds="pdftk convert tesseract"
+reqCmds="pdftk convert tesseract kate"
 checkPrograms
 
 # Run some common functions
@@ -17,12 +17,12 @@ runOCR () {
         convert -density 300 -depth 8 "${file}" "${file}.png"
         tesseract "${file}.png" "${file}" -l ${langSel}
         case "${pgSeperator}" in
-            0) #Yes selected
+            1) #Yes selected
                 pgSep="------------------- ${i} -------------------"
                 echo "${pgSep}" >> "${tmpStorage}/output.txt"
                 echo "" >> "${tmpStorage}/output.txt"
                 ;;
-            1) #No selected
+            2) #No selected
                 pgSep=""
                 ;;
         esac
@@ -35,7 +35,7 @@ runOCR () {
 
 
 # Prompt to maintain the layout
-langSel=$(kdialog --title "Set Language" --inputbox "Set the three letter language code to use on the PDF document.
+langSel=$(guiInput "Set Language" "Set the three letter language code to use on the PDF document.
 
 Using the appropriate language makes the recognition better.
 
@@ -45,7 +45,7 @@ if [[ $? != 0 ]]; then
 fi
 
 
-pgSeperator=$(kdialog --radiolist "Add a page seperator?:" 0 "yes" on 1 "No" off)
+pgSeperator=$(guiYesNo "Add a page seperator?")
 if [[ $? = 3 ]]; then
     exit;
 fi

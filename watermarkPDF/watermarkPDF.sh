@@ -3,7 +3,7 @@
 source "/usr/bin/pdfForts/common.sh"
 
 # Check for required programs
-reqCmds="unzip zip sed convert pdftk libreoffice unoconv"
+reqCmds="unzip zip sed convert pdftk libreoffice unoconv kate"
 checkPrograms
 
 # Run some common functions
@@ -44,30 +44,27 @@ createOdt () {
 
 
 # Prompt to use default template or custom template
-tplSelect=$(kdialog --title "Default template dialog" --yesnocancel "Press YES if you want to use the default template locatet at
+tplSelect=$(guiYesNo "Default template dialog" "Press YES if you want to use the default template locatet at
 '${defaultTemplate}'
 
 Press NO to select a different template.
 
 NOTICE: All '_replace_' strings in the selected template will be replaced by a string selected later")
 case "${?}" in
-    0) # Yes selected
+    1) # Yes selected
         tplSelected="${defaultTemplate}"
         ;;
-    1) # No selected
-        tplSelected=$(kdialog --getopenfilename ${HOME} "*.odt")
+    2) # No selected
+        tplSelected=$(guiFileSelect "${HOME}")
         if [[ $? != 0 ]]; then
             exit;
         fi
-        ;;
-    2) # Cancel selected
-        exit;
         ;;
 esac
 
 
 # Prompt for default text string
-tplMessage=$(kdialog --title "Text message" --inputbox "Please enter the desired text message" "${defaultText}")
+tplMessage=$(guiInput "Text message" "Please enter the desired text message" "${defaultText}")
 
 
 # Create temporary dir

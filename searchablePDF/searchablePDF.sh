@@ -6,18 +6,17 @@ source "/usr/bin/pdfForts/common.sh"
 reqCmds="pdftk cuneiform hocr2pdf convert"
 checkPrograms
 
+# Run some common functions
+createTmpDir
+deleteTmpDir
 
 # Ask for Settings
 Lang=$(cuneiform -l)
-Language=$(kdialog --title "Language Setting" --inputbox "${Lang}");
+Language=$(guiInput "Language Setting" "${Lang}");
 
 if [[ "${?}" != 0 ]]; then
     exit;
 fi
-
-# Run some common functions
-createTmpDir
-deleteTmpDir
 
 # Parse the selected file
 for arg; do

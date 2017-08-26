@@ -6,7 +6,6 @@ source "/usr/bin/pdfForts/common.sh"
 reqCmds="pdftk kate gs recode"
 checkPrograms
 
-
 # Run some common functions
 createTmpDir
 deleteTmpDir
