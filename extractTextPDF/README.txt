@@ -7,7 +7,6 @@ PREREQUISITES
 - KDE / Dolphin
 - kdialog
 - bash
-- basename (part of coreutils)
 - pdftotext (part of poppler-utils)
 
 

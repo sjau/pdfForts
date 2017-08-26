@@ -10,7 +10,6 @@ PREREQUISITES
 - pdftk
 - libreoffice
 - bash
-- basename (part of coreutils)
 - recode
 
 

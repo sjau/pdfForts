@@ -9,7 +9,6 @@ PREREQUISITES
 - imagemagick
 - pdftk
 - bash
-- basename (part of coreutils)
 - tesseract
 - tesseract language file(s)
 

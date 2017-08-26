@@ -7,7 +7,6 @@ PREREQUISITES
 - KDE / Dolphin
 - kdialog
 - ghostscript
-- basename
 
 
 HOWTO

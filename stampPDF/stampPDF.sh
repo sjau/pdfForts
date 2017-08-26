@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -x
+
 source "/usr/bin/pdfForts/common.sh"
 
 # Check for required programs
@@ -7,9 +9,8 @@ reqCmds="unzip zip sed pdftk gs kdialog basename kate libreoffice unoconv"
 checkPrograms
 
 
-
-function createStamp
-{
+createStamp () {
+    origDir=$(pwd)
     stampDir="${tmpStorage}/stampDir_${docNr}_${pgNr}"
     mkdir -p "${stampDir}"
     echo "cp $tplSelected $stampDir/stamp.odt"
@@ -24,25 +25,22 @@ function createStamp
     zip -D -X -0 -r "stamp.odt" . -i \*.png \*.jpg \*.jpeg
 
     case "${selectedConverter}" in
-            1) # Unoconv selected
+        1) # Unoconv selected
+            unoconv -f pdf "stamp.odt"
+            if [[ ! -f "stamp.pdf" ]]; then
                 unoconv -f pdf "stamp.odt"
-                if [[ ! -f "stamp.pdf" ]]
-                then
-                    unoconv -f pdf "stamp.odt"
-                fi
-                ;;
-            2) # LibreOffice selected
-                if [[ "$(pidof soffice.bin)" ]]
-                then
-                    kdialog --error "LibreOffice is running! Please close LibreOffice before continuing.
+            fi
+            ;;
+        2) # LibreOffice selected
+            if [[ "$(pidof soffice.bin)" ]]; then
+                kdialog --error "LibreOffice is running! Please close LibreOffice before continuing.
 
 Notice: Unoconv can be run even if LibreOffice is running!"
-                fi
-                libreoffice --headless --invisible --convert-to pdf "${stampDir}/stamp.odt"
-                ;;
+            fi
+            libreoffice --headless --invisible --convert-to pdf "${stampDir}/stamp.odt"
+            ;;
     esac
-    if [[ ! -f "stamp.pdf" ]]
-    then
+    if [[ ! -f "stamp.pdf" ]]; then
         kdialog --error "Couldn't convert the .odt file to a .pdf. Please try to switch between Unoconv and LibreOffice.
 
 Also make sure that if you selected LibreOffice that it wasn't running.
@@ -51,12 +49,12 @@ If the problem continues to appear, please file a bug report at: https://github.
         exit;
     fi
     mv "${stampDir}/stamp.pdf" "${stampPDF}/${pgNr}.pdf"
+    cd "${origDir}"
 }
 
 
 
-function handlePDF
-{
+handlePDF () {
     docNr="${1}";
     pdfFile="${2}";
     fileBase="${3}";
@@ -75,11 +73,10 @@ function handlePDF
     # Get filename and and append the pdfmarks file for the bookmarks
     echo "|${fileBase}|${curPage}" >> "${bookMarks}"
 
-    for file in "${pgDir}/"*.pdf ;
-    do
+    for file in "${pgDir}/"*.pdf; do
         # Get Zeros before page number
-        countZero "${pg}"
-        pgNr="${addZero}${pg}"
+        padZero "${pg}"
+        pgNr="${paddedCount}${pg}"
 
         # Create stamp PDF
         createStamp
@@ -95,23 +92,25 @@ function handlePDF
 
 
 
-function setFinalDocName
-{
+setFinalDocName () {
     docNrEnd=$((${doc}-1))
-    if [[ "$docNrStart" -eq "$docNrEnd" ]]
-    then
+    if [[ "$docNrStart" -eq "$docNrEnd" ]]; then
         destFile="${destDir}/${savefile} ${docNrStart}.pdf"
     else
         destFile="${destDir}/${savefile} ${docNrStart} - ${docNrEnd}.pdf"
     fi
-//    echo "gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile='${destFile}' '${docDir}/'*pdf  '${pdfMarks}'"
-//    gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile="${destFile}" "${docDir}/"*pdf  "${pdfMarks}"
+#    echo "gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile='${destFile}' '${docDir}/'*pdf  '${pdfMarks}'"
+#    gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile="${destFile}" "${docDir}/"*pdf  "${pdfMarks}"
     cd "${docDir}"
-    for curPDF in *pdf
-    do
-        gs -sDEVICE=ps2write -o "${curPDF}.ps" "${curPDF}"
+    curpwd=$(pwd)
+    echo "$curpwd" > "output.txt"
+    for curPDF in *pdf; do
+        echo "${curPDF}" >> "output.txt"
+        echo "gs -sDEVICE=ps2write -o '${curPDF}.ps' '${curPDF}'" >> "ps.txt"
+        gs -sDEVICE=ps2write -o "${curPDF}.ps" "${curPDF}" >> "gs.txt" 2>&1
     done
-    gs -sDEVICE=pdfwrite -o "${destFile}" *ps  "${pdfMarks}"
+    echo "gs -sDEVICE=pdfwrite -o '${destFile}' *ps  '${pdfMarks}'"
+    gs -sDEVICE=pdfwrite -o "${destFile}" *ps  "${pdfMarks}" >> "final.txt" 2>&1
 }
 
 
@@ -161,15 +160,15 @@ curPage="1";
 
 
 # Loop through the sorted files
-for curFile in "${filesSorted[@]}"
-do
+for curFile in "${filesSorted[@]}"; do
     # Get doc zeros
-    countZero "${doc}"
-    docNr="${addZero}${doc}"
+    padZero "${doc}"
+    docNr="${paddedCount}${doc}"
 
     # Get file info and dir name
-    fileBase=$(basename "${curFile%.*}")
-    fileExt=$(basename "${curFile##*.}")
+    fileName=${curFile##*/}
+    fileBase=${fileName%%.*}
+    fileExt=${curFile##*.}
     fPath=$(readlink -f "${curFile}")
     destDir=$(dirname "${fPath}")
     # Start the file manipulation

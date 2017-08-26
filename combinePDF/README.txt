@@ -8,7 +8,6 @@ PREREQUISITES
 - kdialog
 - pdftk
 - bash
-- basename (part of coreutils)
 - recode
 
 

@@ -1,20 +1,18 @@
 #!/usr/bin/env bash
 
-function searchArray
-{
+source "/usr/bin/pdfForts/common.sh"
+
+searchArray () {
     needle="${1}"
     haystack="${2}"
 
     origData["${needle}"]=""
 
-    for ((i=0; i < ${#haystack[@]}; ++i))
-    do
-        if [[ "${haystack[$i]}" =~ "${needle}" ]]
-        then
+    for ((i=0; i < ${#haystack[@]}; ++i)); do
+        if [[ "${haystack[$i]}" =~ "${needle}" ]]; then
             echo "Found match"
             j=$[i+1]
-            if [[ "${haystack[$j]}" =~ "InfoValue:" ]]
-            then
+            if [[ "${haystack[$j]}" =~ "InfoValue:" ]]; then
                 echo "Found value match"
                 origData["${needle}"]="${haystack[$j]:11}"
             fi
@@ -24,8 +22,8 @@ function searchArray
 
 
 # Create temporary dirs
-tmpDir='stampPDF.XXXXXXXXXX';
-tmpStorage=$(mktemp -t -d "${tmpDir}") || exit 1
+createTmpDir
+deleteTmpDir
 pdfMarkOrig="${tmpStorage}/pdfMarkOrig.txt"
 pdfMarks="${tmpStorage}/pdfMarks.txt"
 
@@ -34,17 +32,14 @@ pdfMarks="${tmpStorage}/pdfMarks.txt"
 IFS=: read -r _ _ _ _ name _ < <(getent passwd $USER);
 userName="${name%%,*}"
 
-if [ "${userName}" == "" ]
-then
+if [[ "${userName}" == "" ]]; then
     userName=$(whoami)
 fi
 
 # Loop through the selected files
-for arg ;
-do
+for arg; do
     # Test if it is a file
-    if [ -f "${arg}" ]
-    then
+    if [[ -f "${arg}" ]]; then
         # Extract pdfmark info
         pdftk "${arg}" dump_data > "${pdfMarkOrig}"
 
@@ -67,13 +62,12 @@ do
         searchArray "ModDate"
 
         # Prompt for password entry
-        fName=$(basename "${arg}")
+        fName=$(arg##*/)
         fileNoExt=${arg%.*}
         author=$(kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
 
 Author - The document's author" "${origData[Author]}");
-        if [[ $? != 0 ]]
-        then
+        if [[ $? != 0 ]]; then
             exit;
         fi
 
@@ -88,48 +82,42 @@ The remainder of the string defines the relation of local time to GMT.
 O is either + for a positive difference (local time is later than GMT) or - (minus) for a negative difference.
 HH' is the absolute value of the offset from GMT in hours, and mm' is the absolute value of the offset in minutes.
 If no GMT information is specified, the relation between the specified time and GMT is considered unknown. Regardless of whether or not GMT information is specified, the remainder of the string should specify the local time." "${origData[CreationDate]}");
-        if [[ $? != 0 ]]
-        then
+        if [[ $? != 0 ]]; then
             exit;
         fi
 
         creator=$(kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
 
 Creator - If the document was converted to PDF from another form, the name of the application that originally created the document" "${origData[Creator]}");
-        if [[ $? != 0 ]]
-        then
+        if [[ $? != 0 ]]; then
             exit;
         fi
 
         producer=$(kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
 
 Producer - The application that created the PDF from its native form" "${origData[Producer]}");
-        if [[ $? != 0 ]]
-        then
+        if [[ $? != 0 ]]; then
             exit;
         fi
 
         title=$(kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
 
 Titel - The document's title" "${origData[Title]}");
-        if [[ $? != 0 ]]
-        then
+        if [[ $? != 0 ]]; then
             exit;
         fi
 
         subject=$(kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
 
 Subject - The document's subject" "${origData[Subject]}");
-        if [[ $? != 0 ]]
-        then
+        if [[ $? != 0 ]]; then
             exit;
         fi
 
         keywords=$(kdialog --title "Set meta data for \"${fName}\"" --inputbox "Set meta data for \"${fName}\"
 
 Keywords - Relevant keywords for this document, seperated by a comma followed by whitespace" "${origData[Keywords]}");
-        if [[ $? != 0 ]]
-        then
+        if [[ $? != 0 ]]; then
             exit;
         fi
 
@@ -144,17 +132,15 @@ The remainder of the string defines the relation of local time to GMT.
 O is either + for a positive difference (local time is later than GMT) or - (minus) for a negative difference.
 HH' is the absolute value of the offset from GMT in hours, and mm' is the absolute value of the offset in minutes.
 If no GMT information is specified, the relation between the specified time and GMT is considered unknown. Regardless of whether or not GMT information is specified, the remainder of the string should specify the local time." "${origData[ModDate]}");
-        if [[ $? != 0 ]]
-        then
+        if [[ $? != 0 ]]; then
             exit;
         fi
 
-        fName=$(basename "${arg}")
+        fName=${arg##*/}
         fileNoExt=${arg%.*}
         # Prompt for save file
         Name=$(kdialog --getsavefilename "${fileNoExt} - Metainfo.pdf");
-        if [[ $? != 0 ]]
-        then
+        if [[ $? != 0 ]]; then
             exit;
         fi
 
@@ -169,7 +155,7 @@ If no GMT information is specified, the relation between the specified time and 
    /DOCINFO pdfmark" > "${pdfMarks}"
 
 
-        gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile=${Name} ${arg} "${pdfMarks}"
+        gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile="${Name}" "${arg}" "${pdfMarks}"
     fi
 done
 
@@ -187,5 +173,3 @@ exit;
 #/DOCINFO pdfmark
 
 #gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile=out.pdf pdfmarkReference.pdf  pdfmarks
-
-

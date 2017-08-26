@@ -9,7 +9,6 @@ PREREQUISITES
 - pdftk
 - ghostscript
 - bash
-- basename (part of coreutils)
 - recode
 
 

@@ -2,7 +2,7 @@
 
 scriptName="rmPasswdPDF"
 installPath="/usr/bin/pdfForts/"
-serviceMenus="/usr/share/kde4/services/ServiceMenus/pdfForts/"
+serviceMenus="/usr/share/kservices5/ServiceMenus/pdfForts/"
 configFile="n"
 templateFile="n"
 templateName=""

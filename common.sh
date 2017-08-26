@@ -1,5 +1,4 @@
-function createTmpDir
-{
+createTmpDir () {
     # Create temporary dir
     tmpDir='pdfForts.XXXXXXXXXX';
     tmpStorage=$(mktemp -t -d "${tmpDir}") || {
@@ -9,28 +8,23 @@ function createTmpDir
 }
 
 
-
-function deleteTmpDir
-{
+deleteTmpDir () {
     trap 'rm -rf "${tmpStorage}"' 0     # remove directory when script finishes
     trap 1 2 3 15                       # terminate script when receiving signal
 }
 
 
-
-function checkConfig
-{
+checkConfig () {
     curScript="${0}"
-    fullName=$(basename "${curScript}")
+    fullName=${curScript##*/}
     baseName="${fullName%.*}"
 
     # Test if config exists
     userConfig="${HOME}/.pdfForts/${baseName}.conf"
-    if [[ ! -f "${userConfig}" ]]
-    then
+    if [[ ! -f "${userConfig}" ]]; then
         # User config does not exist, copy default to user
         mkdir -p "${HOME}/.pdfForts/"
-        cp "/usr/share/kde4/services/ServiceMenus/pdfForts/${baseName}.conf" "${userConfig}"
+        cp "/usr/share/kservices5/ServiceMenus/pdfForts/${baseName}.conf" "${userConfig}"
 
         kdialog --msgbox "No configuration file for ${baseName} has been found.
 A default one was copied to ${userConfig}.
@@ -49,9 +43,7 @@ Retry again on the PDF files."
 }
 
 
-
-function getSaveFile
-{
+getSaveFile () {
     fFile="${1}"
     fMessage="${2}"
     fExt="${3}"
@@ -60,34 +52,22 @@ function getSaveFile
 }
 
 
-
-function countZero
-{
-    # Check length of string and add zeros accordingly
-    unset "addZero"
-    case "${#1}" in
-        1) addZero="00000" ;;
-        2) addZero="0000" ;;
-        3) addZero="000" ;;
-        4) addZero="00" ;;
-        5) addZero="0" ;;
-    esac
+padZero () {
+    # Pad the counting to 50 numbers
+    unset "paddedCount"
+    paddedCount=$(printf "%020d%s\n" "${1}")
 }
 
 
-
-function sortFiles
-{
+sortFiles () {
     files="${1}"
 
     # Create empty array
     declare -a filesUnsorted=();
     # Loop through files
-    for files ;
-    do
+    for files; do
         # Test if it is a file
-        if [ -f "${files}" ]
-        then
+        if [[ -f "${files}" ]]; then
             filesUnsorted=("${filesUnsorted[@]}" "${files}")
         fi
     done
@@ -96,9 +76,7 @@ function sortFiles
 }
 
 
-
-function extractMetaData
-{
+extractMetaData () {
     curFile="${1}"
     pdftk "${curFile}" dump_data > "${metaFile}.html"
     cat "${metaFile}.html" | recode html..utf8 > "${metaFile}"
@@ -107,9 +85,7 @@ function extractMetaData
 }
 
 
-
-function convertSpecialCharsToASCII
-{
+convertSpecialCharsToASCII () {
     curTitle="${1}"
 
     # Create associative array where key is the string to look for and value the replacement
@@ -122,15 +98,13 @@ function convertSpecialCharsToASCII
     replArray[Ü]='\334'
     replArray[ß]='\337'
 
-    for k in "${!replArray[@]}"
-    do
+    for k in "${!replArray[@]}"; do
         curTitle="${curTitle//$k/${replArray[$k]}}"
     done
 }
 
 
-function convertMetaToBookmark
-{
+convertMetaToBookmark () {
     unset "curTitle"
     unset "curLvl"
     unset "curNr"
@@ -141,10 +115,8 @@ function convertMetaToBookmark
 
     rm "${bookMarks}"
 
-    if [[ "${docBookmarks}" -eq "1" ]]
-    then
-        if [[ "${levelBookmarks}" -eq "1" ]]
-        then
+    if [[ "${docBookmarks}" -eq "1" ]]; then
+        if [[ "${levelBookmarks}" -eq "1" ]]; then
             adjustLvl="1"
             echo "+-|${fileBase}|1" >> "${bookMarks}"
         else
@@ -152,32 +124,26 @@ function convertMetaToBookmark
         fi
     fi
 
-    for ((i=0; i < ${#haystack[@]}; ++i))
-    do
+    for ((i=0; i < ${#haystack[@]}; ++i)); do
         # Get pages number
-        if [[ "${haystack[$i]}" =~ "NumberOfPages:" ]]
-        then
+        if [[ "${haystack[$i]}" =~ "NumberOfPages:" ]]; then
             curDocPages="${haystack[$i]:15}"
         fi
         # Get bookmark meta data
-        if [[ "${haystack[$i]}" =~ "${needle}" ]]
-        then
+        if [[ "${haystack[$i]}" =~ "${needle}" ]]; then
             curTitle="${haystack[$i]:15}"
             j=$[i+1]
             k=$[i+2]
-            if [[ "${haystack[$j]}" =~ "BookmarkLevel:" ]]
-            then
+            if [[ "${haystack[$j]}" =~ "BookmarkLevel:" ]]; then
                 tmpLvl="${haystack[$j]:15}"
                 curLvl=$((tmpLvl + adjustLvl))
             fi
-            if [[ "${haystack[$k]}" =~ "BookmarkPageNumber:" ]]
-            then
+            if [[ "${haystack[$k]}" =~ "BookmarkPageNumber:" ]]; then
                 curNr="${haystack[$k]:20}"
             fi
 
             curDash=""
-            while [[  "${curLvl}" -gt "1" ]]
-            do
+            while [[  "${curLvl}" -gt "1" ]]; do
                 curDash="${curDash}--"
                 ((curLvl--))
             done
@@ -188,9 +154,7 @@ function convertMetaToBookmark
 }
 
 
-
-function convertBookmarkToPdfmark
-{
+convertBookmarkToPdfmark () {
     bookmarkFile="${1}"
 
     unset "titleArr"
@@ -212,15 +176,13 @@ function convertBookmarkToPdfmark
     mapfile -t fileContent < "${bookmarkFile}"
 
     bookmarkLine=1
-    for lineContent in "${fileContent[@]}"
-    do
+    for lineContent in "${fileContent[@]}"; do
         unset arrLine
         IFS='|' read -ra arrLine <<< "${lineContent}"
         curDash="${#arrLine[0]}"
         curLvl=$((curDash / 2 - 1))
         curCollapse="${arrLine[0]:0:1}"
-        if [[ "${curCollapse}" == "+" ]]
-        then
+        if [[ "${curCollapse}" == "+" ]]; then
             collapseArr["${bookmarkLine}"]="-1"
         else
             collapseArr["${bookmarkLine}"]="1"
@@ -233,19 +195,17 @@ function convertBookmarkToPdfmark
         numberArr["${bookmarkLine}"]="${curNr}"
         ((bookmarkLine++))
     done
-    
+
     # Loop through the array in reverse order
     lastLevel=0
-    for ((x=${#titleArr[@]}; x >= 1; --x))
-    do
+    for ((x=${#titleArr[@]}; x >= 1; --x)); do
         curTitle="${titleArr[$x]}"
         curLevel="${levelArr[$x]}"
         curNumber="${numberArr[$x]}"
         curCollapseMultiplier="${collapseArr[$x]}"
-        
+
         # Equal level or sublevel
-        if [[ "${curLevel}" -ge "${lastLevel}" ]]
-        then
+        if [[ "${curLevel}" -ge "${lastLevel}" ]]; then
             page=$((curPage + curNumber))
             lvl[$curLevel]=$(( lvl[$curLevel] += 1 ))
             outputArr[$x]="[ /Title (${curTitle}) /Page ${page} /OUT pdfmark"
@@ -254,8 +214,7 @@ function convertBookmarkToPdfmark
         fi
 
         # Parent level
-        if [[ "${curLevel}" -lt "${lastLevel}" ]]
-        then
+        if [[ "${curLevel}" -lt "${lastLevel}" ]]; then
             page=$((curPage + curNumber))
             lvl[$curLevel]=$(( lvl[$curLevel] += 1 ))
             subLvl=$((${curLevel}+1))
@@ -267,9 +226,8 @@ function convertBookmarkToPdfmark
         fi
     done
 
-    for (( a = 0 ; a <= ${#outputArr[@]} ; a++ )) do
-        if [[ "${outputArr[$a]}" ]]
-        then
+    for (( a = 0 ; a <= ${#outputArr[@]} ; a++ )); do
+        if [[ "${outputArr[$a]}" ]]; then
             echo "${outputArr[$a]}" >> "${tmpStorage}/pdfmarks"
         fi
     done
@@ -277,9 +235,7 @@ function convertBookmarkToPdfmark
 }
 
 
-
-function selectTemplate
-{
+selectTemplate () {
     # Prompt to use default template or custom template
     tplSelect=$(kdialog --title "Default template dialog" --yesnocancel "Press YES if you want to use the default template located at ${defaultTemplate}
 
@@ -288,7 +244,7 @@ Press NO to select a different template.
 NOTICE: All '_replace_' strings in the selected template will be replaced by a string selected later")
 
     case "${?}" in
-        0) # Yes selected
+        0) # Yes selected 
             tplSelected="${defaultTemplate}"
             ;;
         1) # No selected
@@ -301,13 +257,9 @@ NOTICE: All '_replace_' strings in the selected template will be replaced by a s
 }
 
 
-
-function checkPrograms
-{
-    for curCmd in ${reqCmds}
-    do
-        type -P ${curCmd} &>/dev/null  && continue  ||
-        {
+checkPrograms () {
+    for curCmd in ${reqCmds}; do
+        type -P ${curCmd} &>/dev/null  && continue  || {
             kdialog --error "Couldn't find the '${curCmd} program.
 
 Please install and re-run this script.";
@@ -317,14 +269,11 @@ Please install and re-run this script.";
 }
 
 
-
-function chkConfOption
-{
+chkConfOption () {
     chkOption="${1}"
     confValue="${2}"
 
-    if [[ "${chkOption}" == "" ]]
-    then
+    if [[ "${chkOption}" == "" ]]; then
         echo " " >> "${userConfig}"
         echo "${confValue}" >> "${userConfig}"
         kdialog --msgbox "Added a new option to the end of your config file located at: "${userConfig}".

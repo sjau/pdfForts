@@ -3,13 +3,12 @@
 source "/usr/bin/pdfForts/common.sh"
 
 # Check for required programs
-reqCmds="pdftk kdialog basename"
+reqCmds="pdftk kdialog"
 checkPrograms
 
 
 
-while [[ "${PasswdChk}" != "OK" ]]
-do
+while [[ "${PasswdChk}" != "OK" ]]; do
     # Ask for password
     Passwd1=$(kdialog --title "Password" --password "Please enter a password");
     if [[ $? != 0 ]]; then
@@ -20,12 +19,9 @@ do
         exit;
     fi
     # Check if the passwords are the same
-    if [[ "${Passwd1}" = "${Passwd2}" ]]
-    then
+    if [[ "${Passwd1}" = "${Passwd2}" ]]; then
         Passwd="${Passwd1}"
-
-        if [[ -n "${Passwd}" ]]
-        then
+        if [[ -n "${Passwd}" ]]; then
             PasswdChk="OK"
         else
             kdialog --error "You can't set an empty password."
@@ -39,8 +35,7 @@ done
 
 
 # Loop through the selected files
-for arg ;
-do
+for arg; do
     # Test if it is a file
     if [[ -f "${arg}" ]]
     then

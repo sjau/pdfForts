@@ -30,11 +30,9 @@ metaFile="${tmpStorage}/meta.txt"
 
 
 # Loop through the selected files
-for arg ;
-do
+for arg; do
     # Test if it is a file
-    if [[ -f "${arg}" ]]
-    then
+    if [[ -f "${arg}" ]]; then
         fMessage="File attached"
         fExt="pdf"
         getSaveFile "${arg}" "${fMessage}" "${fExt}"

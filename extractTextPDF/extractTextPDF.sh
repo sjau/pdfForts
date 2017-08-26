@@ -16,16 +16,13 @@ esac
 
 
 # Loop through the selected files
-for arg ;
-do
+for arg; do
     # Test if it is a file
-    if [[ -f "${arg}" ]]
-    then
+    if [[ -f "${arg}" ]]; then
         # Prompt file save name
         fn=${arg%.*}
         newFile=$(kdialog --getsavefilename "${fn}.txt");
-        if [[ $? != 0 ]]
-        then
+        if [[ $? != 0 ]]; then
             exit;
         fi
         pdftotext ${layout} "${arg}" "${newFile}"

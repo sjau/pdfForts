@@ -19,10 +19,10 @@ Each of the script has other prerequisites. Most of them require one or more of 
 - imagemagick
 - zip
 - unzip
-- basename
 - bash
 - libreoffice
 - tesseract & tesseract language package(s)
+- sed
 
 
 

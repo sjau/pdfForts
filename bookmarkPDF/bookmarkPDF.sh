@@ -3,15 +3,13 @@
 source "/usr/bin/pdfForts/common.sh"
 
 # Check for required programs
-reqCmds="pdftk kdialog basename kate gs recode"
+reqCmds="pdftk kdialog kate gs recode"
 checkPrograms
-
 
 
 # Run some common functions
 createTmpDir
 deleteTmpDir
-
 
 
 # Set bookmark file
@@ -21,13 +19,10 @@ bookMarks="${tmpStorage}/bookmarks.txt"
 metaFile="${tmpStorage}/meta.txt"
 
 
-
 # Loop through the selected files
-for arg ;
-do
+for arg; do
     # Test if it is a file
-    if [[ -f "${arg}" ]]
-    then
+    if [[ -f "${arg}" ]]; then
         fMessage="Bookmarks edited"
         fExt="pdf"
         getSaveFile "${arg}" "${fMessage}" "${fExt}"

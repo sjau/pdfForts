@@ -1,57 +1,29 @@
 #!/usr/bin/env bash
 
-function createTmpDirs
-{
-    # Create temporary dirs
-    tmpDir='watermarkPDF.XXXXXXXXXX';
-    tmpStorage=$(mktemp -t -d "${tmpDir}") || exit 1
-}
+source "/usr/bin/pdfForts/common.sh"
+
+# Run some common functions
+createTmpDir
+deleteTmpDir
+checkConfig "watermarkPDF"
 
 
-
-function checkConfig
-{
-    # Test if config exists
-    userConfig="${HOME}/.pdfForts/watermarkPDF.conf"
-    if [[ ! -f "${userConfig}" ]]
-    then
-        # User config does not exist, copy default to user
-        mkdir -p "${HOME}/.pdfForts/"
-        cp "/usr/share/kde4/services/ServiceMenus/pdfForts/watermarkPDF.conf" "${HOME}/.pdfForts/"
-        kdialog --msgbox "No configuration file for watermarkPDF has been found.
-
-A default one was copied to ${HOME}/.pdfForts/watermarkPDF.conf.
-Please edit that one to suit your needs.
-
-Next Kate will be opened with the config file."
-        kate "${HOME}/.pdfForts/watermarkPDF.conf"
-        kdialog --msgbox "You have now a user config.\n Retry again on the PDF file."
-        exit;
-    else
-    # Load config values
-    source "${HOME}/.pdfForts/watermarkPDF.conf"
-    fi
-}
-
-function checkService
-{
+checkService () {
     curService='soffice.bin'
 
-    if ps ax | grep -v grep | grep $SERVICE > /dev/null
-    then
+    if ps ax | grep -v grep | grep $SERVICE > /dev/null; then
         # Service is already running
         unoconv -f pdf "${tmpStorage}/draft.odt"
     else
         # Service is not running
         unoconv -f pdf "${tmpStorage}/draft.odt"
     fi
-        unoconv -f pdf "${tmpStorage}/draft.odt"
-        unoconv -f pdf "${tmpStorage}/draft.odt"
+    unoconv -f pdf "${tmpStorage}/draft.odt"
+    unoconv -f pdf "${tmpStorage}/draft.odt"
 }
 
 
-function createOdt
-{
+createOdt () {
     echo "${tplSelected} ${tmpStorage}/draft.odt"
     cp "${tplSelected}" "${tmpStorage}/draft.odt"
     cd "${tmpStorage}"
@@ -64,16 +36,6 @@ function createOdt
     zip -D -X -9 -r "draft.odt" . -x mimetype \*/.\* .\* \*.png \*.jpg \*.jpeg
     zip -D -X -0 -r "draft.odt" . -i \*.png \*.jpg \*.jpeg
 }
-
-
-
-function cleanUp
-{
-    rm -Rf  "${tmpStorage}/"*
-}
-
-
-checkConfig;
 
 
 
@@ -90,8 +52,7 @@ case "${?}" in
         ;;
     1) # No selected
         tplSelected=$(kdialog --getopenfilename ${HOME} "*.odt")
-        if [[ $? != 0 ]]
-        then
+        if [[ $? != 0 ]]; then
             exit;
         fi
         ;;
@@ -110,20 +71,18 @@ createTmpDirs;
 createOdt;
 
 # Loop through the selected files
-for arg ;
-do
+for arg; do
     # Test if it is a file
-    if [[ -f "${arg}" ]]
-    then
+    if [[ -f "${arg}" ]]; then
         # Prompt file save name
         fn=${arg%.*}
         newFile=$(kdialog --getsavefilename "${fn} - ${tplMessage}.pdf")
-        if [[ $? != 0 ]]
-        then
+        if [[ $? != 0 ]]; then
             exit;
         fi
         libreoffice --headless --invisible --convert-to pdf "${tmpStorage}/draft.odt"
-        pdftk "${arg}" multibackground "${tmpStorage}/draft.pdf" output "${newFile}"
-        cleanUp
+        convert -density 300 "${tmpStorage}/draft.pdf" -quality 90 "${tmpStorage}/draft.png"
+        convert "${tmpStorage}/draft.png" -transparent white -background none "${tmpStorage}/draft2.pdf"
+        pdftk "${arg}" multistamp "${tmpStorage}/draft2.pdf" output "${newFile}"
     fi
 done
