@@ -2,6 +2,10 @@
 
 source "/usr/bin/pdfForts/common.sh"
 
+# Check for required programs
+reqCmds="pdftk convert tesseract"
+checkPrograms
+
 # Run some common functions
 createTmpDir
 deleteTmpDir

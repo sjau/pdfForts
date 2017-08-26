@@ -2,6 +2,10 @@
 
 source "/usr/bin/pdfForts/common.sh"
 
+# Check for required programs
+reqCmds="unzip zip sed convert pdftk libreoffice unoconv"
+checkPrograms
+
 # Run some common functions
 createTmpDir
 deleteTmpDir

@@ -5,7 +5,7 @@ set -x
 source "/usr/bin/pdfForts/common.sh"
 
 # Check for required programs
-reqCmds="unzip zip sed pdftk gs kdialog basename kate libreoffice unoconv"
+reqCmds="unzip zip sed pdftk gs libreoffice unoconv"
 checkPrograms
 
 

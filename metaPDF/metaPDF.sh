@@ -2,6 +2,10 @@
 
 source "/usr/bin/pdfForts/common.sh"
 
+# Check for required programs
+reqCmds="pdftk gs"
+checkPrograms
+
 searchArray () {
     needle="${1}"
     haystack="${2}"

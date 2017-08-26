@@ -2,6 +2,10 @@
 
 source "/usr/bin/pdfForts/common.sh"
 
+# Check for required programs
+reqCmds="pdftotext"
+checkPrograms
+
 # Prompt to maintain the layout
 tplSelect=$(kdialog --title "Maintain Layout" --yesnocancel "Press YES if you want the extracted text to reflect the layout of the PDF")
 case "${?}" in

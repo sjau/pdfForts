@@ -2,6 +2,10 @@
 
 source "/usr/bin/pdfForts/common.sh"
 
+# Check for required programs
+reqCmds="pdftk"
+checkPrograms
+
 # Loop through the selected files
 for arg; do
     # Test if it is a file

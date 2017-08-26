@@ -2,6 +2,10 @@
 
 source "/usr/bin/pdfForts/common.sh"
 
+# Check for required programs
+reqCmds="pdftk"
+checkPrograms
+
 # Ask for range
 Range=$(kdialog --title "Define pages" --inputbox "Set the pages you want to extract.
 Values are to be seperated by a white space.

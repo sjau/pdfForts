@@ -3,9 +3,8 @@
 source "/usr/bin/pdfForts/common.sh"
 
 # Check for required programs
-reqCmds="pdftk kdialog"
+reqCmds="pdftk"
 checkPrograms
-
 
 
 # Run some common functions

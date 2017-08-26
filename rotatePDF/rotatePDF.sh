@@ -2,6 +2,10 @@
 
 source "/usr/bin/pdfForts/common.sh"
 
+# Check for required programs
+reqCmds="pdftk"
+checkPrograms
+
 # Ask for range
 Rotate=$(kdialog --menu "Chose rotation (clockwise):" East "90°" South "180°" West "270°");
 if [[ $? != 0 ]]; then

@@ -3,7 +3,7 @@
 source "/usr/bin/pdfForts/common.sh"
 
 # Check for required programs
-reqCmds="sed pdftk gs kdialog"
+reqCmds="gs convert"
 checkPrograms
 
 

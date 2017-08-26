@@ -266,6 +266,17 @@ NOTICE: All '_replace_' strings in the selected template will be replaced by a s
 
 
 checkPrograms () {
+    # Check for KDialog or Zenity
+    type -P "kdialog" &>/dev/null && continue || {
+        type -P "zenity" &>/dev/null && continue || {
+            echo "Couldn't find KDialog or Zenity on your system." > "/tmp/pdfFortsError.txt"
+            echo "Please install and re-run this script." >> "/tmp/pdfFortsError.txt"
+            kate "/tmp/pdfFortsError.txt"
+            exit 1;
+        }
+    }
+
+    # Check other required programs
     for curCmd in ${reqCmds}; do
         type -P ${curCmd} &>/dev/null  && continue  || {
             kdialog --error "Couldn't find the '${curCmd} program.
