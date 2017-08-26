@@ -5,7 +5,7 @@ source "/usr/bin/pdfForts/common.sh"
 # Run some common functions
 createTmpDir
 deleteTmpDir
-checkConfig "ocr§PDF"
+checkConfig "ocrPDF"
 
 runOCR () {
     i=$1
@@ -26,7 +26,7 @@ runOCR () {
         echo "" >> "${tmpStorage}/output.txt"
         ((i++))
     done
-    mv "${tmpStorage}/output.txt" "${newFile}"
+    mv "${tmpStorage}/output.txt" "${saveFile}"
 }
 
 
@@ -51,14 +51,11 @@ fi
 for arg; do
     # Test if it is a file
     if [[ -f "${arg}" ]]; then
-        # Prompt file save name
-        fn=${arg%.*}
-        newFile=$(kdialog --getsavefilename "${fn}.txt");
-        if [[ $? != 0 ]]; then
-            exit;
-        fi
+        # Prompt for save file
+        fMessage="OCR"
+        fExt="txt"
+        getSaveFile "${arg}" "${fMessage}" "${fExt}"
         pdftk "${arg}" burst output "${tmpStorage}/pages__%04d.pdf"
         runOCR
-        cleanUp
     fi
 done

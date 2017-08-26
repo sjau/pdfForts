@@ -28,13 +28,11 @@ deleteTmpDir
 for arg; do
     # Test if it is a file
     if [[ -f "${arg}" ]]; then
-        fName=${arg##*/}
-        fileNoExt=${arg%.*}
         # Prompt for save file
-        Name=$(kdialog --getsavefilename "${fileNoExt} - quality.pdf");
-        if [[ $? != 0 ]]; then
-            exit;
-        fi
+        fMessage="Quality"
+        fExt="pdf"
+        getSaveFile "${arg}" "${fMessage}" "${fExt}";
+
         curFile="${arg}"
         # Check if color change is required
         if [[ "${Color}" = "Gray" ]]; then
@@ -51,7 +49,7 @@ for arg; do
             gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dDownsampleColorImages=true -dColorImageResolution=${Resolution} -dNOPAUSE  -dBATCH -sOutputFile="${tmpStorage}/resize.pdf" "${curFile}"
             curFile="${tmpStorage}/resize.pdf"
         fi
-        mv "$curFile" "${Name}"
+        mv "$curFile" "${saveFile}"
     fi
 done
 

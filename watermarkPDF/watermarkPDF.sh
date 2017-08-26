@@ -74,15 +74,13 @@ createOdt;
 for arg; do
     # Test if it is a file
     if [[ -f "${arg}" ]]; then
-        # Prompt file save name
-        fn=${arg%.*}
-        newFile=$(kdialog --getsavefilename "${fn} - ${tplMessage}.pdf")
-        if [[ $? != 0 ]]; then
-            exit;
-        fi
+        # Prompt for save file
+        fMessage="Watermark"
+        fExt="pdf"
+        getSaveFile "${arg}" "${fMessage}" "${fExt}";
         libreoffice --headless --invisible --convert-to pdf "${tmpStorage}/draft.odt"
         convert -density 300 "${tmpStorage}/draft.pdf" -quality 90 "${tmpStorage}/draft.png"
         convert "${tmpStorage}/draft.png" -transparent white -background none "${tmpStorage}/draft2.pdf"
-        pdftk "${arg}" multistamp "${tmpStorage}/draft2.pdf" output "${newFile}"
+        pdftk "${arg}" multistamp "${tmpStorage}/draft2.pdf" output "${saveFile}"
     fi
 done

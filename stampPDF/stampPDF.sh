@@ -166,9 +166,7 @@ for curFile in "${filesSorted[@]}"; do
     docNr="${paddedCount}${doc}"
 
     # Get file info and dir name
-    fileName=${curFile##*/}
-    fileBase=${fileName%%.*}
-    fileExt=${curFile##*.}
+    getFileInfo "${curFile}"
     fPath=$(readlink -f "${curFile}")
     destDir=$(dirname "${fPath}")
     # Start the file manipulation

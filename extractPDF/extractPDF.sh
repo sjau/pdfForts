@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source "/usr/bin/pdfForts/common.sh"
+
 # Ask for range
 Range=$(kdialog --title "Define pages" --inputbox "Set the pages you want to extract.
 Values are to be seperated by a white space.
@@ -15,18 +17,14 @@ The order is defines by your range.
 if [[ $? != 0 ]]; then
     exit;
 fi
-
 # Parse the selected file
 for arg; do
     # Test if it is a file
     if [[ -f "${arg}" ]]; then
-        fName=${arg##*/}
-        fileNoExt=${arg%.*}
-        # Prompt for save file
-        Name=$(kdialog --getsavefilename "${fileNoExt} - extracted.pdf");
-        if [[ $? != 0 ]]; then
-            exit;
-        fi
-        pdftk "${arg}" cat ${Range} output "${Name}"
+        fMessage="Extracted"
+        fExt="pdf"
+        getSaveFile "${arg}" "${fMessage}" "${fExt}"
+
+        pdftk "${arg}" cat ${Range} output "${saveFile}"
     fi
 done

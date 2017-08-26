@@ -52,6 +52,14 @@ getSaveFile () {
 }
 
 
+getFileInfo () {
+    filePath=${1%/*}"/"
+    fileName=${1##*/}
+    fileBase=${fileName%%.*}
+    fileExt=${name##*.}
+}
+
+
 padZero () {
     # Pad the counting to 50 numbers
     unset "paddedCount"

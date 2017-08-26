@@ -135,14 +135,10 @@ If no GMT information is specified, the relation between the specified time and 
         if [[ $? != 0 ]]; then
             exit;
         fi
-
-        fName=${arg##*/}
-        fileNoExt=${arg%.*}
         # Prompt for save file
-        Name=$(kdialog --getsavefilename "${fileNoExt} - Metainfo.pdf");
-        if [[ $? != 0 ]]; then
-            exit;
-        fi
+        fMessage="Meta"
+        fExt="pdf"
+        getSaveFile "${arg}" "${fMessage}" "${fExt}"
 
         echo "[ /Author (${author})
    /CreationDate (${creationdate})
@@ -155,7 +151,7 @@ If no GMT information is specified, the relation between the specified time and 
    /DOCINFO pdfmark" > "${pdfMarks}"
 
 
-        gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile="${Name}" "${arg}" "${pdfMarks}"
+        gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile="${saveFile}" "${arg}" "${pdfMarks}"
     fi
 done
 

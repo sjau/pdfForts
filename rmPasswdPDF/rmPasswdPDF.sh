@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source "/usr/bin/pdfForts/common.sh"
+
 # Loop through the selected files
 for arg; do
     # Test if it is a file
@@ -10,8 +12,11 @@ for arg; do
         if [[ $? != 0 ]]; then
             exit;
         fi
-        fileNoExt=${arg%.*}
-        pdftk "${arg}" input_pw ${Passwd} output "${fileNoExt} - no Pwd.pdf"
+        # Prompt for save file
+        fMessage="no Pwd"
+        fExt="pdf"
+        getSaveFile "${arg}" "${fMessage}" "${fExt}";
+        pdftk "${arg}" input_pw ${Passwd} output "${saveFile}"
     fi
 done
 

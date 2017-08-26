@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source "/usr/bin/pdfForts/common.sh"
+
 # Ask for range
 Rotate=$(kdialog --menu "Chose rotation (clockwise):" East "90°" South "180°" West "270°");
 if [[ $? != 0 ]]; then
@@ -10,13 +12,10 @@ fi
 for arg; do
     # Test if it is a file
     if [[ -f "${arg}" ]]; then
-        fName=${arg##*/}
-        fileNoExt=${arg%.*}
         # Prompt for save file
-        Name=$(kdialog --getsavefilename "${fileNoExt} - rotated.pdf")
-        if [[ $? != 0 ]]; then
-            exit;
-        fi
-        pdftk "${arg}" cat 1-end${Rotate} output "${Name}"
+        fMessage="Rotated"
+        fExt="pdf"
+        getSaveFile "${arg}" "${fMessage}" "${fExt}";
+        pdftk "${arg}" cat 1-end${Rotate} output "${saveFile}"
     fi
 done

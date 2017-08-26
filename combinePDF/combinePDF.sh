@@ -23,15 +23,16 @@ levelBookmarks=$(kdialog --radiolist "Shall the pdf names be a superior category
 
 # Prompt file save name
 pathName="${filesSorted[1]%/*}"
-saveFile=$(kdialog --getsavefilename "${pathName}/Combined.pdf") || exit;
+fMessage="Combined"
+fExt="pdf"
+getSaveFile "PDFs.pdf" "${fMessage}" "${fExt}"
 
 
 # Loop through the sorted files
 h="1"
 curPage="0"
 for curFile in "${filesSorted[@]}"; do
-    fileName=${curFile##*/}
-    fileBase=${fileName%.*}
+    getFileInfo "${curFile}"
     padZero "${h}"
     curDocLoc="${tmpStorage}/${paddedCount}${h}"
     pdftk "${curFile}" dump_data >> "${curDocLoc}.txt.html"

@@ -23,13 +23,10 @@ deleteTmpDir
 for arg; do
     # Test if it is a file
     if [[ -f "${arg}" ]]; then
-        fName=${arg##*/}
-        fileNoExt=${fName%.*}
         # Prompt for save file
-        Name=$(kdialog --getsavefilename "${fileNoExt} - searchable.pdf");
-        if [[ "${?}" != 0 ]]; then
-            exit;
-        fi
+        fMessage="Searchable"
+        fExt="pdf"
+        getSaveFile "${arg}" "${fMessage}" "${fExt}";
 
         cd "${tmpStorage}" || exit;
 
@@ -47,12 +44,10 @@ for arg; do
             if [[ "${?}" != 0 ]]; then
                 touch "${curFile}.html"
             fi
-            hocr2pdf -i "${curFile}" -r 300 -o "${curFile}.new.pdf" < "${curFile}.html"
+            hocr2pdf -i "${curFile}" -o "${curFile}.new.pdf" < "${curFile}.html"
 
         done
-        xxxName=$(kdialog --getsavefilename "${fileNoExt} - searchable.pdf");
- 
-        pdftk "pages__"*.new.pdf cat output "${Name}"
+        pdftk "pages__"*.new.pdf cat output "${saveFile}"
 
     fi
 done
