@@ -47,7 +47,7 @@ done
 
 # Combine the files and send it to final destination
 cd "${tmpStorage}"
-gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile="new.pdf" -c "userdict /opdfmark systemdict /pdfmark get put /pdfmark {cleartomark} def" -f *.pdf -c "/pdfmark userdict /opdfmark get def" -f pdfmarks >> "gs.txt"  2>&1
+gs -sDEVICE=pdfwrite -dBATCH -dNOPAUSE -sOutputFile="new.pdf" -c "userdict /opdfmark systemdict /pdfmark get put /pdfmark {cleartomark} def" -f *.pdf -c "/pdfmark userdict /opdfmark get def" -f pdfmarks >> "gs.txt"  2>&1
 
 cp "new.pdf" "${saveFile}"
 

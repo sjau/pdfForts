@@ -14,6 +14,6 @@ for arg; do
         fMessage="PDFA"
         fExt="pdf"
         getSaveFile "${arg}" "${fMessage}" "${fExt}";
-        gs -dPDFA -dBATCH -dNOPAUSE -dNOOUTERSAVE -dUseCIEColor -sProcessColorModel=DeviceCMYK -sDEVICE=pdfwrite -sOutputFile="${saveFile}" "${arg}"
+        gs -sDEVICE=pdfwrite -dBATCH -dPDFA -dNOPAUSE -dNOOUTERSAVE -dUseCIEColor -sProcessColorModel=DeviceCMYK -sOutputFile="${saveFile}" "${arg}"
     fi
 done

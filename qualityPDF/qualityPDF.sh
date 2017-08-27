@@ -72,7 +72,7 @@ for arg; do
 
         # Check if resolution change is required
         if [[ "${Resolution}" != "Keep" ]]; then
-            gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dDownsampleColorImages=true -dColorImageResolution=${Resolution} -dNOPAUSE  -dBATCH -sOutputFile="${tmpStorage}/resize.pdf" "${curFile}"
+            gs -sDEVICE=pdfwrite -dBATCH -dCompatibilityLevel=1.4 -dDownsampleColorImages=true -dColorImageResolution=${Resolution} -dNOPAUSE -sOutputFile="${tmpStorage}/resize.pdf" "${curFile}"
             curFile="${tmpStorage}/resize.pdf"
         fi
         mv "$curFile" "${saveFile}"
