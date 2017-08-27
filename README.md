@@ -24,6 +24,7 @@ Each of the script has other prerequisites. Most of them require one or more of 
 - tesseract & tesseract language package(s)
 - sed
 
+if you're using Nixos, just use the pdfForts.nix file instead.
 
 
 addPasswdPDF
