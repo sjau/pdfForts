@@ -19,7 +19,8 @@ docBookmarks=$(guiYesNo "Shall the pdf names also added as bookmark entries?") |
 
 # Prompt for level between individual pdf name and existing bookmarks
 levelBookmarks=$(guiYesNo "Shall the pdf names be a superior category?") || exit;
-
+echo "doc -> $docBookmarks" >> $tmpStorage/vars.txt
+echo "lvl -> $levelBookmarks" >> $tmpStorage/vars.txt
 
 # Prompt file save name
 pathName="${filesSorted[1]%/*}"
@@ -44,7 +45,6 @@ for curFile in "${filesSorted[@]}"; do
     curPage=$((curPage + curDocPages))
     ((h++))
 done
-
 # Combine the files and send it to final destination
 cd "${tmpStorage}"
 gs -sDEVICE=pdfwrite -dBATCH -dNOPAUSE -sOutputFile="new.pdf" -c "userdict /opdfmark systemdict /pdfmark get put /pdfmark {cleartomark} def" -f *.pdf -c "/pdfmark userdict /opdfmark get def" -f pdfmarks >> "gs.txt"  2>&1

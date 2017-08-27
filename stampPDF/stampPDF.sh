@@ -13,7 +13,6 @@ createStamp () {
     origDir=$(pwd)
     stampDir="${tmpStorage}/stampDir_${docNr}_${pgNr}"
     mkdir -p "${stampDir}"
-    echo "cp $tplSelected $stampDir/stamp.odt"
     cp "${tplSelected}" "${stampDir}/stamp.odt"
     cd "${stampDir}"
     unzip "stamp.odt"
@@ -41,7 +40,7 @@ Notice: Unoconv can be run even if LibreOffice is running!"
             ;;
     esac
     if [[ ! -f "stamp.pdf" ]]; then
-        guiError "Couldn't convert the .odt file to a .pdf. Please try to switch between Unoconv and LibreOffice.
+        guiError "Couldn't turn the .odt file to a .pdf. Please try to switch between Unoconv and LibreOffice.
 
 Also make sure that if you selected LibreOffice that it wasn't running.
 

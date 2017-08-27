@@ -154,7 +154,6 @@ convertMetaToBookmark () {
                 curDash="${curDash}--"
                 ((curLvl--))
             done
-
             echo "+-${curDash}|${curTitle}|${curNr}" >> "${bookMarks}"
         fi
     done
@@ -244,13 +243,13 @@ convertBookmarkToPdfmark () {
 
 selectTemplate () {
     # Prompt to use default template or custom template
-    tplSelect=$(guiYesNo "Default template dialog" "Press YES if you want to use the default template located at ${defaultTemplate}
+    tplSelect=$(guiYesNo "Select Default Template" "Press YES if you want to use the default template located at ${defaultTemplate}
 
 Press NO to select a different template.
 
 NOTICE: All '_replace_' strings in the selected template will be replaced by a string selected later")
 
-    case "${?}" in
+    case "${tplSelect}" in
         1) # Yes selected 
             tplSelected="${defaultTemplate}"
             ;;
