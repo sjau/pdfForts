@@ -40,7 +40,7 @@ else
     fi
 fi
 
-if [[ "${Resolution}" = "Custom" ]]; then
+if [[ "${Resolution}" == "Custom" ]]; then
     Resolution=$(guiInput "Set Custom Image Resolution" "Set your custom resolution, e.g. use 100 for 100x100dpi") || exit;
 fi
 
