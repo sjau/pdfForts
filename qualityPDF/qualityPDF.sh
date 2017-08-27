@@ -25,15 +25,15 @@ if type kdialog &>/dev/null; then
     Resolution=$(kdialog --checklist "Set Image Resolution:" Keep "Keep current" off 600 "Convert to 600dpi" off 300 "Convert to 300dpi" off 200 "Convert to 200dpi" off 150 "Convert to 150dpi" off Custom "Set custom resolution" off ) || exit;
 else
     Resolution=$(zenity --list --radiolist --text "Set Image Resolution:" --hide-header --column "1" --column "2" FALSE "Keep current" FALSE "Convert to 600dpi" FALSE "Convert to 300dpi" FALSE "Convert to 200dpi" FALSE "Convert to 150dpi" FALSE "Set custom resolution") || exit;
-    if [[ "${Color}" == "Keep current" ]]; then
+    if [[ "${Resolution}" == "Keep current" ]]; then
         Resolution="Keep"
-    elif [[ "${Color}" == "Convert to 600dpi" ]]; then
+    elif [[ "${Resolution}" == "Convert to 600dpi" ]]; then
         Resolution="600"
-    elif [[ "${Color}" == "Convert to 300dpi" ]]; then
+    elif [[ "${Resolution}" == "Convert to 300dpi" ]]; then
         Resolution="300"
-    elif [[ "${Color}" == "Convert to 200dpi" ]]; then
+    elif [[ "${Resolution}" == "Convert to 200dpi" ]]; then
         Resolution="200"
-    elif [[ "${Color}" == "Convert to 150dpi" ]]; then
+    elif [[ "${Resolution}" == "Convert to 150dpi" ]]; then
         Resolution="150"
     else
         Resolution="Custom"
