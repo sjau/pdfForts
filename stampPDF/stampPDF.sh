@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -x
-
 source "/usr/bin/pdfForts/common.sh"
 
 # Check for required programs
