@@ -297,6 +297,12 @@ Kate will be launched for you to review."
     fi
 }
 
+chkCancelButton () {
+    if [[ "${1}" -eq 1 ]]; then
+        guiError "Abort. Cancel button pressed."
+    fi
+}
+
 guiError () {
     if type kdialog &>/dev/null; then
         kdialog --error "${1}"
@@ -315,51 +321,65 @@ guiInfo () {
 }
 
 guiPassword () {
+    local output
     if type kdialog &>/dev/null; then
-        local output=$(kdialog --title "${1}" --password "${2}") || exit;
+        output=$(kdialog --title "${1}" --password "${2}")
+        chkCancelButton "${?}"
     else
-        local output=$(zenity --password --title "${1}") || exit;
+        output=$(zenity --password --title "${1}")
+        chkCancelButton "${?}"
     fi
     printf "%s" "${output}"
 }
 
 guiFileSelect () {
+    local output
     if type kdialog &>/dev/null; then
-        local output=$(kdialog --getopenfilename "${1}") || exit;
+        output=$(kdialog --getopenfilename "${1}")
+        chkCancelButton "${?}"
     else
-        local output=$(zenity --file-selection --filename="${1}/") || exit;
+        output=$(zenity --file-selection --filename="${1}/")
+        chkCancelButton "${?}"
     fi
     printf "%s" "${output}"
 }
 
 guiFileSave () {
+    local output
     if type kdialog &>/dev/null; then
-        local output=$(kdialog --getsavefilename "${1}") || exit;
+        output=$(kdialog --getsavefilename "${1}") || exit;
+        chkCancelButton "${?}"
     else
-        local output=$(zenity --file-selection --save --filename="${1}") || exit;
+        output=$(zenity --file-selection --save --filename="${1}")
+        chkCancelButton "${?}"
     fi
     printf "%s" "${output}"
 }
 
 guiInput () {
+    local output
     if type kdialog &>/dev/null; then
-        local output=$(kdialog --title "${1}" --inputbox "${2}" "${3}") || exit;
+        output=$(kdialog --title "${1}" --inputbox "${2}" "${3}")
+        chkCancelButton "${?}"
     else
-        local output=$(zenity --entry --title "${1}" --text="${2}" --entry-text="${3}") || exit;
+        output=$(zenity --entry --title "${1}" --text="${2}" --entry-text="${3}")
+        chkCancelButton "${?}"
     fi
     printf "%s" "${output}"
 }
 
 guiYesNo () {
+    local output
     if type kdialog &>/dev/null; then
-        local output=$(kdialog --radiolist "${1}" 1 "Yes" on 2 "No" off) || exit;
+        output=$(kdialog --radiolist "${1}" 1 "Yes" on 2 "No" off) || exit;
+        chkCancelButton "${?}"
     else
-        local output=$(zenity --list --radiolist --text "${1}" --hide-header --column "1" --column "2" TRUE "Yes" FALSE "No") || exit;
-        if [[ "${output}" == "Yes" ]]; then
-            output="1"
-        else
-            output="2"
-        fi
+        output=$(zenity --list --radiolist --text "${1}" --hide-header --column "1" --column "2" TRUE "Yes" FALSE "No") || exit;
+        chkCancelButton "${?}"
+        case "${output}" in
+            "Yes")  output="1" ;;
+            "No")   output="2" ;;
+        esac
     fi
     printf "%s" "${output}"
 }
