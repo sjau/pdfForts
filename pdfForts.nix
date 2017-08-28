@@ -5,7 +5,7 @@ stdenv.mkDerivation {
   src = fetchgit {
     url = https://github.com/sjau/pdfForts.git;
     rev = "bd56b46aa33ba8d2955e6b4299eccbef07996237";
-    sha256 = "1fyh56y34w2hj899mspd20ilg7mi7n0yv4zi7mlgnz81qmax3fzy";
+    sha256 = "0rpp37vm1py2haz006dwwngkv5s021i4hrha7lgh3lflj52b1gih";
   };
 #  src = /home/hyper/Desktop/git-repos/pdfForts;
   installPhase = ''
