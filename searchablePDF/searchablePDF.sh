@@ -31,8 +31,6 @@ for arg; do
 
         pdftk "${arg}" burst output "${tmpStorage}/pages__%04d.pdf"
 
-#        echo "usage: ./pdfocr.sh document.pdf ocr-sfw split lang author title"
-
         for curFile in "pages__"*.pdf; do
             convert -normalize -density 300 -depth 8 "${curFile}" "${curFile}.png"
         done

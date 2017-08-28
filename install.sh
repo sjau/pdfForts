@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [[ "$(id -u)" != "0" ]]; then
-   echo "This script must be run as root" 1>&2
+   printf "%s\n" "This script must be run as root" 1>&2
    exit 1
 fi
 
@@ -101,19 +101,19 @@ validParaFunc () {
     fi
     # Check if the $valFound var was set to OK
     if [[ "${valFound}" != "OK" ]]; then
-        echo "Sorry, no valid PARAMETER2 supplied."
-        echo "Please run the script without parameters to see the help."
-        echo "e.g.    ./install.sh"
+        printf "%s\n" "Sorry, no valid PARAMETER2 supplied."
+        printf "%s\n" "Please run the script without parameters to see the help."
+        printf "%s\n" "e.g.    ./install.sh"
         exit;
     fi
 }
 
 
 case "${2}" in
-    all) echo ""
+    all) printf "%s\n" ""
         runScripts=( "${allScripts[@]}" )
         ;;
-    *) echo ""
+    *) printf "%s\n" ""
         runScripts=( ${2} )
         ;;
 esac
@@ -122,44 +122,44 @@ esac
 
 case "${1}" in
     install) validParaFunc "${2}"
-        echo "Install the files"
+        printf "%s\n" "Install the files"
         installFunc
-        echo "Copy files to their location. An entry in Dolphin should appear soon."
+        printf "%s\n" "Copy files to their location. An entry in Dolphin should appear soon."
         ;;
     uninstall) validParaFunc "${2}"
-        echo "Uninstalling the files"
+        printf "%s\n" "Uninstalling the files"
         uninstallFunc
-        echo "Remove files. The entry in Dolphin should disappear soon."
+        printf "%s\n" "Remove files. The entry in Dolphin should disappear soon."
         ;;
     symlink) validParaFunc "${2}"
-        echo  "Symlinking the files"
+        printf "%s\n" "Symlinking the files"
         symlinkFunc
-        echo "Symlink files to their location. An entry in Dolphin should appear soon."
+        printf "%s\n" "Symlink files to their location. An entry in Dolphin should appear soon."
         ;;
-    *) echo "Use: run as root: ./install.sh PARAMETER1 PARAMETER2"
-        echo ""
-        echo ""
-        echo "Possible options for PARAMETER1:"
-        echo "symlink - instead of copying the files to their according location it just symlinks them; this is good for when you update the git repo --> this is RECOMMENDED"
-        echo "install - this will copy the files to their according location"
-        echo "uninstall - this will remove the files from their according location, however it'll leave the config files intact"
-        echo ""
-        echo ""
-        echo "Possible options for PARAMETER2"
-        echo "all - run on all scripts"
-        echo "addPasswdPDF - only run on addPasswdPDF script"
-        echo "attachPDF - only run on attachPDF script"
-        echo "combinePDF - only run combinePDF script"
-        echo "extractPDF - only run on extractPDF script"
-        echo "extractTextPDF - only run on extractTextPDF script"
-        echo "metaPDF - only run on metaPDF script"
-        echo "ocrPDF - only run on ocrPDF script"
-        echo "pdfaPDF - convert a PDF into a PDF/A"
-        echo "qualityPDF - only run on qualityPDF script"
-        echo "rmPasswdPDF - only run on rmPasswdPDF script"
-        echo "rotatePDF - only run on rotatePDF script"
-        echo "searchablePDF - only run on searchablePDF script"
-        echo "stampPDF - only run on stampPDF script"
-        echo "watermarkPDF - only run watermarkPDF script"
+    *) printf "%s\n" "Use: run as root: ./install.sh PARAMETER1 PARAMETER2"
+        printf "%s\n" ""
+        printf "%s\n" ""
+        printf "%s\n" "Possible options for PARAMETER1:"
+        printf "%s\n" "symlink - instead of copying the files to their according location it just symlinks them; this is good for when you update the git repo --> this is RECOMMENDED"
+        printf "%s\n" "install - this will copy the files to their according location"
+        printf "%s\n" "uninstall - this will remove the files from their according location, however it'll leave the config files intact"
+        printf "%s\n" ""
+        printf "%s\n" ""
+        printf "%s\n" "Possible options for PARAMETER2"
+        printf "%s\n" "all - run on all scripts"
+        printf "%s\n" "addPasswdPDF - only run on addPasswdPDF script"
+        printf "%s\n" "attachPDF - only run on attachPDF script"
+        printf "%s\n" "combinePDF - only run combinePDF script"
+        printf "%s\n" "extractPDF - only run on extractPDF script"
+        printf "%s\n" "extractTextPDF - only run on extractTextPDF script"
+        printf "%s\n" "metaPDF - only run on metaPDF script"
+        printf "%s\n" "ocrPDF - only run on ocrPDF script"
+        printf "%s\n" "pdfaPDF - convert a PDF into a PDF/A"
+        printf "%s\n" "qualityPDF - only run on qualityPDF script"
+        printf "%s\n" "rmPasswdPDF - only run on rmPasswdPDF script"
+        printf "%s\n" "rotatePDF - only run on rotatePDF script"
+        printf "%s\n" "searchablePDF - only run on searchablePDF script"
+        printf "%s\n" "stampPDF - only run on stampPDF script"
+        printf "%s\n" "watermarkPDF - only run watermarkPDF script"
         ;;
 esac

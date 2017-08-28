@@ -20,10 +20,8 @@ searchArray () {
 
     for ((i=0; i < ${#haystack[@]}; ++i)); do
         if [[ "${haystack[$i]}" =~ "${needle}" ]]; then
-            echo "Found match"
             j=$[i+1]
             if [[ "${haystack[$j]}" =~ "InfoValue:" ]]; then
-                echo "Found value match"
                 origData["${needle}"]="${haystack[$j]:11}"
             fi
         fi
@@ -142,7 +140,7 @@ If no GMT information is specified, the relation between the specified time and 
         fExt="pdf"
         getSaveFile "${arg}" "${fMessage}" "${fExt}"
 
-        echo "[ /Author (${author})
+        metaInfo="[ /Author (${author})
    /CreationDate (${creationdate})
    /Creator (${creator})
    /Producer (${producer})
@@ -150,7 +148,9 @@ If no GMT information is specified, the relation between the specified time and 
    /Subject (${subject})
    /Keywords (${keywords})
    /ModDate (${moddate})
-   /DOCINFO pdfmark" > "${pdfMarks}"
+   /DOCINFO pdfmark"
+   
+        printf "%s\n" "${metaInfo}" > "${pdfMarks}"
 
 
         gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile="${saveFile}" "${arg}" "${pdfMarks}"

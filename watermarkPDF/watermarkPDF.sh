@@ -28,7 +28,6 @@ checkService () {
 
 
 createOdt () {
-    echo "${tplSelected} ${tmpStorage}/draft.odt"
     cp "${tplSelected}" "${tmpStorage}/draft.odt"
     cd "${tmpStorage}"
     unzip "draft.odt"

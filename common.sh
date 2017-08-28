@@ -79,7 +79,7 @@ sortFiles () {
         fi
     done
     # Sort selected files alphabetically
-    readarray -t filesSorted < <(for a in "${filesUnsorted[@]}"; do echo "$a"; done | sort)
+    readarray -t filesSorted < <(for a in "${filesUnsorted[@]}"; do printf "%s\n" "${a}"; done | sort)
 }
 
 
@@ -125,9 +125,9 @@ convertMetaToBookmark () {
     if [[ "${docBookmarks}" -eq "1" ]]; then
         if [[ "${levelBookmarks}" -eq "1" ]]; then
             adjustLvl="1"
-            echo "+-|${fileBase}|1" >> "${bookMarks}"
+            printf "%s\n" "+-|${fileBase}|1" >> "${bookMarks}"
         else
-            echo "+-|${fileBase}|1" >> "${bookMarks}"
+            printf "%s\n" "+-|${fileBase}|1" >> "${bookMarks}"
         fi
     fi
 
@@ -154,7 +154,7 @@ convertMetaToBookmark () {
                 curDash="${curDash}--"
                 ((curLvl--))
             done
-            echo "+-${curDash}|${curTitle}|${curNr}" >> "${bookMarks}"
+            printf "%s\n" "+-${curDash}|${curTitle}|${curNr}" >> "${bookMarks}"
         fi
     done
 }
@@ -234,7 +234,7 @@ convertBookmarkToPdfmark () {
 
     for (( a = 0 ; a <= ${#outputArr[@]} ; a++ )); do
         if [[ "${outputArr[$a]}" ]]; then
-            echo "${outputArr[$a]}" >> "${tmpStorage}/pdfmarks"
+            printf "%s\n" "${outputArr[$a]}" >> "${tmpStorage}/pdfmarks"
         fi
     done
 
@@ -264,8 +264,8 @@ checkPrograms () {
     # Check for KDialog or Zenity
     type -P "kdialog" &>/dev/null && continue || {
         type -P "zenity" &>/dev/null && continue || {
-            echo "Couldn't find KDialog or Zenity on your system." > "/tmp/pdfFortsError.txt"
-            echo "Please install and re-run this script." >> "/tmp/pdfFortsError.txt"
+            printf "%s\n" "Couldn't find KDialog or Zenity on your system." > "/tmp/pdfFortsError.txt"
+            printf "%s\n" "Please install and re-run this script." >> "/tmp/pdfFortsError.txt"
             kate -b "/tmp/pdfFortsError.txt"
             exit 1;
         }
@@ -287,8 +287,8 @@ chkConfOption () {
     confValue="${2}"
 
     if [[ "${chkOption}" == "" ]]; then
-        echo " " >> "${userConfig}"
-        echo "${confValue}" >> "${userConfig}"
+        printf "%s\n" " " >> "${userConfig}"
+        printf "%s\n" "${confValue}" >> "${userConfig}"
         guiInfo "Added a new option to the end of your config file located at: "${userConfig}".
 
 Kate will be launched for you to review."
@@ -320,7 +320,7 @@ guiPassword () {
     else
         local output=$(zenity --password --title "${1}") || exit;
     fi
-    echo "${output}"
+    printf "%s" "${output}"
 }
 
 guiFileSelect () {
@@ -329,7 +329,7 @@ guiFileSelect () {
     else
         local output=$(zenity --file-selection --filename="${1}/") || exit;
     fi
-    echo "${output}"
+    printf "%s" "${output}"
 }
 
 guiFileSave () {
@@ -338,7 +338,7 @@ guiFileSave () {
     else
         local output=$(zenity --file-selection --save --filename="${1}") || exit;
     fi
-    echo "${output}"
+    printf "%s" "${output}"
 }
 
 guiInput () {
@@ -347,7 +347,7 @@ guiInput () {
     else
         local output=$(zenity --entry --title "${1}" --text="${2}" --entry-text="${3}") || exit;
     fi
-    echo "${output}"
+    printf "%s" "${output}"
 }
 
 guiYesNo () {
@@ -361,5 +361,5 @@ guiYesNo () {
             output="2"
         fi
     fi
-    echo "${output}"
+    printf "%s" "${output}"
 }

@@ -68,7 +68,7 @@ handlePDF () {
     pg="1";
 
     # Get filename and and append the pdfmarks file for the bookmarks
-    echo "|${fileBase}|${curPage}" >> "${bookMarks}"
+    printf "%s\n" "|${fileBase}|${curPage}" >> "${bookMarks}"
 
     for file in "${pgDir}/"*.pdf; do
         # Get Zeros before page number
@@ -79,7 +79,6 @@ handlePDF () {
         createStamp
 
         # Add the created stamp to current page
-        echo "pdftk '${file}' stamp '${stampPDF}/${pgNr}.pdf' output '${docDir}/${docNr}_${pgNr}.pdf'"
         pdftk "${file}" stamp "${stampPDF}/${pgNr}.pdf" output "${docDir}/${docNr}_${pgNr}.pdf"
 
         curPage=$((curPage+1))
@@ -96,17 +95,17 @@ setFinalDocName () {
     else
         destFile="${destDir}/${savefile} ${docNrStart} - ${docNrEnd}.pdf"
     fi
-#    echo "gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile='${destFile}' '${docDir}/'*pdf  '${pdfMarks}'"
+#    printf "%s\n" "gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile='${destFile}' '${docDir}/'*pdf  '${pdfMarks}'"
 #    gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile="${destFile}" "${docDir}/"*pdf  "${pdfMarks}"
     cd "${docDir}"
     curpwd=$(pwd)
-    echo "$curpwd" > "output.txt"
+    printf "%s\n" "$curpwd" > "output.txt"
     for curPDF in *pdf; do
-        echo "${curPDF}" >> "output.txt"
-        echo "gs -sDEVICE=ps2write -o '${curPDF}.ps' '${curPDF}'" >> "ps.txt"
+        printf "%s\n" "${curPDF}" >> "output.txt"
+        printf "%s\n" "gs -sDEVICE=ps2write -o '${curPDF}.ps' '${curPDF}'" >> "ps.txt"
         gs -sDEVICE=ps2write -o "${curPDF}.ps" "${curPDF}" >> "gs.txt" 2>&1
     done
-    echo "gs -sDEVICE=pdfwrite -o '${destFile}' *ps  '${pdfMarks}'"
+    printf "%s\n" "gs -sDEVICE=pdfwrite -o '${destFile}' *ps  '${pdfMarks}'"
     gs -sDEVICE=pdfwrite -o "${destFile}" *ps  "${pdfMarks}" >> "final.txt" 2>&1
 }
 

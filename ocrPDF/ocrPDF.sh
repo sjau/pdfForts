@@ -19,15 +19,15 @@ runOCR () {
         case "${pgSeperator}" in
             1) #Yes selected
                 pgSep="------------------- ${i} -------------------"
-                echo "${pgSep}" >> "${tmpStorage}/output.txt"
-                echo "" >> "${tmpStorage}/output.txt"
+                printf "%s\n" "${pgSep}" >> "${tmpStorage}/output.txt"
+                printf "%s\n" "" >> "${tmpStorage}/output.txt"
                 ;;
             2) #No selected
                 pgSep=""
                 ;;
         esac
         cat "${file}.txt" >> "${tmpStorage}/output.txt"
-        echo "" >> "${tmpStorage}/output.txt"
+        printf "%s\n" "" >> "${tmpStorage}/output.txt"
         ((i++))
     done
     mv "${tmpStorage}/output.txt" "${saveFile}"
