@@ -8,9 +8,11 @@ checkPrograms
 
 # Ask for range
 if type kdialog &>/dev/null; then
-    Rotate=$(kdialog --checklist "Chose rotation (clockwise):" East "90°" off South "180°" off West "270°" off) || exit;
+    Rotate=$(kdialog --checklist "Chose rotation (clockwise):" East "90°" off South "180°" off West "270°" off)
+    chkCancelButton "${?}"
 else
-    Rotate=$(zenity --list --radiolist --text "Chose rotation (clockwise):" --hide-header --column "1" --column "2" FALSE "90°" FALSE "180°" FALSE "270°") || exit;
+    Rotate=$(zenity --list --radiolist --text "Chose rotation (clockwise):" --hide-header --column "1" --column "2" FALSE "90°" FALSE "180°" FALSE "270°")
+    chkCancelButton "${?}"
     case "${Rotate}" in
         "90°")  Rotate="East" ;;
         "180°") Rotate="South" ;;

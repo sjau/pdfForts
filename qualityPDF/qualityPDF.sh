@@ -9,9 +9,11 @@ checkPrograms
 
 # Ask for Settings
 if type kdialog &>/dev/null; then
-    Color=$(kdialog --checklist "Chose Color Mode:" Keep "Keep current" off Gray "Convert to Grayscale" off BW "Convert to B/W" off) || exit;
+    Color=$(kdialog --checklist "Chose Color Mode:" Keep "Keep current" off Gray "Convert to Grayscale" off BW "Convert to B/W" off)
+    chkCancelButton "${?}"
 else
-    Color=$(zenity --list --radiolist --text "Chose Color Mode:" --hide-header --column "1" --column "2" FALSE "Keep current" FALSE "Convert to Grayscale" FALSE "Convert to B/W") || exit;
+    Color=$(zenity --list --radiolist --text "Chose Color Mode:" --hide-header --column "1" --column "2" FALSE "Keep current" FALSE "Convert to Grayscale" FALSE "Convert to B/W")
+    chkCancelButton "${?}"
     case "${Color}" in
         "Keep current")             Color="Keep" ;;
         "Convert to Grayscale")     Color="Gray" ;;
@@ -20,9 +22,11 @@ else
 fi
 
 if type kdialog &>/dev/null; then
-    Resolution=$(kdialog --checklist "Set Image Resolution:" Keep "Keep current" off 600 "Convert to 600dpi" off 300 "Convert to 300dpi" off 200 "Convert to 200dpi" off 150 "Convert to 150dpi" off Custom "Set custom resolution" off ) || exit;
+    Resolution=$(kdialog --checklist "Set Image Resolution:" Keep "Keep current" off 600 "Convert to 600dpi" off 300 "Convert to 300dpi" off 200 "Convert to 200dpi" off 150 "Convert to 150dpi" off Custom "Set custom resolution" off )
+    chkCancelButton "${?}"
 else
-    Resolution=$(zenity --list --radiolist --text "Set Image Resolution:" --hide-header --column "1" --column "2" FALSE "Keep current" FALSE "Convert to 600dpi" FALSE "Convert to 300dpi" FALSE "Convert to 200dpi" FALSE "Convert to 150dpi" FALSE "Set custom resolution") || exit;
+    Resolution=$(zenity --list --radiolist --text "Set Image Resolution:" --hide-header --column "1" --column "2" FALSE "Keep current" FALSE "Convert to 600dpi" FALSE "Convert to 300dpi" FALSE "Convert to 200dpi" FALSE "Convert to 150dpi" FALSE "Set custom resolution")
+    chkCancelButton "${?}"
     case "${Resolution}" in
         "Keep current")         Resolution="Keep" ;;
         "Convert to 600dpi")    Resolution="600dpi" ;;
