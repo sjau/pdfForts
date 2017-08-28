@@ -5,7 +5,7 @@ addPasswdPDF
 PREREQUISITES
 
 - KDE / Dolphin
-- kdialog
+- kdialog / Zenity
 - pdftk
 - bash
 

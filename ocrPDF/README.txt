@@ -5,7 +5,7 @@ ocrPDF
 PREREQUISITES
 
 - KDE / Dolphin
-- kdialog
+- kdialog / Zenity
 - imagemagick
 - pdftk
 - bash

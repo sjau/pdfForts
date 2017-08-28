@@ -5,7 +5,7 @@ attachPDF
 PREREQUISITES
 
 - KDE / Dolphin
-- kdialog
+- kdialog / Zenity
 - pdftk
 
 

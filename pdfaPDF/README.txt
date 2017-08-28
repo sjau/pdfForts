@@ -5,7 +5,7 @@ pdfaPDF
 PREREQUISITES
 
 - KDE / Dolphin
-- kdialog
+- kdialog / Zenity
 - ghostscript
 
 

@@ -5,7 +5,7 @@ combinePDF
 PREREQUISITES
 
 - KDE / Dolphin
-- kdialog
+- kdialog / Zenity
 - pdftk
 - bash
 - recode

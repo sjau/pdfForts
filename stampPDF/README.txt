@@ -5,7 +5,7 @@ stampPDF
 PREREQUISITES
 
 - KDE / Dolphin
-- kdialog
+- kdialog / Zenity
 - ghostscript
 - pdftk
 - libreoffice

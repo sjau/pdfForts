@@ -5,7 +5,7 @@ watermarkPDF
 PREREQUISITES
 
 - KDE / Dolphin
-- kdialog
+- kdialog / Zenity
 - pdftk
 - bash
 - libreoffice

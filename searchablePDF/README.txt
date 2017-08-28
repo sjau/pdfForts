@@ -5,7 +5,7 @@ searchablePDF
 PREREQUISITES
 
 - KDE / Dolphin
-- kdialog
+- kdialog / Zenity
 - pdftk
 - ghostscript
 - bash
