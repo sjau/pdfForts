@@ -67,9 +67,6 @@ for arg; do
         author=$(guiInput "Set meta data for '${fName}'" "Set meta data for '${fName}'
 
 Author - The document's author" "${origData[Author]}");
-        if [[ $? != 0 ]]; then
-            exit;
-        fi
 
         creationdate=$(guiInput "Set meta data for '${fName}'" "Set meta data for '${fName}'
 
@@ -82,44 +79,26 @@ The remainder of the string defines the relation of local time to GMT.
 O is either + for a positive difference (local time is later than GMT) or - (minus) for a negative difference.
 HH' is the absolute value of the offset from GMT in hours, and mm' is the absolute value of the offset in minutes.
 If no GMT information is specified, the relation between the specified time and GMT is considered unknown. Regardless of whether or not GMT information is specified, the remainder of the string should specify the local time." "${origData[CreationDate]}");
-        if [[ $? != 0 ]]; then
-            exit;
-        fi
 
         creator=$(guiInput "Set meta data for '${fName}'" "Set meta data for '${fName}'
 
 Creator - If the document was converted to PDF from another form, the name of the application that originally created the document" "${origData[Creator]}");
-        if [[ $? != 0 ]]; then
-            exit;
-        fi
 
         producer=$(guiInput "Set meta data for '${fName}'" "Set meta data for '${fName}'
 
 Producer - The application that created the PDF from its native form" "${origData[Producer]}");
-        if [[ $? != 0 ]]; then
-            exit;
-        fi
 
         title=$(guiInput "Set meta data for '${fName}'" "Set meta data for '${fName}'
 
 Titel - The document's title" "${origData[Title]}");
-        if [[ $? != 0 ]]; then
-            exit;
-        fi
 
         subject=$(guiInput "Set meta data for '${fName}'" "Set meta data for '${fName}'
 
 Subject - The document's subject" "${origData[Subject]}");
-        if [[ $? != 0 ]]; then
-            exit;
-        fi
 
         keywords=$(guiInput "Set meta data for '${fName}'" "Set meta data for '${fName}'
 
 Keywords - Relevant keywords for this document, seperated by a comma followed by whitespace" "${origData[Keywords]}");
-        if [[ $? != 0 ]]; then
-            exit;
-        fi
 
         moddate=$(guiInput "Set meta data for '${fName}'" "Set meta data for '${fName}'
 
@@ -132,9 +111,6 @@ The remainder of the string defines the relation of local time to GMT.
 O is either + for a positive difference (local time is later than GMT) or - (minus) for a negative difference.
 HH' is the absolute value of the offset from GMT in hours, and mm' is the absolute value of the offset in minutes.
 If no GMT information is specified, the relation between the specified time and GMT is considered unknown. Regardless of whether or not GMT information is specified, the remainder of the string should specify the local time." "${origData[ModDate]}");
-        if [[ $? != 0 ]]; then
-            exit;
-        fi
         # Prompt for save file
         fMessage="Meta"
         fExt="pdf"
@@ -149,9 +125,8 @@ If no GMT information is specified, the relation between the specified time and 
    /Keywords (${keywords})
    /ModDate (${moddate})
    /DOCINFO pdfmark"
-   
-        printf "%s\n" "${metaInfo}" > "${pdfMarks}"
 
+        printf "%s\n" "${metaInfo}" > "${pdfMarks}"
 
         gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile="${saveFile}" "${arg}" "${pdfMarks}"
     fi

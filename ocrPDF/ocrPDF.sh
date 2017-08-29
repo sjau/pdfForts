@@ -40,16 +40,8 @@ langSel=$(guiInput "Set Language" "Set the three letter language code to use on 
 Using the appropriate language makes the recognition better.
 
 Also make sure you have the actual tesseract language pack installed." "${defaultLanguage}")
-if [[ $? != 0 ]]; then
-    exit;
-fi
-
 
 pgSeperator=$(guiYesNo "Add a page seperator?")
-if [[ $? = 3 ]]; then
-    exit;
-fi
-
 
 # Loop through the selected files
 for arg; do

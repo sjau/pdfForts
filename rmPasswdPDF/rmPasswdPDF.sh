@@ -13,9 +13,7 @@ for arg; do
         # Prompt for password entry
         fName=${arg##*/}
         Passwd=$(guiPassword "Password" "Enter the password for '${fName}'")
-        if [[ $? != 0 ]]; then
-            exit;
-        fi
+
         # Prompt for save file
         fMessage="no Pwd"
         fExt="pdf"
