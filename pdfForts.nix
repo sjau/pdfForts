@@ -65,6 +65,3 @@ stdenv.mkDerivation {
     done
   '';
 }
-
-
-#watermarkPDF
