@@ -29,7 +29,7 @@ checkService () {
 
 createOdt () {
     cp "${tplSelected}" "${tmpStorage}/draft.odt"
-    cd "${tmpStorage}"
+    cd "${tmpStorage}" || guiError "Couldn't change directory."
     unzip "draft.odt"
     rm "draft.odt"
     sed "s|_replace_|${tplMessage}|g" "content.xml" > "new_content.xml"

@@ -27,7 +27,7 @@ for arg; do
         fExt="pdf"
         getSaveFile "${arg}" "${fMessage}" "${fExt}";
 
-        cd "${tmpStorage}" || exit;
+        cd "${tmpStorage}" || guiError "Couldn't change directory."
 
         pdftk "${arg}" burst output "${tmpStorage}/pages__%04d.pdf"
 
