@@ -10,13 +10,7 @@ checkPrograms
 while [[ "${PasswdChk}" != "OK" ]]; do
     # Ask for password
     Passwd1=$(guiPassword "Password" "Please enter a password");
-    if [[ $? != 0 ]]; then
-        exit;
-    fi
     Passwd2=$(guiPassword "Password Confirmation" "Re-enter the password");
-    if [[ $? != 0 ]]; then
-        exit;
-    fi
     # Check if the passwords are the same
     if [[ "${Passwd1}" = "${Passwd2}" ]]; then
         Passwd="${Passwd1}"
