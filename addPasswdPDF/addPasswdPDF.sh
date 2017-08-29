@@ -6,6 +6,10 @@ source "/usr/bin/pdfForts/common.sh"
 reqCmds="pdftk"
 checkPrograms
 
+# Run some common functions
+createTmpDir
+deleteTmpDir
+
 
 while [[ "${PasswdChk}" != "OK" ]]; do
     # Ask for password
@@ -26,7 +30,6 @@ Please try again."
 done
 
 
-
 # Loop through the selected files
 for arg; do
     # Test if it is a file
@@ -35,6 +38,7 @@ for arg; do
         fMessage="with Pwd"
         fExt="pdf"
         getSaveFile "${arg}" "${fMessage}" "${fExt}"
-        pdftk "${arg}" output "${saveFile}" user_pw "${Passwd}"
+        pdftk "${arg}" output "${tmpStorage}/finalfile.pdf" user_pw "${Passwd}"
+        mv "${tmpStorage}/finalfile.pdf" "${saveFile}"
     fi
 done

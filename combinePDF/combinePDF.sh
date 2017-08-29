@@ -45,10 +45,5 @@ for curFile in "${filesSorted[@]}"; do
 done
 # Combine the files and send it to final destination
 cd "${tmpStorage}" || guiError "Couldn't change directory."
-gs -sDEVICE=pdfwrite -dBATCH -dNOPAUSE -sOutputFile="new.pdf" -c "userdict /opdfmark systemdict /pdfmark get put /pdfmark {cleartomark} def" -f *.pdf -c "/pdfmark userdict /opdfmark get def" -f pdfmarks >> "gs.txt"  2>&1
-
-cp "new.pdf" "${saveFile}"
-
-sleep 5
-
-exit;
+gs -sDEVICE=pdfwrite -dBATCH -dNOPAUSE -sOutputFile="${tmpStorage}/finalfile.pdf" -c "userdict /opdfmark systemdict /pdfmark get put /pdfmark {cleartomark} def" -f *.pdf -c "/pdfmark userdict /opdfmark get def" -f pdfmarks >> "gs.txt"  2>&1
+mv "${tmpStorage}/finalfile.pdf" "${saveFile}"

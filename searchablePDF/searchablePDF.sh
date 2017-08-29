@@ -44,9 +44,7 @@ for arg; do
             hocr2pdf -i "${curFile}" -o "${curFile}.new.pdf" < "${curFile}.html"
 
         done
-        pdftk "pages__"*.new.pdf cat output "${saveFile}"
-
+        pdftk "pages__"*.new.pdf cat output "${tmpStorage}/finalfile.pdf"
+        mv "${tmpStorage}/finalfile.pdf" "${saveFile}"
     fi
 done
-
-exit;

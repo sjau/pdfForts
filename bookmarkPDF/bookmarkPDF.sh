@@ -30,6 +30,7 @@ for arg; do
         convertMetaToBookmark "${metaFile}"
         kate -b "${bookMarks}"
         convertBookmarkToPdfmark "${bookMarks}"
-        gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile="${saveFile}" -c "userdict /opdfmark systemdict /pdfmark get put /pdfmark {cleartomark} def" -f "${noBookmark}" -c "/pdfmark userdict /opdfmark get def" -f "${pdfMarks}"
+        gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile="${tmpStorage}/finalfile.pdf" -c "userdict /opdfmark systemdict /pdfmark get put /pdfmark {cleartomark} def" -f "${noBookmark}" -c "/pdfmark userdict /opdfmark get def" -f "${pdfMarks}"
+        mv "${tmpStorage}/finalfile.pdf" "${saveFile}"
     fi
 done

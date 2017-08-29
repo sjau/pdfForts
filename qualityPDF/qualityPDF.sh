@@ -6,6 +6,9 @@ source "/usr/bin/pdfForts/common.sh"
 reqCmds="gs convert"
 checkPrograms
 
+# Run some common functions
+createTmpDir
+deleteTmpDir
 
 # Ask for Settings
 if type kdialog &>/dev/null; then
@@ -41,12 +44,6 @@ if [[ "${Resolution}" == "Custom" ]]; then
     Resolution=$(guiInput "Set Custom Image Resolution" "Set your custom resolution, e.g. use 100 for 100x100dpi") || exit;
 fi
 
-
-# Run some common functions
-createTmpDir
-deleteTmpDir
-
-
 # Parse the selected file
 for arg; do
     # Test if it is a file
@@ -75,6 +72,3 @@ for arg; do
         mv "$curFile" "${saveFile}"
     fi
 done
-
-
-exit;

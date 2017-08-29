@@ -33,6 +33,7 @@ for arg; do
         fExt="pdf"
         getSaveFile "${arg}" "${fMessage}" "${fExt}"
 
-        pdftk "${arg}" attach_files "${attach}" to_page "${pagenumber}" output "${saveFile}"
+        pdftk "${arg}" attach_files "${attach}" to_page "${pagenumber}" output "${tmpStorage}/finalfile.pdf"
+        mv "${tmpStorage}/finalfile.pdf" "${saveFile}"
     fi
 done

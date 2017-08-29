@@ -6,6 +6,10 @@ source "/usr/bin/pdfForts/common.sh"
 reqCmds="pdftk"
 checkPrograms
 
+# Run some common functions
+createTmpDir
+deleteTmpDir
+
 # Ask for range
 Range=$(guiInput "Define pages" "Set the pages you want to extract.
 Values are to be seperated by a white space.
@@ -26,7 +30,7 @@ for arg; do
         fMessage="Extracted"
         fExt="pdf"
         getSaveFile "${arg}" "${fMessage}" "${fExt}"
-
-        pdftk "${arg}" cat ${Range} output "${saveFile}"
+        pdftk "${arg}" cat ${Range} output "${tmpStorage}/finalfile.pdf"
+        mv "${tmpStorage}/finalfile.pdf" "${saveFile}"
     fi
 done

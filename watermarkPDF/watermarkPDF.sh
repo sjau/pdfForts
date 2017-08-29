@@ -81,6 +81,7 @@ for arg; do
         libreoffice --headless --invisible --convert-to pdf "${tmpStorage}/draft.odt"
         convert -density 300 "${tmpStorage}/draft.pdf" -quality 90 "${tmpStorage}/draft.png"
         convert "${tmpStorage}/draft.png" -transparent white -background none "${tmpStorage}/draft2.pdf"
-        pdftk "${arg}" multistamp "${tmpStorage}/draft2.pdf" output "${saveFile}"
+        pdftk "${arg}" multistamp "${tmpStorage}/draft2.pdf" output "${tmpStorage}/finalfile.pdf"
+        mv "${tmpStorage}/finalfile.pdf" "${saveFile}"
     fi
 done

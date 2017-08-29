@@ -6,6 +6,10 @@ source "/usr/bin/pdfForts/common.sh"
 reqCmds="pdftotext"
 checkPrograms
 
+# Run some common functions
+createTmpDir
+deleteTmpDir
+
 # Prompt to maintain the layout
 tplSelect=$(guiYesNo "Maintain Layout? Select YES if you want the extracted text to reflect the layout of the PDF.")
 case "${?}" in
@@ -26,7 +30,7 @@ for arg; do
         fMessage="Extracted Text"
         fExt="txt"
         getSaveFile "${arg}" "${fMessage}" "${fExt}"
-
-        pdftotext ${layout} "${arg}" "${saveFile}"
+        pdftotext ${layout} "${arg}" "${tmpStorage}/finalfile.pdf"
+        mv "${tmpStorage}/finalfile.pdf" "${saveFile}"
     fi
 done

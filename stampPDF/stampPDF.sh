@@ -106,7 +106,8 @@ setFinalDocName () {
         gs -sDEVICE=ps2write -o "${curPDF}.ps" "${curPDF}" >> "gs.txt" 2>&1
     done
     printf "%s\n" "gs -sDEVICE=pdfwrite -o '${destFile}' *ps  '${pdfMarks}'"
-    gs -sDEVICE=pdfwrite -o "${destFile}" *ps  "${pdfMarks}" >> "final.txt" 2>&1
+    gs -sDEVICE=pdfwrite -o "${tmpStorage}/finalfile.pdf" *ps  "${pdfMarks}" >> "final.txt" 2>&1
+    mv "${tmpStorage}/finalfile.pdf" "${destFile}"
 }
 
 

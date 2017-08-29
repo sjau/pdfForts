@@ -128,11 +128,10 @@ If no GMT information is specified, the relation between the specified time and 
 
         printf "%s\n" "${metaInfo}" > "${pdfMarks}"
 
-        gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile="${saveFile}" "${arg}" "${pdfMarks}"
+        gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile="${tmpStorage}/finalfile.pdf" "${arg}" "${pdfMarks}"
+        mv "${tmpStorage}/finalfile.pdf" "${saveFile}"
     fi
 done
-
-exit;
 
 
 #[ /Author (string)

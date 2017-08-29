@@ -6,6 +6,10 @@ source "/usr/bin/pdfForts/common.sh"
 reqCmds="pdftk"
 checkPrograms
 
+# Run some common functions
+createTmpDir
+deleteTmpDir
+
 # Ask for range
 if type kdialog &>/dev/null; then
     Rotate=$(kdialog --checklist "Chose rotation (clockwise):" East "90°" off South "180°" off West "270°" off)
@@ -29,6 +33,7 @@ for arg; do
         fMessage="Rotated"
         fExt="pdf"
         getSaveFile "${arg}" "${fMessage}" "${fExt}";
-        pdftk "${arg}" cat 1-end${Rotate} output "${saveFile}"
+        pdftk "${arg}" cat 1-end${Rotate} output "${tmpStorage}/finalfile.pdf"
+        mv "${tmpStorage}/finalfile.pdf" "${saveFile}"
     fi
 done
