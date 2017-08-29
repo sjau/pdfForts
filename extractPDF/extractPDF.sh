@@ -1,4 +1,4 @@
-# #!/usr/bin/env bash
+#!/usr/bin/env bash
 
 source "/usr/bin/pdfForts/common.sh"
 
@@ -21,7 +21,7 @@ That would extract the pages 3-6, page 17, pages 21-24, pages 37 to the end, pag
 
 The order is defines by your range.
 
-" "1-end");
+" "1-end")
 
 # Parse the selected file
 for arg; do

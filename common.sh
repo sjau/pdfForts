@@ -300,6 +300,7 @@ Kate will be launched for you to review."
 chkCancelButton () {
     if [[ "${1}" -eq 1 ]]; then
         guiError "Abort. Cancel button pressed."
+        exit 1;
     fi
 }
 

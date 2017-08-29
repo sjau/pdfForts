@@ -2,12 +2,12 @@
 stdenv.mkDerivation {
   name = "pdfForts-git";
 # Switch between local testing and using proper git repo
-  src = fetchgit {
-    url = https://github.com/sjau/pdfForts.git;
-    rev = "e6f11cac0e9db48a0d188cb5074a6305876adda0";
-    sha256 = "0wbpn1jgxxfm4iy7dj48l73n90mgj3mssglqrrrzjp87r8dw3bwx";
-  };
-#  src = /home/hyper/Desktop/git-repos/pdfForts;
+#  src = fetchgit {
+#    url = https://github.com/sjau/pdfForts.git;
+#    rev = "e6f11cac0e9db48a0d188cb5074a6305876adda0";
+#    sha256 = "0wbpn1jgxxfm4iy7dj48l73n90mgj3mssglqrrrzjp87r8dw3bwx";
+#  };
+  src = /home/hyper/Desktop/git-repos/pdfForts;
   installPhase = ''
     mkdir -p $out/bin
     cp -n **/*.sh $out/bin
