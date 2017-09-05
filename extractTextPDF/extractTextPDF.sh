@@ -12,7 +12,7 @@ deleteTmpDir
 
 # Prompt to maintain the layout
 tplSelect=$(guiYesNo "Maintain Layout? Select YES if you want the extracted text to reflect the layout of the PDF.")
-case "${?}" in
+case "${tplSelect}" in
     1) # Yes selected
         layout="-layout"
         ;;
