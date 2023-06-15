@@ -10,7 +10,7 @@ stdenv.mkDerivation {
 #  src = /home/hyper/Desktop/git-repos/pdfForts;
   installPhase = ''
     mkdir -p $out/bin
-    cp -n **/*.sh $out/bin
+    cp -n **/*.sh $out/bin && continue || continue
     rm $out/bin/vars.sh
 # NixOS does currently not provide Kate, so Zenity is chosen over Kate
     for i in $out/bin/*; do
