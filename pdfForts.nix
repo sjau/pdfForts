@@ -4,8 +4,8 @@ stdenv.mkDerivation {
 # Switch between local testing and using proper git repo
   src = fetchgit {
     url = https://github.com/sjau/pdfForts.git;
-    rev = "8d5b3cbfddbf9e7dbdb75c143e2c326ccae511b5";
-    sha256 = "17qnz579lk25ggaq8f0ng338vgiji4ka9fsx9q82091xx8kwy70s";
+    rev = "2fbe31ae6914a158bdf6c6e7962c8b2fb4e94a3c";
+    sha256 = "sha256-LbU9gqMvE1DI/aYnVbl6P40zRgu7i0ZOiHccUfM9yKw=";
   };
 #  src = /home/hyper/Desktop/git-repos/pdfForts;
   installPhase = ''
