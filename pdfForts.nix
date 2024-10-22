@@ -1,4 +1,4 @@
-{stdenv, fetchgit, kate, gnome3, pdftk, imagemagick, zip, unzip, libreoffice, unoconv, tesseract, recode, cuneiform, poppler_utils, ghostscript }:
+{stdenv, fetchgit, kate, gnome, pdftk, imagemagick, zip, unzip, libreoffice, unoconv, tesseract, recode, cuneiform, poppler_utils, ghostscript }:
 stdenv.mkDerivation {
   name = "pdfForts-git";
 # Switch between local testing and using proper git repo
