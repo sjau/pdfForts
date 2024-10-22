@@ -18,7 +18,7 @@ stdenv.mkDerivation {
         --replace /usr/bin/pdfForts/common.sh $out/lib/pdfForts/common.sh \
         --replace /usr/share/kservices5/ServiceMenus/pdfForts/ $out/share/kservices5/ServiceMenus/pdfForts/ \
         --replace kate ${kate}/bin/kate \
-        --replace zenity ${gnome3.zenity}/bin/zenity \
+        --replace zenity ${gnome.zenity}/bin/zenity \
         --replace pdftk ${pdftk}/bin/pdftk \
         --replace " convert " " ${imagemagick}/bin/convert " \
         --replace " zip " " ${zip}/bin/zip " \
