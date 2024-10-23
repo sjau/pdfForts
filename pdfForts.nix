@@ -1,4 +1,4 @@
-{stdenv, fetchgit, kate, gnome, pdftk, imagemagick, zip, unzip, libreoffice, unoconv, tesseract, recode, cuneiform, poppler_utils, ghostscript }:
+{stdenv, fetchgit, kate, pdftk, imagemagick, zip, unzip, libreoffice, unoconv, tesseract, recode, cuneiform, poppler_utils, ghostscript, zenity }:
 stdenv.mkDerivation {
   name = "pdfForts-git";
 # Switch between local testing and using proper git repo
@@ -18,7 +18,7 @@ stdenv.mkDerivation {
         --replace /usr/bin/pdfForts/common.sh $out/lib/pdfForts/common.sh \
         --replace /usr/share/kservices5/ServiceMenus/pdfForts/ $out/share/kservices5/ServiceMenus/pdfForts/ \
         --replace kate ${kate}/bin/kate \
-        --replace zenity ${gnome.zenity}/bin/zenity \
+        --replace zenity ${zenity}/bin/zenity \
         --replace pdftk ${pdftk}/bin/pdftk \
         --replace " convert " " ${imagemagick}/bin/convert " \
         --replace " zip " " ${zip}/bin/zip " \
@@ -39,7 +39,7 @@ stdenv.mkDerivation {
         --replace /usr/share/kservices5/ServiceMenus/pdfForts/ $out/share/kservices5/ServiceMenus/pdfForts/ \
         --replace pdftk ${pdftk}/bin/pdftk \
         --replace kate ${kate}/bin/kate \
-        --replace zenity ${gnome.zenity}/bin/zenity
+        --replace zenity ${zenity}/bin/zenity
     done
 
     mkdir -p $out/share/kservices5/ServiceMenus/pdfForts/
