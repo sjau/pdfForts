@@ -39,7 +39,7 @@ stdenv.mkDerivation {
         --replace /usr/share/kservices5/ServiceMenus/pdfForts/ $out/share/kservices5/ServiceMenus/pdfForts/ \
         --replace pdftk ${pdftk}/bin/pdftk \
         --replace kate ${kate}/bin/kate \
-        --replace zenity ${gnome3.zenity}/bin/zenity
+        --replace zenity ${gnome.zenity}/bin/zenity
     done
 
     mkdir -p $out/share/kservices5/ServiceMenus/pdfForts/
