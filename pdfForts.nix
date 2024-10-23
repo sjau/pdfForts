@@ -4,7 +4,7 @@ stdenv.mkDerivation {
 # Switch between local testing and using proper git repo
   src = fetchgit {
     url = https://github.com/sjau/pdfForts.git;
-    rev = "df0e97acfd3930bcaced9b33afa9ab2668088072";
+    rev = "0c856edffb94f98caef93f1e4b49bf7ea238c2d7";
     sha256 = "sha256-LbU9gqMvE1DI/aYnVbl6P40zRgu7i0ZOiHccUfM9yKw=";
   };
 #  src = /home/hyper/Desktop/git-repos/pdfForts;
